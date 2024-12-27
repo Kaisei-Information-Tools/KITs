@@ -1,6 +1,6 @@
 # KITs
 
-![image](https://www.kits-tools.net/assets/images/logo.png)
+![image](https://www.kits-tools.net/assets/images/logo.svg)
 
 ## 概要
 
