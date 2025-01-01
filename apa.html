@@ -11,11 +11,11 @@ js: apa
 <div class="column">
   <label for="source-selection" class="default-label">タイプ</label>
   <ul class="source-selection border" id="source-selection">
-    <li><button type="button" class="button border selected" id="source-web" >Webサイト</button></li>
+    <li><button type="button" class="button border selected" id="source-web">Webサイト</button></li>
     <li><button type="button" class="button border" id="source-journal">学術誌・論文</button></li>
     <li><button type="button" class="button border" id="source-book">書籍</button></li>
   </ul>
-</div> 
+</div>
 <div class="apa-form">
   <div class="column">
     <label for="author" class="default-label">著者名 <span class="required" id="author-required">*</span></label>
@@ -46,26 +46,32 @@ js: apa
     <ul id="detail" class="detail border">
       <li name="form-block" id="edition-block">
         <label for="edition" class="default-label">版</label>
-        <input type="number" id="edition" class="text-input detail-input border" placeholder="3" name="apa-input-data" />
-      </li>            
+        <input type="number" id="edition" class="text-input detail-input border" placeholder="3"
+          name="apa-input-data" />
+      </li>
       <li name="form-block" id="volume-block">
         <label for="vol" class="default-label">巻 <span class="required">*</span></label>
-        <input type="number" id="volume" class="text-input detail-input border" placeholder="57" name="apa-input-data" />
-      </li>            
+        <input type="number" id="volume" class="text-input detail-input border" placeholder="57"
+          name="apa-input-data" />
+      </li>
       <li name="form-block" id="page-count-block">
         <label for="page-number" class="default-label">ページ <span class="required">*</span></label>
-        <input type="text" id="page-count" class="text-input detail-input border" placeholder="5-18" name="apa-input-data" />
-      </li>            
+        <input type="text" id="page-count" class="text-input detail-input border" placeholder="5-18"
+          name="apa-input-data" />
+      </li>
     </ul>
   </div>
   <div class="column">
     <label for="url" class="default-label" id="url-label">URL <span class="required" id="url-required">*</span></label>
-    <input type="url" id="url" class="text-input border" placeholder="https://kits-tools.net/apa.html" name="apa-input-data" />
+    <input type="url" id="url" class="text-input border" placeholder="https://kits-tools.net/apa.html"
+      name="apa-input-data" />
+    <button id="auto-get-data" class="button submit border">自動取得（β）</button>
   </div>
   <div class="column">
     <label for="publish" class="default-label">作成日 <span class="required" id="publish-required">*</span></label>
     <div id="publish" class="date border">
-      <input type="number" id="publish-year" min="0" max="2038" class="text-input date-input border" name="apa-input-data" />
+      <input type="number" id="publish-year" min="0" max="2038" class="text-input date-input border"
+        name="apa-input-data" />
       <label for="publish-year" class="date-label">年</label>
 
       <select id="publish-month" class="text-input date-input border" name="apa-input-data">
@@ -123,7 +129,8 @@ js: apa
   <div class="column" name="form-block" id="access-block">
     <label for="access" class="default-label">アクセス日 <span class="required">*</span></label>
     <div id="access" class="date border">
-      <input type="number" id="access-year" min="0" max="2038" class="text-input date-input border" name="apa-input-data" />
+      <input type="number" id="access-year" min="0" max="2038" class="text-input date-input border"
+        name="apa-input-data" />
       <label for="access-year" class="date-label">年</label>
 
       <select id="access-month" class="text-input date-input border" name="apa-input-data">

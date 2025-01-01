@@ -57,9 +57,6 @@
     />
     <meta name="msapplication-TileColor" content="#3c3c6c" />
     <meta name="theme-color" content="#3c3c6c" />
-    {% if page.js %}
-    <script src="assets/js/{{ page.js }}.js" defer></script>
-    {% endif %}
     <!-- Google tag (gtag.js) -->
     <script
       async
@@ -104,9 +101,63 @@
               >開発者ブログ・使い方など</a
             >
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link white"
+              href="https://www.kits-tools.net/other_npo.html"
+              >NPO一覧</a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <button
+              class="btn btn-theme-2 dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              ツール一覧
+            </button>
+            <ul class="dropdown-menu dropdown-menu-theme">
+              <li><a class="dropdown-item" href="clock">時計</a></li>
+              <li><a class="dropdown-item" href="apa">APAスタイル</a></li>
+              <li>
+                <a class="dropdown-item" href="vertical">縦書きエディタ</a>
+              </li>
+              <li><a class="dropdown-item" href="todo">todoリスト</a></li>
+              <li><a class="dropdown-item" href="group">グループ分け</a></li>
+              <li>
+                <a class="dropdown-item" href="number">数字→読み方変換</a>
+              </li>
+              <li><a class="dropdown-item" href="calculator">電卓</a></li>
+              <li><a class="dropdown-item" href="timer">タイマー</a></li>
+              <li>
+                <a class="dropdown-item" href="pomodoro">ポモドーロ時計</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="stopwatch">ストップウォッチ</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="https://memo.kits-tools.net"
+                  >メモ帳</a
+                >
+              </li>
+              <li><a class="dropdown-item" href="count">カウンター</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </nav>
+    <div id="terms-popup">
+      <div class="popup-content">
+        <h2>利用規約に同意してください</h2>
+        <p>
+          このサイトを利用する前に、<a href="terms.html" target="_blank"
+            >利用規約・プライバシーポリシー</a
+          >をお読みください。
+          <br />続行するには<wbr />「同意する」<wbr />をクリックしてください。
+        </p>
+        <button class="accept">同意する</button>
+      </div>
+    </div>
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
       <div
         class="toast"
@@ -125,9 +176,9 @@
           ></button>
         </div>
         <div class="toast-body">
-          満足度アンケートにご協力ください！
+          ニーズ再調査アンケートにご協力ください（必須）！
           <a
-            href="https://docs.google.com/forms/u/1/d/195f98qlnqLGJ6yexaj1DQzL11GW5w48XmJ-OwSTB3-0/edit?usp=forms_home&ths=true"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeC2KrViAyuMA-gN6lywmTp3fe0H49c3xAgxtiRQAUR10_MPQ/viewform"
           >
             アンケートはこちら
           </a>
@@ -144,10 +195,27 @@
         </div>
       </div>
     </div>
-
+    {% if page.no_popup != true %}
     <script>
-      // ローカルストレージを確認
-      if (!localStorage.getItem("surveyAnswered2")) {
+      document
+        .querySelector(".popup-content .accept")
+        .addEventListener("click", function () {
+          // ユーザーの同意をCookieまたはローカルストレージに保存
+          localStorage.setItem("termsAccepted", "true");
+          // ポップアップを非表示にする
+          document.getElementById("terms-popup").style.display = "none";
+        });
+
+      // ページ読み込み時に同意済みか確認
+      window.addEventListener("load", function () {
+        if (localStorage.getItem("termsAccepted") !== "true") {
+          document.getElementById("terms-popup").style.display = "flex";
+        }
+      }); // ローカルストレージを確認
+    </script>
+    {% endif %}
+    <script>
+      if (!localStorage.getItem("surveyAnswered3")) {
         var toastEl = document.getElementById("liveToast");
         var toast = new bootstrap.Toast(toastEl, { autohide: false });
         toast.show();
@@ -159,13 +227,16 @@
         .addEventListener("change", function () {
           if (this.checked) {
             // ローカルストレージにデータを書き込み
-            localStorage.setItem("surveyAnswered2", "true");
+            localStorage.setItem("surveyAnswered3", "true");
           }
         });
     </script>
     {{ content }}
     <footer>
-      <p>&copy; 2024 Kaisei Information Technologies</p>
+      <p>&copy; 2024 Kaisei Information Technology for support</p>
     </footer>
+    {% if page.js %}
+    <script src="assets/js/{{ page.js }}.js" defer></script>
+    {% endif %}
   </body>
 </html>

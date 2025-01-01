@@ -1,0 +1,68 @@
+main {
+    text-align: center;
+    max-width: 80vw; /* 幅を画面の80%に設定 */
+    height: 80vh; /* 高さを画面の80%に設定 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 中央寄せ */
+}
+
+.counter {
+    font-size: 72px; /* 数字を大きく設定 */
+    color: #3c3c6c;
+    background-color: #f9f9f9; /* 背景色を設定 */
+    border: 2px solid #3c3c6c; /* 枠線を追加 */
+    border-radius: 10px; /* 角を丸める */
+    padding: 20px; /* 内側の余白を追加 */
+    margin: 20px 0; /* 上下のマージンを追加 */
+    cursor: text; /* カーソルをテキストに変更 */
+}
+
+.buttons {
+    margin: 20px 0;
+}
+
+.button {
+    border: none;
+    padding: 10px 10px;
+    margin: 3px;
+    font-size: 16px;
+    width: 7.5rem;
+    height: 3rem;
+}
+
+.button.decrease {
+    background-color: #4ca3a0; /* 濃い水色に変更 */
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
+.customs {
+    margin-top: 20px;
+}
+
+.counter-input {
+    padding: 10px;
+    margin-right: 5px;
+    width: 15rem;
+}
+
+.counter-alert {
+    display: none; /* 初期は非表示 */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+}

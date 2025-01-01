@@ -1,27 +1,26 @@
-.timer-container {
-  height: 100vh;
-  background-color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-
 main {
-  width: 20vw;
+  text-align: center;
+  margin-bottom: 10px;
+  max-width: 60vw;
 }
 
-.timer-container h1 {
+main h1 {
   font-weight: 700;
 }
 
+.timer {
+  border-radius: 5px;
+  padding: 5px;
+}
+
 .input-container {
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
 .timer-input {
-  width: 3rem;
-  padding: 5px;
-  text-align: center;
+  margin: 0 5px;
+  width: 7rem;
+  height: 3rem;
 }
 
 .timer-button {
@@ -32,14 +31,62 @@ main {
   height: 3rem;
 }
 
+.add-button {
+  background-color: var(--color-primary);
+}
+
 .start-button {
   background-color: #60d351;
-  color: white;
 }
 
 .stop-button {
   background-color: #d351a1;
-  color: white;
+}
+
+.sound-setting {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: large;
+}
+
+.toggle-button {
+  margin: 0.3rem 1rem;
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  border-radius: 1.5rem;
+  border: 3px solid #dddddd;
+  box-sizing: content-box;
+  cursor: pointer;
+  transition: border-color .4s;
+}
+
+.toggle-button:has(:checked) {
+  border-color: #4bd865;
+}
+
+.toggle-button::after {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background-color: #dddddd;
+  content: '';
+  transition: left .4s;
+}
+
+.toggle-button:has(:checked)::after {
+  left: 1.5rem;
+  background-color: #4bd865;
+}
+
+#toggle-sound {
+  display: none;
 }
 
 .timer-display {
@@ -47,6 +94,16 @@ main {
   margin-top: 20px;
 }
 
+#timers {
+  place-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  gap: 10px;
+  margin-top: 10px;
+}
+
 footer {
   margin-top: 0;
+  position: fixed;
+  bottom: 0;
 }

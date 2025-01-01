@@ -68,7 +68,6 @@
 /*   font-size: 0.8em; */
 /* } */
 
-footer {
-  bottom: 0;
-  position: fixed;
+#container {
+  min-height: calc(100vh - 174px);
 }

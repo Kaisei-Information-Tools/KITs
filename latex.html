@@ -1,0 +1,24 @@
+---
+layout: main
+title: LaTeXエディタ
+css: latex
+js: latex
+---
+
+<h1>LaTeX エディタ</h1>
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="assets/js/svg2pdf.umd.min.js"></script>
+
+<div class="container">
+  <textarea
+    id="editor"
+    placeholder="ここにLaTeXコードを入力してください。"
+  ></textarea>
+  <div id="preview"></div>
+</div>
+<button id="openCHTMLBtn">印刷用に開く</button>

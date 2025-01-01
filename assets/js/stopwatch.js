@@ -6,18 +6,18 @@ let timerInterval;
 let running = false;
 let lapLength = 0;
 
-const $DISPLAY = document.getElementById('display');
-const $TOGGLE_BUTTON = document.getElementById('toggle');
-const $RESET_BUTTON = document.getElementById('reset');
-const $LAP_BUTTON = document.getElementById('lap');
-const $LAP_CONTAINER = document.getElementById('lap-container');
+const $DISPLAY = document.getElementById("display");
+const $TOGGLE_BUTTON = document.getElementById("toggle");
+const $RESET_BUTTON = document.getElementById("reset");
+const $LAP_BUTTON = document.getElementById("lap");
+const $LAP_CONTAINER = document.getElementById("lap-container");
 
-const $FOOTER = document.getElementsByTagName('footer')[0];
+const $FOOTER = document.getElementsByTagName("footer")[0];
 
-const START_BUTTON_NAME = 'Start';
-const STOP_BUTTON_NAME = 'Stop';
-const START_BUTTON_COLOR = '#60d351';
-const STOP_BUTTON_COLOR = '#d351a1';
+const START_BUTTON_NAME = "Start";
+const STOP_BUTTON_NAME = "Stop";
+const START_BUTTON_COLOR = "#60d351";
+const STOP_BUTTON_COLOR = "#d351a1";
 
 function toggleStop() {
   if (!running) {
@@ -37,39 +37,47 @@ function toggleStop() {
 
 function reset() {
   clearInterval(timerInterval);
-  $DISPLAY.textContent = '00:00:00.00';
+  $DISPLAY.textContent = "00:00:00.00";
   $TOGGLE_BUTTON.textContent = START_BUTTON_NAME;
   $TOGGLE_BUTTON.style.backgroundColor = START_BUTTON_COLOR;
   running = false;
   difference = 0;
   savedTime = 0;
   lapLength = 0;
-  $LAP_CONTAINER.innerHTML = '<h3>Laps</h3>';
-  $FOOTER.style.position = 'fixed';
+  $LAP_CONTAINER.innerHTML = "<h3>Laps</h3>";
+  // $FOOTER.style.position = "fixed";
 }
 
 function updateTime() {
   updatedTime = new Date().getTime();
   difference = updatedTime - startTime;
 
-  const hours = Math.floor(difference / (1000 * 60 * 60)).toString().padStart(2, '0');
-  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-  const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, '0');
-  const milliseconds = Math.floor((difference % 1000) / 10).toString().padStart(2, '0');
+  const hours = Math.floor(difference / (1000 * 60 * 60)).toString().padStart(
+    2,
+    "0",
+  );
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+    .toString().padStart(2, "0");
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString()
+    .padStart(2, "0");
+  const milliseconds = Math.floor((difference % 1000) / 10).toString().padStart(
+    2,
+    "0",
+  );
 
   $DISPLAY.textContent = `${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
 function createLap() {
   const lapTime = $DISPLAY.textContent;
-  const lapElement = document.createElement('div');
-  lapElement.className = 'lap';
+  const lapElement = document.createElement("div");
+  lapElement.className = "lap";
 
-  const lapTimeDisplay = document.createElement('div');
-  lapTimeDisplay.className = 'lap-time';
+  const lapTimeDisplay = document.createElement("div");
+  lapTimeDisplay.className = "lap-time";
   lapTimeDisplay.textContent = lapTime;
 
-  const lapButtons = document.createElement('div');
+  const lapButtons = document.createElement("div");
   // const lapDisplay = document.createElement('div');
   // lapDisplay.className = 'lap-display';
   // lapDisplay.textContent = lapTime;
@@ -93,10 +101,10 @@ function createLap() {
   //     }
   // });
 
-  const lapRemoveButton = document.createElement('button');
-  lapRemoveButton.textContent = 'Remove';
-  lapRemoveButton.className = 'button border stopwatch-buttons reset-button';
-  lapRemoveButton.addEventListener('click', () => lapElement.remove() );
+  const lapRemoveButton = document.createElement("button");
+  lapRemoveButton.textContent = "Remove";
+  lapRemoveButton.className = "button border stopwatch-buttons reset-button";
+  lapRemoveButton.addEventListener("click", () => lapElement.remove());
 
   // lapButtons.appendChild(lapStartStopButton);
   lapButtons.appendChild(lapRemoveButton);
@@ -126,7 +134,7 @@ function createLap() {
 
   // lapTimerInterval = setInterval(updateLapTime, 10);
   if (document.body.clientHeight >= window.innerHeight) {
-    $FOOTER.style.position = 'static';
+    // $FOOTER.style.position = 'static';
   }
 }
 
@@ -142,6 +150,6 @@ function createLap() {
 //   );
 // }
 
-$TOGGLE_BUTTON.addEventListener('click', toggleStop);
-$RESET_BUTTON.addEventListener('click', reset);
-$LAP_BUTTON.addEventListener('click', createLap);
+$TOGGLE_BUTTON.addEventListener("click", toggleStop);
+$RESET_BUTTON.addEventListener("click", reset);
+$LAP_BUTTON.addEventListener("click", createLap);

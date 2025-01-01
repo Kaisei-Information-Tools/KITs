@@ -1,3 +1,11 @@
 .terms {
   max-width: 800px;
 }
+
+ul {
+  list-style: disc;
+}
+
+.terms-popup {
+  display: none !important;
+}

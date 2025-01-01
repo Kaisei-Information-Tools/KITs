@@ -1,20 +1,25 @@
 ---
-layout: default
+layout: main
 title: タイマー
 css: timer
 js: timer
 ---
-<div class="timer-container">
-  <main>
-    <h1>タイマー</h1>
-    <div class="input-container">
-      <input type="number" class="timer-input border" id="minutes" min="0" placeholder="分" value="0">
-      <span>分</span>
-      <input type="number" class="timer-input border" id="seconds" min="0" max="59" placeholder="秒" value="0">
-      <span>秒</span>
-    </div>
-    <button id="start-button" class="button timer-button start-button border">スタート</button>
-    <button id="stop-button" class="button timer-button stop-button border">ストップ</button>
-    <div id="timer-display" class="timer-display">00:00</div>
-  </main>
+<h1>タイマー</h1>
+<div class="sound-setting">
+  <span>音: </span>
+  <label class="toggle-button">
+    <input type="checkbox" id="toggle-sound">
+  </label>
 </div>
+<button type="button" id="add-button" class="button timer-button add-button border" onclick="addTimer()">Add</button>
+<button 
+  type="button"
+  id="start-button" 
+  class="button timer-button start-button border" 
+  onclick="stopAllTimer(); startAllTimer()">Start</button>
+<button 
+  type="button" 
+  id="stop-button" 
+  class="button timer-button stop-button border" 
+  onclick="stopAllTimer()">Stop</button>
+<div id="timers"></div>
