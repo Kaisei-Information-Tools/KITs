@@ -84,7 +84,7 @@ p {
 .char-container {
   display: inline-block;
   position: relative;
-  margin: 5px;
+  margin: 10px 5px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
@@ -115,4 +115,6 @@ p {
   transform: translate(45%, 70%);
   font-size: 1em;
   writing-mode: vertical-rl;
+  height: max-content;
+  letter-spacing: -3px;
 }
