@@ -1,0 +1,101 @@
+---
+layout: main
+title: 訓読文エディタ
+css: kundoku
+---
+
+<h1>訓読文エディタ</h1>
+<div class="editor">
+  <div class="input-area">
+    <textarea
+      id="kanbunInput"
+      rows="10"
+      cols="30"
+      placeholder="ここに漢文を入力"
+    ></textarea>
+    <br />
+    <button onclick="renderPreview()">プレビュー更新</button>
+  </div>
+  <div class="preview-area" id="preview"></div>
+</div>
+<script>
+  // プレビュー生成関数
+  function renderPreview() {
+    const inputText = document.getElementById("kanbunInput").value;
+    const preview = document.getElementById("preview");
+    preview.innerHTML = "";
+
+    const lines = inputText.split("\n");
+    lines.forEach((line) => {
+      const p = document.createElement("p");
+      for (let i = 0; i < line.length; i++) {
+        const container = document.createElement("span");
+        container.className = "char-container";
+
+        // メインの漢字表示用
+        const charSpan = document.createElement("span");
+        charSpan.className = "char";
+        charSpan.textContent = line[i];
+        if (line[i] === "-") {
+          charSpan.textContent = "―";
+          charSpan.style.transform = "scaleY(0.3)";
+          charSpan.style.display = "inline-block";
+          charSpan.style.margin = "-12px 0";
+        }
+        container.appendChild(charSpan);
+
+        // 返り点用スパン（初期は空）
+        const kaeritenSpan = document.createElement("span");
+        kaeritenSpan.className = "kaeriten";
+        kaeritenSpan.textContent = "";
+        container.appendChild(kaeritenSpan);
+
+        // 送り仮名用スパン（初期は空）
+        const okuriganaSpan = document.createElement("span");
+        okuriganaSpan.className = "okurigana";
+        okuriganaSpan.textContent = "";
+        container.appendChild(okuriganaSpan);
+
+        // クリックで注釈編集
+        container.addEventListener("click", function (e) {
+          annotateCharacter(container);
+          e.stopPropagation();
+        });
+
+        p.appendChild(container);
+      }
+      preview.appendChild(p);
+    });
+  }
+
+  // 注釈編集関数
+  function annotateCharacter(container) {
+    const Kaeriten = container.querySelector(".kaeriten");
+    const currentKaeriten = Kaeriten.textContent;
+    const currentOkurigana = container.querySelector(".okurigana").textContent;
+
+    const newKaeriten = prompt(
+      "返り点を入力してください（現在: " + currentKaeriten + "）",
+      currentKaeriten,
+    );
+    const newOkurigana = prompt(
+      "送り仮名を入力してください（現在: " + currentOkurigana + "）",
+      currentOkurigana,
+    );
+
+    Kaeriten.textContent = newKaeriten || "";
+    if (newKaeriten === "一レ") {
+      Kaeriten.style.letterSpacing = "-11px";
+      Kaeriten.style.transform = "translate(-45%, 30%)";
+    } else if (newKaeriten === "上レ") {
+      Kaeriten.style.letterSpacing = "-5px";
+      Kaeriten.style.transform = "translate(-45%, 70%) scaleY(0.8)";
+    } else {
+      Kaeriten.style.transform = "translate(-45%, 50%)";
+    }
+    if (container.querySelector(".char").textContent === "―") {
+      Kaeriten.style.transform = "translate(-45%, 50%)";
+    }
+    container.querySelector(".okurigana").textContent = newOkurigana || "";
+  }
+</script>
