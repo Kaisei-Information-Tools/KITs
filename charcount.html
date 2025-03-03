@@ -1,0 +1,30 @@
+---
+title: 文字数カウント
+layout: container
+css: charcount
+js: charcount
+exjs: http://chasen.org/~taku/software/TinySegmenter/tiny_segmenter.js
+---
+
+<div class="left">
+  <h2>文字カウントツール</h2>
+  <textarea id="textInput" placeholder="ここに文章を入力"></textarea>
+  <div class="result">
+    <p>文字数: <span id="charCount">0</span></p>
+    <p>スペースなしの文字数: <span id="charCountNoSpace">0</span></p>
+    <p>単語数: <span id="wordCount">0</span></p>
+    <p>行数: <span id="lineCount">0</span></p>
+    <p>句読点・記号: <span id="symbolCount">0</span></p>
+    <p>
+      ひらがな: <span id="hiraganaPercent">0</span>% / カタカナ:
+      <span id="katakanaPercent">0</span>% / 漢字:
+      <span id="kanjiPercent">0</span>% / アルファベット:
+      <span id="alphabetPercent">0</span>% / その他:
+      <span id="otherPercent">0</span>%
+    </p>
+  </div>
+</div>
+<div class="right">
+  <h3>単語の出現回数</h3>
+  <ul id="wordFrequency"></ul>
+</div>
