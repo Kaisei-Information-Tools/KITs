@@ -38,6 +38,7 @@ const urlsToCache = [
   "/assets/js/count.js",
   "/assets/js/group.js",
   "/assets/js/charcount.js",
+  "/assets/js/tinysegmenter.js",
   "/assets/sounds/alerm.mp3",
   "/assets/images/apa.svg",
   "/assets/images/calculator.svg",
