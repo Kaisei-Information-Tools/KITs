@@ -1,4 +1,3 @@
-
 // 変換係数データ
 const units = {
     energy: {
@@ -23,7 +22,6 @@ const units = {
         "TB": 8000000000000,
         "KiB": 8192,
         "MiB": 8388608
-
     },
     volume: {
         "立方メートル": 1,
@@ -85,9 +83,9 @@ const units = {
         "km": 1000,
         "inch": 0.0254,
         "feet": 0.3048,
-        "yard": 0.9144,  // ヤードを追加
+        "yard": 0.9144,
         "mile": 1609.34,
-        "寸": 0.030303 // 寸を追加（1寸 ≈ 3.03cm）
+        "寸": 0.030303
     },
     area: {
         "平方メートル": 1,
@@ -99,7 +97,7 @@ const units = {
     }
 };
 
-// カテゴリ変更時に単位リストを更新 & 設定項目の表示制御
+// 単位リスト更新 & 有効数字設定の表示制御
 function updateUnits() {
     const category = document.getElementById("category").value;
     const fromUnit = document.getElementById("fromUnit");
@@ -115,9 +113,7 @@ function updateUnits() {
         });
     }
 
-    // 理科系のときのみ、有効数字設定を表示
     document.getElementById("scienceSettings").style.display = (category === "science") ? "block" : "none";
-
     saveToLocalStorage();
 }
 
@@ -127,92 +123,58 @@ function convert() {
     const from = document.getElementById("fromUnit").value;
     const to = document.getElementById("toUnit").value;
     const value = parseFloat(document.getElementById("value").value);
-    const resultText = document.getElementById("result");
+    const decimalPlaces = parseInt(document.getElementById("decimalPlaces").value, 10) || 2;
 
     if (isNaN(value)) {
-        resultText.innerText = "数値を入力してください。";
+        document.getElementById("result").innerText = "数値を入力してください。";
         return;
     }
 
-    let result;
-
-    // mol の計算
     const molVolume = parseFloat(document.getElementById("molVolume").value) || 22.4;
     const avogadro = parseFloat(document.getElementById("avogadro").value) * 1e23 || 6.0e23;
+    let result;
 
     if (category === "science") {
-        if (from === "mol" && to === "L") {
-            resultText.innerText = `結果: ${value * molVolume} L`;
-            return;
-        }
-        if (from === "L" && to === "mol") {
-            resultText.innerText = `結果: ${value / molVolume} mol`;
-            return;
-        }
-        if (from === "mol" && to === "個") {
-            resultText.innerText = `結果: ${value * avogadro} 個`;
-            return;
-        }
-        if (from === "L" && to === "個") {
-            resultText.innerText = `結果: ${(value / molVolume) * avogadro} 個`;
-            return;
-        }
-    }
-
-    // 温度の計算
-    if (category === "temperature") {
-        result = convertTemperature(value, from, to);
-        resultText.innerText = `結果: ${result} ${to}`;
-        return;
-    }
-
-    // 通常の単位変換
-    if (units[category] && units[category][from] && units[category][to]) {
+        if (from === "mol" && to === "L") result = value * molVolume;
+        if (from === "L" && to === "mol") result = value / molVolume;
+        if (from === "mol" && to === "個") result = value * avogadro;
+        if (from === "L" && to === "個") result = (value / molVolume) * avogadro;
+    } else if (units[category] && units[category][from] && units[category][to]) {
         result = (value * units[category][from]) / units[category][to];
-        resultText.innerText = `結果: ${result}`;
-        return;
     }
 
-    resultText.innerText = "対応していない変換です。";
+    // 選択した桁数で結果を表示
+    document.getElementById("result").innerText = `結果: ${result.toPrecision(decimalPlaces)} ${to}`;
 }
 
-// 温度変換の計算
+
+// 温度変換
 function convertTemperature(value, from, to) {
-    if (from === to) return value;
-
-    if (from === "℃") {
-        if (to === "°F") return (value * 9/5) + 32;
-        if (to === "K") return value + 273.15;
-    } 
-    if (from === "°F") {
-        if (to === "℃") return (value - 32) * 5/9;
-        if (to === "K") return (value - 32) * 5/9 + 273.15;
-    } 
-    if (from === "K") {
-        if (to === "℃") return value - 273.15;
-        if (to === "°F") return (value - 273.15) * 9/5 + 32;
-    }
-
-    return "変換不可";
+    if (from === "℃" && to === "°F") return (value * 9/5) + 32;
+    if (from === "℃" && to === "K") return value + 273.15;
+    if (from === "°F" && to === "℃") return (value - 32) * 5/9;
+    if (from === "°F" && to === "K") return (value - 32) * 5/9 + 273.15;
+    if (from === "K" && to === "℃") return value - 273.15;
+    if (from === "K" && to === "°F") return (value - 273.15) * 9/5 + 32;
+    return value;
 }
-// ローカルストレージに保存
+
+// ローカルストレージ管理
 function saveToLocalStorage() {
-    ["category", "fromUnit", "toUnit", "value", "molVolume", "avogadro"].forEach(id => {
+    ["category", "fromUnit", "toUnit", "value", "molVolume", "avogadro", "decimalPlaces"].forEach(id => {
         const element = document.getElementById(id);
         if (element) localStorage.setItem(id, element.value);
     });
 }
 
-// ローカルストレージから復元
 function loadFromLocalStorage() {
-    ["category", "fromUnit", "toUnit", "value", "molVolume", "avogadro"].forEach(id => {
+    ["category", "fromUnit", "toUnit", "value", "molVolume", "avogadro", "decimalPlaces"].forEach(id => {
         const element = document.getElementById(id);
         if (element && localStorage.getItem(id)) {
             element.value = localStorage.getItem(id);
         }
     });
-
     updateUnits();
 }
-// ページ読み込み時にデータ復元
+
 window.onload = loadFromLocalStorage;
