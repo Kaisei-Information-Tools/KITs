@@ -32,7 +32,6 @@ js: conversion
 
         <input type="number" id="value" placeholder="数値を入力">
 
-        <!-- 理科系の有効数字設定を1つのコンテナにまとめる -->
         <div id="scienceSettings" style="display:none;">
             <h3>有効数字の設定</h3>
             <label for="molVolume">モル体積 (L/mol):</label>
@@ -50,13 +49,12 @@ js: conversion
                 <option value="6.02200">6.022</option>
                 <option value="6.022100">6.0221</option>
             </select>
+
+            <label for="decimalPlaces">小数点以下の桁数:</label>
+<input type="number" id="decimalPlaces" value="2" min="0" max="10">
+
         </div>
 
         <button onclick="convert()">変換</button>
         <p id="result">結果: -</p>
     </div>
-
-    <script src="conversion.js"></script>
-
-</body>
-</html>
