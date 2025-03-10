@@ -23,6 +23,7 @@ p.description {
     font-size: 14px;
     color: #555;
     margin-bottom: 20px;
+    margin-top: -5px;
 }
 
 button:not(.btn):hover {
