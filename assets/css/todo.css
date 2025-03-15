@@ -19,7 +19,6 @@
 }
 
 .due-box input {
-  width: 9rem;
   height: 2rem;
   padding: 0 10px;
   font-size: 14px;
@@ -27,6 +26,10 @@
   background: transparent;
   border: 2px solid #ccc;
   border-radius: 0.5rem;
+}
+
+.due-box input #duedate {
+  width: 9rem;
 }
 
 .plus {
