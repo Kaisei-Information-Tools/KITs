@@ -1,4 +1,4 @@
-const CACHE_NAME = "kits-cache-v1";
+const CACHE_NAME = "kits-cache-v2"; // バージョン変更（キャッシュの更新を確実にする）
 const urlsToCache = [
   "/",
   "/index.html",
@@ -14,6 +14,7 @@ const urlsToCache = [
   "/stopwatch.html",
   "/timer.html",
   "/todo.html",
+  "/charcount.html",
   "/assets/css/apa.css",
   "/assets/css/base.css",
   "/assets/css/button.css",
@@ -27,6 +28,7 @@ const urlsToCache = [
   "/assets/css/todo.css",
   "/assets/css/kundoku.css",
   "/assets/css/pomodoro.css",
+  "/assets/css/charcount.css",
   "/assets/js/apa.js",
   "/assets/js/pomodoro.js",
   "/assets/js/stopwatch.js",
@@ -35,6 +37,8 @@ const urlsToCache = [
   "/assets/js/clock.js",
   "/assets/js/count.js",
   "/assets/js/group.js",
+  "/assets/js/charcount.js",
+  "/assets/js/tinysegmenter.js",
   "/assets/sounds/alerm.mp3",
   "/assets/images/apa.svg",
   "/assets/images/calculator.svg",
@@ -62,40 +66,40 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// フェッチ時にキャッシュを利用（オフライン時対応）
+// フェッチ時の処理（Google Fonts は別対応）
 self.addEventListener("fetch", (event) => {
-  if (event.request.url.startsWith("https://fonts.googleapis.com")) {
-    // Google Fonts はキャッシュに追加
+  const url = event.request.url;
+
+  // Google Fonts のキャッシュ処理
+  if (
+    url.startsWith("https://fonts.googleapis.com") ||
+    url.startsWith("https://fonts.gstatic.com")
+  ) {
     event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, response.clone());
+      caches.open(CACHE_NAME).then((cache) => {
+        return fetch(event.request)
+          .then((response) => {
+            cache.put(event.request, response.clone()); // キャッシュに保存
             return response;
-          });
-        })
-        .catch(() => caches.match(event.request)),
+          })
+          .catch(() => caches.match(event.request)); // オフライン時はキャッシュを利用
+      }),
     );
-  } else {
-    event.respondWith(
-      caches
-        .match(event.request)
-        .then((response) => {
-          return (
-            response ||
-            fetch(event.request).then((networkResponse) => {
-              return caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, networkResponse.clone());
-                return networkResponse;
-              });
-            })
-          );
-        })
-        .catch(() => {
-          return caches.match("/index.html"); // オフライン時に index.html を表示
-        }),
-    );
+    return;
   }
+
+  // 一般リソースはネットワーク優先
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      })
+      .catch(() => caches.match(event.request))
+      .catch(() => caches.match("/index.html")),
+  );
 });
 
 // 古いキャッシュを削除
