@@ -115,7 +115,8 @@ function convert() {
   if (category === "temperature") {
     result = convertTemperature(value, from, to);
   } else if (category === "science") {
-    if (from === "mol" && to === "L") result = value * molVolume;
+    if (from === to) result = value;
+    else if (from === "mol" && to === "L") result = value * molVolume;
     else if (from === "L" && to === "mol") result = value / molVolume;
     else if (from === "mol" && to === "個") result = value * avogadro;
     else if (from === "L" && to === "個") {
@@ -128,7 +129,12 @@ function convert() {
   }
 
   // 「個」への変換時、指数表記の調整を適用
-  if (to === "個" && typeof result === "number" && !isNaN(result)) {
+  if (
+    to === "個" &&
+    typeof result === "number" &&
+    !isNaN(result) &&
+    from !== "個"
+  ) {
     result = adjustExponential(result, decimalPlaces);
   } else if (typeof result === "number" && !isNaN(result)) {
     result = result.toFixed(decimalPlaces);
