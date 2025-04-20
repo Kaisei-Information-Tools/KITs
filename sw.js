@@ -1,4 +1,4 @@
-const CACHE_NAME = "kits-cache-v3"; // バージョン変更（キャッシュの更新を確実にする）
+const CACHE_NAME = "kits-cache-v4"; // バージョン変更（キャッシュの更新を確実にする）
 const urlsToCache = [
   "/",
   "/index.html",
@@ -57,6 +57,8 @@ const urlsToCache = [
   "/assets/images/timer.svg",
   "/assets/images/todo.svg",
   "/assets/images/vertical.svg",
+  "/assets/images/charcount.svg",
+  "/assets/images/conversion.svg",
 ];
 
 // インストール時にキャッシュ
