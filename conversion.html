@@ -1,0 +1,56 @@
+---
+layout: main
+title: 単位変換ツール
+css: conversion
+js: conversion
+---
+
+    <div class="container">
+        <h1>単位変換ツール</h1>
+
+        <label for="category">カテゴリ:</label>
+        <select id="category" onchange="updateUnits()">
+            <option value="energy">エネルギー</option>
+            <option value="data">データ容量</option>
+            <option value="speed">データ通信速度</option>
+            <option value="volume">体積</option>
+            <option value="frequency">周波数</option>
+            <option value="pressure">圧力</option>
+            <option value="time">時間</option>
+            <option value="temperature">温度</option>
+            <option value="weight">重量</option>
+            <option value="length">長さ</option>
+            <option value="area">面積</option>
+            <option value="science">理科系</option>
+        </select>
+
+        <label for="fromUnit">変換元:</label>
+        <select id="fromUnit"></select>
+
+        <label for="toUnit">変換先:</label>
+        <select id="toUnit"></select>
+
+        <input type="number" id="value" placeholder="数値を入力">
+
+        <div id="scienceSettings" style="display:none;">
+            <h3>有効数字の設定</h3>
+            <label for="molVolume">モル体積 (L/mol):</label>
+            <select id="molVolume">
+                <option value="22.40">22.4</option>
+                <option value="22.410">22.41</option>
+                <option value="22.4140">22.414</option>
+                <option value="22.41410">22.4141</option>
+            </select>
+
+            <label for="avogadro">アボガドロ数 (x10^23):</label>
+            <select id="avogadro">
+                <option value="6.00">6.0</option>
+                <option value="6.0200">6.02</option>
+                <option value="6.02200">6.022</option>
+                <option value="6.022100">6.0221</option>
+            </select>
+        </div>
+
+        <button onclick="convert()">変換</button>
+        <p id="result">結果: -</p>
+    </div>
