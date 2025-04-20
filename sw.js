@@ -1,4 +1,4 @@
-const CACHE_NAME = "kits-cache-v2"; // バージョン変更（キャッシュの更新を確実にする）
+const CACHE_NAME = "kits-cache-v5"; // バージョン変更（キャッシュの更新を確実にする）
 const urlsToCache = [
   "/",
   "/index.html",
@@ -15,6 +15,7 @@ const urlsToCache = [
   "/timer.html",
   "/todo.html",
   "/charcount.html",
+  "/conversion.html",
   "/assets/css/apa.css",
   "/assets/css/base.css",
   "/assets/css/button.css",
@@ -29,6 +30,7 @@ const urlsToCache = [
   "/assets/css/kundoku.css",
   "/assets/css/pomodoro.css",
   "/assets/css/charcount.css",
+  "/assets/css/conversion.css",
   "/assets/js/apa.js",
   "/assets/js/pomodoro.js",
   "/assets/js/stopwatch.js",
@@ -38,7 +40,7 @@ const urlsToCache = [
   "/assets/js/count.js",
   "/assets/js/group.js",
   "/assets/js/charcount.js",
-  "/assets/js/tinysegmenter.js",
+  "/assets/js/conversion.js",
   "/assets/sounds/alerm.mp3",
   "/assets/images/apa.svg",
   "/assets/images/calculator.svg",
@@ -55,6 +57,8 @@ const urlsToCache = [
   "/assets/images/timer.svg",
   "/assets/images/todo.svg",
   "/assets/images/vertical.svg",
+  "/assets/images/conversion.svg",
+  "/assets/images/charcount.svg",
 ];
 
 // インストール時にキャッシュ
