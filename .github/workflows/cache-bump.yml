@@ -4,7 +4,6 @@ name: Bump Service Worker Cache
 on:
   push:
     paths:
-      - "sw.js"
       - "**/*.html"
       - "**/*.css"
       - "**/*.js"
