@@ -73,18 +73,15 @@ document.addEventListener("keydown", function (event) {
   if (!isNaN(key)) {
     // 数字キー
     appendNumber(key);
-    console.log(key);
     event.preventDefault();
   } else if (["+", "-", "*", "/", "(", ")", "^", ".", "!"].includes(key)) {
     // 演算子キー
     appendOperator(key);
-    console.log(key);
     event.preventDefault();
   } else if (key === "Enter" || key === "=") {
     // Enterキーまたは=キー
     calculateResult();
     event.preventDefault();
-    console.log(key);
   } else if (key === "Backspace") {
     // バックスペースキー
     if (display.selectionStart === display.selectionEnd) {
