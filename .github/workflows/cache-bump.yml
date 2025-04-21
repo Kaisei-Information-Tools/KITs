@@ -8,6 +8,7 @@ on:
       - "*.html"
       - "*.css"
       - "*.js"
+  workflow_dispatch: # この行を追加
 
 jobs:
   bump-cache-version:
