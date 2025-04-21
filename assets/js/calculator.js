@@ -43,7 +43,7 @@ function calculateResult() {
   try {
     let result = display.value;
     console.log(result);
-    eggs = ["(^^)", "(^^)/", "(*^^*)", "(^-^)", "(^0^)"];
+    const eggs = ["(^^)", "(^^)/", "(*^^*)", "(^-^)", "(^0^)"];
     if (eggs.includes(result)) {
       alert("見つかっちゃった(^^)!");
       return;
@@ -63,11 +63,8 @@ function calculateResult() {
 }
 
 function insertAtCursor(value) {
-  const start = display.selectionStart;
-  const end = display.selectionEnd;
-  display.value = display.value.slice(0, start) + value +
-    display.value.slice(end);
-  display.selectionStart = display.selectionEnd = start + value.length;
+  display.value += value;
+  display.selectionStart = display.selectionEnd = display.value.length;
 }
 
 document.addEventListener("keydown", function (event) {
