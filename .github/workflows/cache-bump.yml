@@ -1,36 +1,51 @@
-# .github/workflows/cache-bump.yml
-name: Bump Service Worker Cache
+name: Bump Service Worker Cache Version
 
 on:
   push:
     paths:
-      - "**/*.html"
-      - "**/*.css"
-      - "**/*.js"
-      - "**/*.svg"
-      - "**/*.ico"
-      - "**/*.mp3"
+      - "assets/**"
+      - "index.html"
+      - "**.html"
+      - "**.css"
+      - "**.js"
+      - "**.mp3"
+      - "**.svg"
+  workflow_dispatch:
 
 jobs:
-  bump-cache:
+  bump-cache-version:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # HEAD^ を使えるようにする
 
       - name: Check for changes in cached files
         id: detect
         run: |
-          # 1. キャッシュ対象ファイル一覧を sw.js から抽出
-          CACHED_FILES=$(grep -oP '(?<=^\s*")[^"]+(?=",?$)' sw.js | tr -d ',')
+          # 抽出：sw.jsのurlsToCache配列に含まれるパスを取得
+          CACHED_FILES=$(grep -o '^\s*".*"' sw.js | sed 's/^ *"//' | sed 's/",$//')
 
-          # 2. 差分のあるファイルを取得（直近のコミットと比較）
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          # 差分ファイルを取得（前のコミットがあるか確認）
+          if [ $(git rev-list --count HEAD) -gt 1 ]; then
+              CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          else
+              CHANGED_FILES=$(git diff --name-only HEAD)
+          fi
 
-          # 3. 対象ファイルの変更があるか判定
           echo "$CHANGED_FILES" > changed.txt
           echo "$CACHED_FILES" > cached.txt
 
+          # sw.js しか変わってない場合は処理をスキップ（無限ループ防止）
+          if [ "$(cat changed.txt)" = "sw.js" ]; then
+            echo "Only sw.js changed. Skipping bump to avoid loop."
+            echo "need_bump=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # 差分にキャッシュ対象ファイルが含まれているか判定
           NEED_BUMP="false"
           while read -r file; do
             if grep -q "$file" changed.txt; then
@@ -41,21 +56,18 @@ jobs:
 
           echo "need_bump=$NEED_BUMP" >> $GITHUB_OUTPUT
 
-      - name: Bump CACHE_NAME if needed
+      - name: Bump CACHE_NAME in sw.js
         if: steps.detect.outputs.need_bump == 'true'
         run: |
-          echo "Bumping CACHE_NAME in sw.js..."
+          echo "Bumping CACHE_NAME..."
+          # CACHE_NAME の数字部分を +1 する
+          sed -i -E 's/(const CACHE_NAME = "kits-cache-v)([0-9]+)"/echo \1$((\2 + 1))"/e' sw.js
 
-          # 現在のバージョン番号を取得
-          CURRENT_VERSION=$(grep -oP 'kits-cache-v\K[0-9]+' sw.js)
-          NEXT_VERSION=$((CURRENT_VERSION + 1))
-
-          # sedでCACHE_NAMEを置換
-          sed -i "s/kits-cache-v$CURRENT_VERSION/kits-cache-v$NEXT_VERSION/" sw.js
-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
+      - name: Commit and push changes
+        if: steps.detect.outputs.need_bump == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add sw.js
-          git commit -m "Auto bump CACHE_NAME to kits-cache-v$NEXT_VERSION"
+          git commit -m "⬆️ Bump CACHE_NAME due to cached file changes"
           git push
