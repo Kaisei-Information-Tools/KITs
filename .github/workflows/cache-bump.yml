@@ -1,16 +1,13 @@
-name: Bump Service Worker Cache Version
+name: Auto Bump Cache Version
 
 on:
   push:
     paths:
       - "assets/**"
       - "index.html"
-      - "**.html"
-      - "**.css"
-      - "**.js"
-      - "**.mp3"
-      - "**.svg"
-  workflow_dispatch:
+      - "*.html"
+      - "*.css"
+      - "*.js"
 
 jobs:
   bump-cache-version:
@@ -18,17 +15,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 2 # HEAD^ を使えるようにする
+          fetch-depth: 2 # HEAD^ を使えるようにするため2に設定
 
       - name: Check for changes in cached files
         id: detect
         run: |
-          # 抽出：sw.jsのurlsToCache配列に含まれるパスを取得
+          # 1. キャッシュ対象ファイル一覧を sw.js から抽出
           CACHED_FILES=$(grep -o '^\s*".*"' sw.js | sed 's/^ *"//' | sed 's/",$//')
 
-          # 差分ファイルを取得（前のコミットがあるか確認）
+          # 2. 差分のあるファイルを取得（HEAD^ が存在するかチェック）
           if [ $(git rev-list --count HEAD) -gt 1 ]; then
               CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           else
@@ -38,14 +35,14 @@ jobs:
           echo "$CHANGED_FILES" > changed.txt
           echo "$CACHED_FILES" > cached.txt
 
-          # sw.js しか変わってない場合は処理をスキップ（無限ループ防止）
+          # 3. sw.js だけが変更された場合は無限ループを防止
           if [ "$(cat changed.txt)" = "sw.js" ]; then
             echo "Only sw.js changed. Skipping bump to avoid loop."
             echo "need_bump=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # 差分にキャッシュ対象ファイルが含まれているか判定
+          # 4. 差分ファイルにキャッシュ対象ファイルが含まれているかチェック
           NEED_BUMP="false"
           while read -r file; do
             if grep -q "$file" changed.txt; then
@@ -56,11 +53,10 @@ jobs:
 
           echo "need_bump=$NEED_BUMP" >> $GITHUB_OUTPUT
 
-      - name: Bump CACHE_NAME in sw.js
+      - name: Bump cache version in sw.js
         if: steps.detect.outputs.need_bump == 'true'
         run: |
-          echo "Bumping CACHE_NAME..."
-          # CACHE_NAME の数字部分を +1 する
+          echo "Updating CACHE_NAME..."
           sed -i -E 's/(const CACHE_NAME = "kits-cache-v)([0-9]+)"/echo \1$((\2 + 1))"/e' sw.js
 
       - name: Commit and push changes
@@ -69,5 +65,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add sw.js
-          git commit -m "⬆️ Bump CACHE_NAME due to cached file changes"
+          git commit -m "🔁 Bump CACHE_NAME due to cache file change"
           git push
