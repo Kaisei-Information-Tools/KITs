@@ -43,7 +43,7 @@ function calculateResult() {
   try {
     let result = display.value;
     console.log(result);
-    eggs = ["(^^)", "(^^)/", "(*^^*)", "(^-^)", "(^0^)"];
+    const eggs = ["(^^)", "(^^)/", "(*^^*)", "(^-^)", "(^0^)"];
     if (eggs.includes(result)) {
       alert("見つかっちゃった(^^)!");
       return;
@@ -63,11 +63,8 @@ function calculateResult() {
 }
 
 function insertAtCursor(value) {
-  const start = display.selectionStart;
-  const end = display.selectionEnd;
-  display.value = display.value.slice(0, start) + value +
-    display.value.slice(end);
-  display.selectionStart = display.selectionEnd = start + value.length;
+  display.value += value;
+  display.selectionStart = display.selectionEnd = display.value.length;
 }
 
 document.addEventListener("keydown", function (event) {
@@ -76,15 +73,18 @@ document.addEventListener("keydown", function (event) {
   if (!isNaN(key)) {
     // 数字キー
     appendNumber(key);
+    console.log(key);
     event.preventDefault();
   } else if (["+", "-", "*", "/", "(", ")", "^", ".", "!"].includes(key)) {
     // 演算子キー
     appendOperator(key);
+    console.log(key);
     event.preventDefault();
   } else if (key === "Enter" || key === "=") {
     // Enterキーまたは=キー
     calculateResult();
     event.preventDefault();
+    console.log(key);
   } else if (key === "Backspace") {
     // バックスペースキー
     if (display.selectionStart === display.selectionEnd) {
