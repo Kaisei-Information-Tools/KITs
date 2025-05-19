@@ -248,9 +248,9 @@ function createAPA(needs) {
       common = `${begin}. <i>${inputData.title.value}</i>`;
       if (edition && url) {
         result = `${common}(${edition}). ${publisherName}. ${url}`;
-      } else if (edition) result = `${common}(${edition}). ${publisherName}`;
+      } else if (edition) result = `${common}(${edition}). ${publisherName}.`;
       else if (url) result = `${common}. ${publisherName}. ${url}`;
-      else result = `${common}. ${publisherName}`;
+      else result = `${common}. ${publisherName}.`;
       break;
 
     default:
