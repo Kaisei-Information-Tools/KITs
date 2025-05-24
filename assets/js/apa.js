@@ -248,9 +248,9 @@ function createAPA(needs) {
       common = `${begin}. <i>${inputData.title.value}</i>`;
       if (edition && url) {
         result = `${common}(${edition}). ${publisherName}. ${url}`;
-      } else if (edition) result = `${common}(${edition}). ${publisherName}`;
+      } else if (edition) result = `${common}(${edition}). ${publisherName}.`;
       else if (url) result = `${common}. ${publisherName}. ${url}`;
-      else result = `${common}. ${publisherName}`;
+      else result = `${common}. ${publisherName}.`;
       break;
 
     default:
@@ -270,16 +270,16 @@ async function getDataWithAPI() {
     const res = await fetch(
       `https://web-info-api.onrender.com/api/get-info?url=${inputData.url.value}`,
     );
-    const datas = await res.json();
-    inputData.site.value = datas.title || "";
-    inputData.pageName.value = datas.subtitle || "";
-    inputData.author.value = datas.author || "";
-    if (datas.creationDate) {
-      inputData.publish.year.value = datas.creationDate.split("-")[0];
+    const data = await res.json();
+    inputData.site.value = data.title || "";
+    inputData.pageName.value = data.subtitle || "";
+    inputData.author.value = data.author || "";
+    if (data.creationDate) {
+      inputData.publish.year.value = data.creationDate.split("-")[0];
       inputData.publish.month.value = new Intl.DateTimeFormat("en", {
         month: "long",
-      }).format(new Date(datas.creationDate));
-      inputData.publish.day.value = datas.creationDate
+      }).format(new Date(data.creationDate));
+      inputData.publish.day.value = data.creationDate
         .split("-")[2]
         .replace(new RegExp("^0+"), "");
     } else {
