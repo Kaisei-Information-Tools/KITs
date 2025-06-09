@@ -17,8 +17,8 @@ const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 const resetBtn = document.getElementById("resetBtn");
 
-const beepSound = new Audio("https://www.soundjay.com/button/beep-07.wav");
-const endSound = new Audio("https://www.soundjay.com/button/beep-09.wav");
+const beepSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-07a.mp3");
+const endSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-09.mp3");
 
 setButton.addEventListener("click", setTimer);
 startBtn.addEventListener("click", startTimer);
@@ -95,8 +95,8 @@ function pauseTimer() {
 }
 
 function tick() {
-  if (totalTime <= 0) {
-    endSound.play();
+  if (totalTime == 1) endSound.play();
+  if (totalTime == 0) {
     if (isWorkTime) {
       if (remainingRepeats > 0) {
         totalTime = breakTime;
@@ -120,7 +120,7 @@ function tick() {
     }
   } else {
     totalTime--;
-    if (totalTime <= 3) {
+    if (1 <= totalTime && totalTime <= 3) {
       beepSound.play();
     }
   }
