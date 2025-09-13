@@ -120,7 +120,7 @@ function tick() {
     }
   } else {
     totalTime--;
-    if (1 <= totalTime && totalTime <= 3) {
+    if (totalTime === 1 || totalTime === 2 || totalTime === 3) {
       beepSound.play();
     }
   }
