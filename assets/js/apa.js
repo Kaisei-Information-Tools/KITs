@@ -85,6 +85,14 @@ window.onload = function () {
   setAccessDateDefault();
 
   mode = changeMode("web");
+
+  // URLパラメーターから自動入力
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlParam = urlParams.get("url");
+  if (urlParam) {
+    inputData.url.value = urlParam;
+    getDataWithAPI();
+  }
 };
 
 function setAccessDateDefault() {
