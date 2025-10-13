@@ -1,12 +1,83 @@
----
-layout: container
-title: ホーム
-css: index
-js: index
----
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ツール</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- ローディング画面 -->
+<div id="loader">
+  <div id="loader-inner">
+    <div class="progress-ring">
+      <svg viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+  <stop offset="0%" stop-color="#6fd2ff" />   <!-- 明るい青 -->
+  <stop offset="100%" stop-color="#da70f5" /> <!-- 明るい紫ピンク -->
+</linearGradient>
 
-<div class="list-grid1-parts">
-  <div class="list-parts">
+        </defs>
+        <circle class="bg" cx="60" cy="60" r="54" />
+        <circle class="fg" cx="60" cy="60" r="54" stroke="url(#grad1)" />
+      </svg>
+      <div id="loader-text">0%</div>
+    </div>
+    <div id="loader-subtext">Loading...</div>
+  </div>
+</div>
+
+  <header class="header">
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="logo"><img src="assets/images/logo.svg" width="32px"></div>
+    <nav class="nav">
+      <a href="about.html">about</a>
+      <a href="index.html">tools</a>
+      <a href="#">blog</a>
+      <a href="#">link</a>
+      <a href="contact.html">contact</a>
+    </nav>
+    <button id="settings-btn" class="settings-btn">
+      <i class="fas fa-cog"></i>
+    </button>
+
+  </header>
+
+  <main class="main">
+    <!-- サイドバー -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar__title">tools</div>
+      <ul class="sidebar__menu">
+        <li><a href="#">APAスタイル作成</a></li>
+        <li><a href="#">時計</a></li>
+        <li><a href="#">タイマー</a></li>
+        <li><a href="#">ストップウォッチ</a></li>
+        <li><a href="#">グループ分け</a></li>
+        <li><a href="#">単位変換</a></li>
+        <li><a href="#">縦書きエディタ</a></li>
+        <li><a href="#">訓読文エディタ</a></li>
+        <li><a href="#">文字カウント</a></li>
+        <li><a href="#">todoリスト</a></li>
+        <li><a href="#">電卓</a></li>
+        <li><a href="#">ポモドーロ時計</a></li>
+        <li><a href="#">数字読み方変換</a></li>
+        <li><a href="#">メモ帳</a></li>
+        <li><a href="#">カウンター</a></li>
+        <li><a href="#">LaTeX</a></li>
+      </ul>
+    </aside>
+
+
+        <div class="content" id="content">
+      <div class="grid">
+  <div class="square">
     <a href="apa.html" class="black">
       <figure>
         <img src="assets/images/apa.png" alt="" width="100%" />
@@ -17,9 +88,8 @@ js: index
       </div>
     </a>
   </div>
-
-  <div class="list-parts">
-    <a href="clock.html" class="black">
+    <div class="square">
+     <a href="clock.html" class="black">
       <figure>
         <img src="assets/images/clock.png" alt="" width="100%" />
       </figure>
@@ -27,10 +97,9 @@ js: index
         <h4>時計</h4>
         <p>現在時刻を見ることができます。</p>
       </div>
-    </a>
+     </a>
   </div>
-
-  <div class="list-parts">
+  <div class="square">
     <a href="timer.html" class="black">
       <figure>
         <img src="assets/images/timer.svg" alt="" width="100%" />
@@ -42,7 +111,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="stopwatch.html" class="black">
       <figure>
         <img src="assets/images/stopwatch.svg" alt="" width="100%" />
@@ -54,7 +123,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="group.html" class="black">
       <figure>
         <img src="assets/images/group.svg" alt="" width="100%" />
@@ -66,7 +135,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="conversion.html" class="black">
       <figure>
         <img src="assets/images/conversion.svg" alt="" width="100%" />
@@ -78,7 +147,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="vertical.html" class="black">
       <figure>
         <img src="assets/images/vertical.png" alt="" width="100%" />
@@ -92,7 +161,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="kundoku.html" class="black">
       <figure>
         <img src="assets/images/kundoku.svg" alt="" width="100%" />
@@ -104,7 +173,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="charcount.html" class="black">
       <figure>
         <img src="assets/images/charcount.svg" alt="" width="100%" />
@@ -116,7 +185,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="todo.html" class="black">
       <figure>
         <img src="assets/images/todo.png" alt="" width="100%" />
@@ -128,7 +197,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="calculator.html" class="black">
       <figure>
         <img src="assets/images/calculator.svg" alt="" width="100%" />
@@ -140,7 +209,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="pomodoro.html" class="black">
       <figure>
         <img src="assets/images/pomodoro.svg" alt="" width="100%" />
@@ -152,7 +221,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="number.html" class="black">
       <figure>
         <img src="assets/images/number.svg" alt="" width="100%" />
@@ -164,7 +233,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="https://memo.kits-tools.net/" class="black">
       <figure>
         <img src="assets/images/memo.svg" alt="" width="100%" />
@@ -176,7 +245,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="count.html" class="black">
       <figure>
         <img src="assets/images/count.svg" alt="" width="100%" />
@@ -188,7 +257,7 @@ js: index
     </a>
   </div>
 
-  <div class="list-parts">
+  <div class="square">
     <a href="latex.html" class="black">
       <figure>
         <img src="assets/images/latex.svg" alt="" width="100%" />
@@ -199,9 +268,48 @@ js: index
       </div>
     </a>
   </div>
-</div>
-<div class="side-content">
+      </div>
+
+      <div class="side-content">
   <div id="clock" class="clock">2025年5月17日（日）<br>0:00:00</div>
+  <div class="todo-list">
+    <h2>todo list</h2>
+    <ul>
+      <li>例: 買い物</li>
+    </ul>
+  </div>
 </div>
- <!-- トップへ戻るボタン -->
+      
+    </div>
+  </main>
+<div id="settings-overlay" class="settings-overlay hidden">
+  <div id="settings-panel" class="settings-panel">
+    <button id="settings-close" class="close-btn">&times;</button>
+    <h2>表示設定</h2>
+    <label><input type="checkbox" id="toggle-clock" checked> 時計を表示</label><br>
+    <label><input type="checkbox" id="toggle-todo" checked> ToDoリストを表示</label><br><br>
+
+    <label>ツールの列数：
+      <select id="column-count"></select>
+    </label><br><br>
+
+    <label>時計サイズ：
+      <input type="range" id="clock-size" min="1" max="2" step="0.1" value="1">
+    </label><br><br>
+
+    <label>ToDoサイズ：
+      <input type="range" id="todo-size" min="1" max="2" step="0.1" value="1">
+    </label>
+  </div>
+</div>
+
+  <footer>
+    <p>© 2024 Kaisei Information Technology for support</p>
+  </footer>
+
+  <!-- トップへ戻るボタン -->
   <button id="to-top">↑</button>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
