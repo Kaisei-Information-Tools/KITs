@@ -1,11 +1,63 @@
----
-layout: container
-title: お問い合わせ
-css: contact
-js: contact
----
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>お問い合わせ</title>
+  <link rel="stylesheet" href="assets/css/contact.css" />
+</head>
+<body>
+  <!-- ハンバーガーメニュー用チェックボックス -->
+  <input type="checkbox" id="menu" />
 
-<!-- コンテンツ -->
+  <!-- ヘッダー -->
+  <header class="header">
+    <label for="menu" class="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="logo">
+      <img src="assets/images/logo.svg" width="32" alt="Logo" />
+    </div>
+    <nav class="nav">
+      <a href="about.html">about</a>
+      <a href="index.html">tools</a>
+      <a href="blog.html">blog</a>
+      <a href="link.html">link</a>
+      <a href="contact.html">contact</a>
+    </nav>
+    <button id="settings-btn" class="settings-btn">
+      <i class="fas fa-cog"></i>
+    </button>
+  </header>
+
+  <!-- メイン -->
+  <main class="main">
+    <!-- サイドバー -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar__title">tools</div>
+      <ul class="sidebar__menu">
+        <li><a href="#">APAスタイル作成</a></li>
+        <li><a href="#">時計</a></li>
+        <li><a href="#">タイマー</a></li>
+        <li><a href="#">ストップウォッチ</a></li>
+        <li><a href="#">グループ分け</a></li>
+        <li><a href="#">単位変換</a></li>
+        <li><a href="#">縦書きエディタ</a></li>
+        <li><a href="#">訓読文エディタ</a></li>
+        <li><a href="#">文字カウント</a></li>
+        <li><a href="#">todoリスト</a></li>
+        <li><a href="#">電卓</a></li>
+        <li><a href="#">ポモドーロ時計</a></li>
+        <li><a href="#">数字読み方変換</a></li>
+        <li><a href="#">メモ帳</a></li>
+        <li><a href="#">カウンター</a></li>
+        <li><a href="#">LaTeX</a></li>
+      </ul>
+    </aside>
+
+    <!-- コンテンツ -->
     <div id="content" class="content">
       <!-- 非表示 iframe（フォームのレスポンス受け取り用） -->
       <iframe
@@ -18,7 +70,7 @@ js: contact
       <section class="contact-form">
         <h2>お問い合わせ</h2>
         <form
-          action="https://script.google.com/macros/s/AKfycbxv__Jvdtpf2b1dRp4mwkoY53k8zP3HkE8vS6bcDox9oBsfPeiMBcoLEcETLgrndJqVdw/exec"
+          action="https://script.google.com/macros/s/AKfycbzeCeHdkxryOo4HxUmdVAUfTTLQjcr_HAmo6Ycd11u1qfS-saJu5KgoSdEl8sL_U9yu/exec"
           method="post"
           target="hidden_iframe"
         >
@@ -86,3 +138,16 @@ js: contact
       </section>
     </div>
   </main>
+
+  <!-- トップへ戻るボタン -->
+  <button id="to-top">↑</button>
+
+  <!-- フッター -->
+  <footer>
+    <p>© 2024 Kaisei Information Technology for support</p>
+  </footer>
+
+  <!-- 外部JS -->
+  <script src="assets/js/contact.js" defer></script>
+</body>
+</html>
