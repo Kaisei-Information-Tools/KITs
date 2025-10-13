@@ -1,75 +1,3 @@
-:root {
-  --purple: #3c3c6c;
-  --light: #e2e2f4;
-  --cyan: #efefef;
-  --white: #ffffff;
-  --input-bg: #ffffff;
-  --input-border: #cccccc;
-  --input-focus-border: #3c3c6c;
-  --btn-bg: #3c3c6c;
-  --btn-hover-bg: #5c5c8c;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: sans-serif;
-  background-color: var(--cyan);
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* ヘッダー */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  background: var(--purple);
-  padding: 10px 20px;
-  color: var(--white);
-  overflow-x: auto;
-}
-
-.logo {
-  font-size: 2rem;
-  flex: 0 0 auto;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.nav {
-  display: flex;
-  margin-left: left;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.nav a {
-  margin: 0 5px;
-  padding: 5px 10px;
-  border-radius: 10px;
-  background: var(--purple);
-  color: #fff;
-  font-size: 1.2rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav a:hover {
-  background: #5c5c8c;
-}
-
 .settings-btn {
   background: none;
   border: none;
@@ -85,59 +13,6 @@ html, body {
   background-color: var(--cyan);
   min-height: 100vh;
   padding-top: 60px;
-}
-
-/* サイドバー */
-.sidebar {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: clamp(200px, 20%, 280px);
-  height: calc(100vh - 60px);
-  background: #4c4c7c;
-  padding: 10px 5px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  transition: left 0.3s ease, width 0.3s ease;
-}
-
-.sidebar.hidden {
-  left: -300px;
-}
-
-.sidebar__title {
-  color: white;
-  font-size: 1.3rem;
-  margin-bottom: 5px;
-  padding-left: 10px; /* ← 左に余白をつける */
-}
-
-.sidebar__menu {
-  list-style: none;
-  padding: 0;
-  margin: 5px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.sidebar__menu li a {
-  display: block;
-  width: 100%;
-  padding: 8px 6px;
-  border-radius: 8px;
-  color: var(--white);
-  text-decoration: none;
-  background: #5c5c8c;
-  transition: background 0.3s;
-  font-size: 1rem;
-  word-break: break-word;
-  white-space: normal;
-}
-
-.sidebar__menu li a:hover {
-  background: #3c3c6c;
 }
 
 /* コンテンツ */
@@ -177,11 +52,13 @@ html, body {
   align-items: center;
   text-align: center;
   padding: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
 
-.square:hover { transform: translateY(-5px); }
+.square:hover {
+  transform: translateY(-5px);
+}
 
 .square a {
   color: inherit;
@@ -234,7 +111,8 @@ html, body {
   transition: all 0.3s ease;
 }
 
-.clock, .todo-list {
+.clock,
+.todo-list {
   display: block;
   width: auto;
   max-width: 100%;
@@ -274,10 +152,11 @@ html, body {
 /* 設定パネル */
 .settings-overlay {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,7 +171,7 @@ html, body {
   background: #fff;
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   width: 320px;
   max-width: 90%;
   position: relative;
@@ -300,8 +179,14 @@ html, body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .settings-panel h2 {
@@ -347,7 +232,7 @@ footer {
   font-size: 1.5rem;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 999;
   display: none;
@@ -362,7 +247,9 @@ footer {
 
 /* --- レスポンシブ対応 --- */
 @media (max-width: 1400px) and (min-width: 1201px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 @media (max-width: 1200px) and (min-width: 800px) {
   .content {
@@ -388,105 +275,37 @@ footer {
 }
 @media (max-width: 1300px) and (min-width: 1200px) {
   .content.fullwidth .grid {
-    grid-template-columns: repeat(4, 1fr) !important;;
+    grid-template-columns: repeat(4, 1fr) !important;
   }
-  .header {
-    height: 60px;    /* 同じ高さを維持 */
-  }
-
 }
 
 @media (max-width: 1000px) and (min-width: 801px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  .header {
-    height: 60px;    /* 同じ高さを維持 */
-  }
-
 }
 @media (max-width: 800px) and (min-width: 601px) {
   .grid,
   .content.fullwidth .grid {
     grid-template-columns: repeat(3, 1fr) !important;
   }
-  .header {
-    height: 60px;    /* 同じ高さを維持 */
-    }
-
 }
 @media (max-width: 600px) {
   .grid,
   .content.fullwidth .grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  .nav a {
-    font-size: 0.9rem !important;
-    margin: 2px 4px;
-    padding: 2px 10px;
-    white-space: nowrap !important;
-    margin: 10px 5px;
-  }
-  .header {
-    height: 60px;    /* 同じ高さを維持 */
-  }
-
 }
 
 /* --- スマホ向け（800px以下） --- */
 @media (max-width: 800px) {
-  .header {
-    padding: 8px 8px;
-    gap: 3px;
-  height: 60px;
-  }
-  .nav {
-    gap: 3px 0px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .nav a {
-    font-size: 1.2rem;
-    margin: 0 4px;
-    padding: 6px 3px;
-    white-space: nowrap !important;
-  }
-  .menu-toggle {
-    font-size: 1.2rem;
-    padding: 6px 8px;
-  }
-  .sidebar {
-    transform: translateX(-100%);
-    width: 60%;
-    max-width: 250px;
-    padding: 5px 0px;
-  }
-  .sidebar__title {
-    padding-left: 10px; /* ← 左に余白をつける */
-  }
-  .sidebar.visible {
-    transform: translateX(0);
-  }
-  .sidebar__menu {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .sidebar__menu li {
-    margin-bottom: 5px;
-  }
-  .sidebar__menu li a {
-    font-size: 1rem;
-    padding: 4px 6px;
-    text-align: left;
-    word-break: break-word;
-    white-space: normal;
-  }
   .content {
     margin-left: 0 !important;
     padding: 5px;
   }
-  .clock, .todo-list, .side-content {
+  .clock,
+  .todo-list,
+  .side-content {
     display: none;
   }
   .grid {
@@ -497,15 +316,15 @@ footer {
   }
 }
 
-
-
 /* ========= ローダー全体 ========== */
 
 /* ローダー全体 */
 #loader {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: #3c3c6c;
   display: flex;
   align-items: center;
@@ -545,7 +364,7 @@ footer {
 }
 
 .progress-ring .bg {
-  stroke: rgba(255,255,255,0.2);
+  stroke: rgba(255, 255, 255, 0.2);
 }
 
 .progress-ring .fg {
@@ -554,7 +373,6 @@ footer {
   stroke-dashoffset: 339.292;
   transition: stroke-dashoffset 0.1s linear;
 }
-
 
 /* 中央パーセンテージ */
 #loader-text {
@@ -573,14 +391,14 @@ footer {
   letter-spacing: 1px;
 }
 
-
 /*歯車*/
 .settings-overlay {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -595,7 +413,7 @@ footer {
   background: #fff;
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   width: 320px;
   max-width: 90%;
   position: relative;
@@ -603,8 +421,14 @@ footer {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .settings-panel h2 {
@@ -629,7 +453,6 @@ input[type="range"] {
   width: 100%;
 }
 
-
 /* --- ハンバーガーメニュー --- */
 .menu {
   position: relative;
@@ -648,7 +471,9 @@ input[type="range"] {
   width: 20px;
   height: 2px;
   background-color: white;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 .menu span:nth-of-type(1) {
   transform: translateY(-6px);

@@ -1,88 +1,7 @@
-:root {
-  --purple: #3c3c6c;
-  --light: #e2e2f4;
-  --cyan: #efefef;
-  --white: #ffffff;
-  --input-bg: #ffffff;
-  --input-border: #cccccc;
-  --input-focus-border: #3c3c6c;
-  --btn-bg: #3c3c6c;
-  --btn-hover-bg: #5c5c8c;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: sans-serif;
-  background-color: var(--cyan);
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-
-/* ヘッダー */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  background: var(--purple);
-  padding: 10px 20px;
-  color: var(--white);
-  overflow-x: auto;
-}
-
-.logo {
-  font-size: 2rem;
-  flex: 0 0 auto;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.nav {
-  display: flex;
-  margin-left: left;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.nav a {
-  margin: 0 5px;
-  padding: 5px 10px;
-  border-radius: 10px;
-  background: var(--purple);
-  color: #fff;
-  font-size: 1.2rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav a:hover {
-  background: #5c5c8c;
-}
-
-.settings-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-left: auto;
-}
-
 .menu {
   position: relative;
-  width: 30px; height: 30px;
+  width: 30px;
+  height: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -92,104 +11,51 @@ html, body {
 }
 .menu span {
   position: absolute;
-  width: 20px; height: 2px;
+  width: 20px;
+  height: 2px;
   background-color: var(--white);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
-.menu span:nth-of-type(1) { transform: translateY(-6px); }
-.menu span:nth-of-type(2) { transform: translateY(0); }
-.menu span:nth-of-type(3) { transform: translateY(6px); }
+.menu span:nth-of-type(1) {
+  transform: translateY(-6px);
+}
+.menu span:nth-of-type(2) {
+  transform: translateY(0);
+}
+.menu span:nth-of-type(3) {
+  transform: translateY(6px);
+}
 
-#menu { display: none; }
-#menu:checked ~ .main .sidebar { left: 0; }
-#menu:not(:checked) ~ .main .sidebar { left: -300px; }
-#menu:checked ~ .header .menu span:nth-of-type(1) { transform: rotate(45deg); }
-#menu:checked ~ .header .menu span:nth-of-type(2) { opacity: 0; }
-#menu:checked ~ .header .menu span:nth-of-type(3) { transform: rotate(-45deg); }
-
+#menu {
+  display: none;
+}
+#menu:checked ~ .main .sidebar {
+  left: 0;
+}
+#menu:not(:checked) ~ .main .sidebar {
+  left: -300px;
+}
+#menu:checked ~ .header .menu span:nth-of-type(1) {
+  transform: rotate(45deg);
+}
+#menu:checked ~ .header .menu span:nth-of-type(2) {
+  opacity: 0;
+}
+#menu:checked ~ .header .menu span:nth-of-type(3) {
+  transform: rotate(-45deg);
+}
 
 .nav a.active {
   background: var(--white);
   color: var(--purple);
 }
 
-.settings-btn {
-  background: none;
-  border: none;
-  color: var(--white);
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-
-
 /* メインレイアウト */
 .main {
   display: flex;
   padding-top: 60px;
-}
-
-.sidebar {
-  position: fixed;
-  top: 60px; left: -300px;
-  width: clamp(200px, 20%, 280px);
-  height: calc(100vh - 60px);
-  background: #4c4c7c;
-  padding: 10px;
-  transition: left 0.3s ease;
-}
-/* サイドバー */
-.sidebar {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: clamp(200px, 20%, 280px);
-  height: calc(100vh - 60px);
-  background: #4c4c7c;
-  padding: 10px 5px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  transition: left 0.3s ease, width 0.3s ease;
-}
-
-.sidebar.hidden {
-  left: -300px;
-}
-
-.sidebar__title {
-  color: white;
-  font-size: 1.3rem;
-  margin-bottom: 5px;
-  padding-left: 10px; /* ← 左に余白をつける */
-}
-
-.sidebar__menu {
-  list-style: none;
-  padding: 0;
-  margin: 5px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.sidebar__menu li a {
-  display: block;
-  width: 100%;
-  padding: 8px 6px;
-  border-radius: 8px;
-  color: var(--white);
-  text-decoration: none;
-  background: #5c5c8c;
-  transition: background 0.3s;
-  font-size: 1rem;
-  word-break: break-word;
-  white-space: normal;
-}
-
-.sidebar__menu li a:hover {
-  background: #3c3c6c;
 }
 
 /* フォーム中央配置 */
@@ -214,7 +80,7 @@ html, body {
   background: var(--white);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 }
 .contact-form h2 {
@@ -234,7 +100,9 @@ html, body {
   border-radius: 6px;
   background: var(--input-bg);
   font-size: 1.1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
   appearance: none;
   background-image: none;
 }
@@ -248,7 +116,9 @@ html, body {
   border-radius: 6px;
   background: var(--input-bg);
   font-size: 1.1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
   appearance: none;
   /* 矢印アイコン */
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
@@ -272,11 +142,11 @@ html, body {
 .contact-form select:focus {
   outline: none;
   border-color: var(--input-focus-border);
-  box-shadow: 0 0 0 3px rgba(60,60,108,0.2);
+  box-shadow: 0 0 0 3px rgba(60, 60, 108, 0.2);
 }
 /* ラベル文字を少し大きく */
 .contact-form label {
-  font-size: 1.1rem;  /* 元1rem→1.1remに */
+  font-size: 1.1rem; /* 元1rem→1.1remに */
 }
 
 /* テキストエリア */
@@ -303,32 +173,3 @@ html, body {
 .contact-form .btn-submit:hover {
   background: var(--btn-hover-bg);
 }
-
-/* トップへ戻る */
-#to-top {
-  position: fixed;
-  bottom: 20px; right: 20px;
-  width: 45px; height: 45px;
-  background: var(--purple);
-  color: var(--white);
-  border: none;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-#to-top:hover {
-  background: var(--btn-hover-bg);
-}
-
-/* フッター */
-footer {
-  background: var(--purple);
-  color: var(--white);
-  text-align: center;
-  padding: 10px 0;
-  margin-top: 40px;
-}
-
-
