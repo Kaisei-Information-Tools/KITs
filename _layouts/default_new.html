@@ -153,9 +153,10 @@
     </footer>
 
     <!-- 外部JS -->
-  {% if page.js %}
-  <script src="assets/js/{{ page.js }}.js" defer></script>
-  {% endif %}
+    <script src="assets/js/base.js" defer></script>
+    {% if page.js %}
+    <script src="assets/js/{{ page.js }}.js" defer></script>
+    {% endif %}
 </body>
 
 </html>

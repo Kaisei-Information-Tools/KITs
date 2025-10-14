@@ -1,25 +1,25 @@
 ---
-layout: main
+layout: default_new
 title: タイマー
 css: timer
 js: timer
 ---
+
 <h1>タイマー</h1>
 <div class="sound-setting">
   <span>音: </span>
   <label class="toggle-button">
-    <input type="checkbox" id="toggle-sound">
+    <input type="checkbox" id="toggle-sound" />
   </label>
 </div>
-<button type="button" id="add-button" class="button timer-button add-button border" onclick="addTimer()">Add</button>
-<button 
-  type="button"
-  id="start-button" 
-  class="button timer-button start-button border" 
-  onclick="stopAllTimer(); startAllTimer()">Start</button>
-<button 
-  type="button" 
-  id="stop-button" 
-  class="button timer-button stop-button border" 
-  onclick="stopAllTimer()">Stop</button>
+<button type="button" id="add-button" class="button timer-button add-button border" onclick="addTimer()">
+  Add
+</button>
+<button type="button" id="start-button" class="button timer-button start-button border"
+  onclick="stopAllTimer(); startAllTimer()">
+  Start
+</button>
+<button type="button" id="stop-button" class="button timer-button stop-button border" onclick="stopAllTimer()">
+  Stop
+</button>
 <div id="timers"></div>

@@ -1,19 +1,32 @@
 ---
-layout: main
+layout: default_new
 title: APAスタイル作成ツール
 css: apa
 js: apa
 ---
+
 <h1 class="title">APAスタイル作成ツール</h1>
 <div class="reset-button-box">
-  <button type="reset" id="reset-button" class="reset button border">フォームをリセット</button>
+  <button type="reset" id="reset-button" class="reset button border">
+    フォームをリセット
+  </button>
 </div>
 <div class="column">
   <label for="source-selection" class="default-label">タイプ</label>
   <ul class="source-selection border" id="source-selection">
-    <li><button type="button" class="button border selected" id="source-web">Webサイト</button></li>
-    <li><button type="button" class="button border" id="source-journal">学術誌・論文</button></li>
-    <li><button type="button" class="button border" id="source-book">書籍</button></li>
+    <li>
+      <button type="button" class="button border selected" id="source-web">
+        Webサイト
+      </button>
+    </li>
+    <li>
+      <button type="button" class="button border" id="source-journal">
+        学術誌・論文
+      </button>
+    </li>
+    <li>
+      <button type="button" class="button border" id="source-book">書籍</button>
+    </li>
   </ul>
 </div>
 <div class="apa-form">
@@ -65,7 +78,9 @@ js: apa
     <label for="url" class="default-label" id="url-label">URL <span class="required" id="url-required">*</span></label>
     <input type="url" id="url" class="text-input border" placeholder="https://kits-tools.net/apa.html"
       name="apa-input-data" />
-    <button id="auto-get-data" class="button submit border">自動取得（β）</button>
+    <button id="auto-get-data" class="button submit border">
+      自動取得（β）
+    </button>
   </div>
   <div class="column">
     <label for="publish" class="default-label">作成日 <span class="required" id="publish-required">*</span></label>
@@ -190,5 +205,7 @@ js: apa
 <div class="text-input border result" id="result" contenteditable="true"></div>
 <div class="bottom-buttons">
   <button id="textarea-copy-button" class="reset button border">コピー</button>
-  <button id="textarea-reset-button" class="reset button border">リセット</button>
+  <button id="textarea-reset-button" class="reset button border">
+    リセット
+  </button>
 </div>

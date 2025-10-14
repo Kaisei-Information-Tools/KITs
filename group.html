@@ -1,16 +1,17 @@
 ---
-layout: main
+layout: default_new
 title: グループ分けツール
 css: group
 js: group
 ---
+
 <div class="autofill-container">
   <h1 class="title">グループ分けツール</h1>
   <input id="numberOfPeople" type="number" class="text-input border" placeholder="全体の人数を入力" />
   <button id="autofillButton" class="submit">自動入力</button>
 </div>
 <div class="input-container">
-  <textarea id="names" class="text-input border" placeholder="名前を入力（カンマ区切り）" ></textarea>
+  <textarea id="names" class="text-input border" placeholder="名前を入力（カンマ区切り）"></textarea>
   <input type="number" id="numGroups" class="text-input border" placeholder="グループ数を入力" />
   <button id="divideButton" class="submit">分ける</button>
   <div id="result"></div>
