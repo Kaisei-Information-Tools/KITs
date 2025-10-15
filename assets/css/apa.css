@@ -6,6 +6,7 @@
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
+  list-style-type: none;
 }
 
 .source-selection button {
@@ -43,7 +44,6 @@
 
   font-weight: 700;
   display: block;
-
 }
 
 .detail {

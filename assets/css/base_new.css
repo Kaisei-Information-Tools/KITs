@@ -14,7 +14,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: visible;
   font-family: sans-serif;
   background-color: var(--cyan);
 }
@@ -51,7 +51,7 @@ body {
 
 .nav {
   display: flex;
-  margin-left: left;
+  padding: 0px;
   gap: 8px;
   flex-wrap: wrap;
 }

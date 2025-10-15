@@ -3,7 +3,7 @@ body {
 }
 
 .clock-container {
-  height: calc(100% - 56px);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,4 +21,17 @@ body {
 
 footer {
   margin-top: 0;
+}
+
+main {
+  background-color: #3c3c6c;
+  padding: 0;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  box-shadow: none;
+  border-radius: 0;
+  height: 100%;
 }

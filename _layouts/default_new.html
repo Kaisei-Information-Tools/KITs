@@ -12,6 +12,9 @@
 
 
   <title>{{ page.title }} - KITs</title>
+  {% if page.old_base_css %}
+  <link rel="stylesheet" href="assets/css/base.css" />
+  {% endif %}
   <link rel="stylesheet" href="assets/css/base_new.css" />
   {% if page.css %}
   <link rel="stylesheet" href="assets/css/{{ page.css }}.css" />
@@ -146,17 +149,18 @@
     {{ content }}
     <!-- トップへ戻るボタン -->
     <button id="to-top">↑</button>
+  </main>
 
-    <!-- フッター -->
-    <footer>
-      <p>© 2024 Kaisei Information Technology for support</p>
-    </footer>
+  <!-- フッター -->
+  <footer>
+    <p>© 2024 Kaisei Information Technology for support</p>
+  </footer>
 
-    <!-- 外部JS -->
-    <script src="assets/js/base.js" defer></script>
-    {% if page.js %}
-    <script src="assets/js/{{ page.js }}.js" defer></script>
-    {% endif %}
+  <!-- 外部JS -->
+  <script src="assets/js/base.js" defer></script>
+  {% if page.js %}
+  <script src="assets/js/{{ page.js }}.js" defer></script>
+  {% endif %}
 </body>
 
 </html>

@@ -38,6 +38,7 @@ main {
   flex-direction: column;
   align-items: center;
   max-width: 1200px !important;
+  margin-top: 4rem;
 }
 
 /* PDF化時専用のCSS */
@@ -51,4 +52,13 @@ main {
   .mjx-math {
     margin: 0;
   }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+}
+
+body {
+  overflow-x: visible;
 }
