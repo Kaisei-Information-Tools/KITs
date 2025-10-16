@@ -2,36 +2,49 @@ body {
   height: 100vh;
 }
 .calc-container {
-    height: calc(100vh - 56px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
+  height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
 }
 .calculator {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 400px;
-    margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 400px;
+  margin: auto;
 }
-.calculator input, button {
-    font-size: 1.5em;
-    padding: 10px;
-    text-align: center;
+.calculator input,
+button {
+  font-size: 1.5em;
+  padding: 10px;
+  text-align: center;
 }
 .calculator input {
-    grid-column: span 4;
+  grid-column: span 4;
 }
 .calculator button {
-    cursor: pointer;
+  cursor: pointer;
 }
 .operator {
-    background-color: var(--color-primary);
-    color: white;
+  background-color: var(--color-primary);
+  color: white;
 }
 .equals {
-    grid-column: span 4;
-    background-color: var(--color-primary);
-    color: white;
+  grid-column: span 4;
+  background-color: var(--color-primary);
+  color: white;
+}
+
+main {
+  background-color: transparent;
+  padding: 0;
+  width: auto;
+  max-width: unset;
+  margin-top: 0;
+  margin-left: unset;
+  margin-right: unset;
+  box-shadow: none;
+  border-radius: 0;
 }
