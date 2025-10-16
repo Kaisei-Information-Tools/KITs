@@ -56,6 +56,7 @@
 .main {
   display: flex;
   padding-top: 60px;
+  max-width: 800px;
 }
 
 /* フォーム中央配置 */
