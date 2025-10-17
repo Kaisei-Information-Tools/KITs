@@ -10,7 +10,11 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+}
+
+nav {
+  width: 100%;
 }
 
 h1 {
@@ -86,7 +90,7 @@ h1 {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   gap: 20px;
   box-sizing: border-box;
