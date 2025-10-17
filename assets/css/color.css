@@ -2,7 +2,12 @@
 /* アプリケーション専用スタイル */
 /* base.cssのスタイルを補完します */
 /* -------------------------------------- */
-
+h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #1a237e;
+}
 /* メインコンテンツのレイアウト */
 .main-content {
     display: flex;
@@ -113,4 +118,5 @@
     transform: translate(-50%, -50%);
     overflow: hidden; 
 }
+
 
