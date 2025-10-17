@@ -20,6 +20,17 @@
     display: none;
 }
 
+.file-upload-label {
+    display: block;
+    background-color: #3949ab;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
 /* 画像プレビューエリア */
 #preview-container {
     position: relative;
@@ -102,3 +113,4 @@
     transform: translate(-50%, -50%);
     overflow: hidden; 
 }
+
