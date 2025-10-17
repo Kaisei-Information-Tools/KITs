@@ -1,54 +1,30 @@
 /* -------------------------------------- */
-/* デザイン・レイアウトCSS */
+/* アプリケーション専用スタイル */
+/* base.cssのスタイルを補完します */
 /* -------------------------------------- */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
-    min-height: 100vh;
-    margin: 0;
-}
 
-h1 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 30px;
-    color: #1a237e;
-}
+/* メインコンテンツのレイアウト */
 .main-content {
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
 }
+
 .image-area {
     flex: 2;
     min-width: 300px;
 }
-.file-upload-label {
-    display: block;
-    background-color: #3949ab;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-bottom: 20px;
-}
-.file-upload-label:hover {
-    background-color: #1a237e;
-}
+
+/* ファイル選択ボタンの裏にあるinputを隠す */
 #image-loader {
     display: none;
 }
+
+/* 画像プレビューエリア */
 #preview-container {
     position: relative;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
+    border: 2px dashed #ddd; /* base.cssのborder-colorに合わせる */
+    border-radius: 0.5rem; /* base.cssのradiusに合わせる */
     min-height: 200px;
     display: flex;
     justify-content: center;
@@ -56,62 +32,73 @@ h1 {
     background-color: #fafafa;
     color: #aaa;
     overflow: hidden;
+    margin-top: 1.5rem;
 }
+
 #preview {
     max-width: 100%;
     display: none;
     cursor: crosshair;
 }
+
+/* カラー情報エリア */
 .info-area {
     flex: 1;
     min-width: 250px;
     display: none;
 }
-h2 {
-    margin-top: 0;
-    border-bottom: 2px solid #3949ab;
-    padding-bottom: 8px;
-    color: #3949ab;
+
+.info-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    /* base.cssの変数を活用してテーマカラーを適用 */
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
 }
+
 #color-preview {
     width: 100%;
     height: 120px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
     background-color: #fff;
 }
+
 .code-display {
     background-color: #f5f5f5;
     padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 1.1em;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
     font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 1.1em;
 }
+
 .code-display strong {
     display: block;
     margin-bottom: 5px;
     font-size: 0.9em;
     color: #555;
+    font-family: "Noto Sans JP", sans-serif; /* フォントを戻す */
 }
 
+
 /* -------------------------------------- */
-/* ルーペ専用CSS */
+/* ルーペ専用CSS (これはbase.cssに無いため全て記述) */
 /* -------------------------------------- */
 #loupe {
     position: absolute;
     width: 150px;
     height: 150px;
-    border-radius: 50%; /* 円形にする */
-    border: 4px solid #fff; /* 白い縁 */
-    box-shadow: 0 0 15px rgba(0,0,0,0.3); /* 影 */
-    pointer-events: none; /* マウスイベントを貫通させる */
-    display: none; /* 初期状態では非表示 */
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    pointer-events: none;
+    display: none;
     background-color: #fff;
-    z-index: 1000; /* 最前面に表示 */
-    /* 変形原点を中心に設定し、描画を円形にクリップ */
+    z-index: 1000;
     transform: translate(-50%, -50%);
     overflow: hidden; 
-
 }
