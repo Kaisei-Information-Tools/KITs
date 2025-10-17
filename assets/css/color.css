@@ -8,6 +8,12 @@ h1 {
     margin-bottom: 30px;
     color: #1a237e;
 }
+h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #3949ab;
+    padding-bottom: 8px;
+    color: #3949ab;
+}
 /* メインコンテンツのレイアウト */
 .main-content {
     display: flex;
@@ -118,5 +124,6 @@ h1 {
     transform: translate(-50%, -50%);
     overflow: hidden; 
 }
+
 
 
