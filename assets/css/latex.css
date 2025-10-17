@@ -13,6 +13,11 @@ body {
   padding: 0;
 }
 
+body > main {
+  min-height: unset;
+  max-width: 800px;
+}
+
 nav {
   width: 100%;
 }
@@ -99,7 +104,7 @@ h1 {
 /* エディタ（左） */
 #editor {
   flex: 1;
-  min-height: 400px;
+  min-height: 300px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -113,7 +118,7 @@ h1 {
 /* プレビュー（右） */
 #preview {
   flex: 1;
-  min-height: 400px;
+  min-height: 300px;
   padding: 15px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -154,4 +159,9 @@ h1 {
   #preview {
     min-height: 250px;
   }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
 }
