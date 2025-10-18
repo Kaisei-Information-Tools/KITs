@@ -38,6 +38,7 @@ body {
   padding: 10px 20px;
   color: var(--white);
   overflow-x: auto;
+  gap: 8px;
 }
 
 .logo {
