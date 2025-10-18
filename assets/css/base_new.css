@@ -86,7 +86,7 @@ body {
 /* サイドバー */
 .sidebar {
   position: fixed;
-  top: 60px;
+  top: 55px;
   left: 0;
   width: clamp(200px, 20%, 280px);
   height: calc(100vh - 60px);
