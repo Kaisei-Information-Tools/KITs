@@ -89,7 +89,7 @@ body {
   top: 55px;
   left: 0;
   width: clamp(200px, 20%, 280px);
-  height: calc(100vh - 60px);
+  height: calc(100vh - 55px);
   background: #4c4c7c;
   padding: 10px 5px;
   display: flex;
