@@ -40,20 +40,19 @@ js: latex
   <button data-insert="\pm">±</button>
   <button data-insert="\mp">∓</button>
   <button data-insert="\approx">≈</button>
-  <button data-insert="\fallingdotseq">≒</button>
   <button data-insert="<">&lt;</button>
   <button data-insert=">">&gt;</button>
   <button data-insert="\le">≦</button>
   <button data-insert="\ge">≧</button>
   <button data-insert="\neq">≠</button>
   <button data-insert="\frac{a}{b}">a/b</button>
-  <button data-insert="x^{n}">xⁿ</button>
-  <button data-insert="X_{n}">xₙ</button>
+  <button data-insert="x^{}">xⁿ</button>
+  <button data-insert="_{n}">xₙ</button>
   <button data-insert="\sqrt{x}">√</button>
   <button data-insert="\sqrt[n]{x}">ⁿ√x</button>
   <button data-insert="|x|">|x|</button>
   <button data-insert="\left\|x\right\|">‖x‖</button>
-  <button data-insert="\\">改行</button>
+  <button data-insert="\\\\">改行</button>
 </div>
 
 <!-- 関数 -->
@@ -108,9 +107,9 @@ js: latex
 
 <!-- 行列 -->
 <div id="matrix" class="toolbar">
-  <button data-insert="\begin{pmatrix}a \\ b\end{pmatrix}">(a; b)</button>
-  <button data-insert="\begin{bmatrix}a & b \\ c & d\end{bmatrix}">[a b; c d]</button>
-  <button data-insert="\begin{vmatrix}a & b \\ c & d\end{vmatrix}">|a b; c d|</button>
+  <button data-insert="\left(\begin{array}{c}a \\ b\end{array}\right)">(a; b)</button>
+  <button data-insert="\left[\begin{array}{cc}a & b \\ c & d\end{array}\right]">[a b; c d]</button>
+  <button data-insert="\left|\begin{array}{cc}a & b \\ c & d\end{array}\right|">|a b; c d|</button>
   <button data-insert="\vec{v}">\vec{v}</button>
   <button data-insert="\bm{v}">**v**</button>
   <button data-insert="\overrightarrow{OP}">→OP</button>
