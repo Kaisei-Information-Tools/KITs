@@ -12,9 +12,13 @@ js: latex
   href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
 />
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<!-- ▼▼▼ 【重要】化学式(\ce)を有効にするための拡張機能を追加 ▼▼▼ -->
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="assets/js/svg2pdf.umd.min.js"></script>
+</head>
 
+<body>
 <div class="tabs">
   <button class="tab active" data-target="basic">基本</button>
   <button class="tab" data-target="func">関数</button>
@@ -152,11 +156,11 @@ js: latex
   <button data-insert="\infty">∞</button>
   <button data-insert="\dots">...</button>
   <button data-insert="\angle">∠</button>
-  <button data-insert="\langle">⟨</button>
-  <button data-insert="\rangle">⟩</button>
   <button data-insert="\sim">∼</button>
   <button data-insert="\equiv">≡</button>
   <button data-insert="\propto">∝</button>
+  <button data-insert="\langle">⟨</button>
+  <button data-insert="\rangle">⟩</button>
 </div>
 
 <!-- 物理 -->
@@ -169,8 +173,8 @@ js: latex
   <button data-insert="\Leftrightarrow">⇔</button>
   <button data-insert="\longrightarrow">⟶</button>
   <button data-insert="\rightleftharpoons">⇌</button>
-  <button data-insert="E=mc^2">E=mc²</button>
   <button data-insert="F=ma">F=ma</button>
+  <button data-insert="\bm{F}=m\bm{a}">**F**=m**a**</button>
 </div>
 
 <!-- 化学 -->
@@ -179,6 +183,7 @@ js: latex
   <button data-insert="\ce{CO2}">CO₂</button>
   <button data-insert="\ce{Na+}">Na⁺</button>
   <button data-insert="\ce{OH-}">OH⁻</button>
+  <button data-insert="\ce{Ca(OH)2}">Ca(OH)₂</button>
   <button data-insert="\rightarrow">→</button>
   <button data-insert="\rightleftharpoons">⇌</button>
 </div>
@@ -188,10 +193,13 @@ js: latex
   <button data-insert="\mu">μ</button>
   <button data-insert="\sigma">σ</button>
   <button data-insert="\rho">ρ</button>
+  <button data-insert="\bar{x}">x̄</button>
+  <button data-insert="\hat{p}">p̂</button>
   <button data-insert="\text{Var}(X)">Var(X)</button>
   <button data-insert="\text{Cov}(X,Y)">Cov(X,Y)</button>
   <button data-insert="P(A)">P(A)</button>
   <button data-insert="E[X]">E[X]</button>
+  <button data-insert="\mathrm{abc}">abc(Roman)</button>
 </div>
 
 
