@@ -98,6 +98,7 @@ body {
   transition:
     left 0.3s ease,
     width 0.3s ease;
+  font-family: sans-serif;
 }
 
 .sidebar.hidden {
@@ -120,6 +121,12 @@ body {
   gap: 3px;
 }
 
+.sidebar__menu li {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
 .sidebar__menu li a {
   display: block;
   width: 100%;
@@ -132,6 +139,7 @@ body {
   font-size: 1rem;
   word-break: break-word;
   white-space: normal;
+  text-align: left;
 }
 
 .sidebar__menu li a:hover {
