@@ -3,14 +3,12 @@
 /* -------------------------------------- */
 
 /* --- コンポーネントのルート要素 (.container) --- */
-/* base.css の main タグのスタイルを参考に、このコンポーネントの外観を定義します */
 .container {
-   display: block; /* reset.css でリセットされるため再定義 */
+   display: block;
    background-color: #ffffff;
    padding: 2rem;
    width: 100%;
-   max-width: 800px; /* 内部が2カラムになるため、少し幅を広げる */
-   /* margin: auto; で親要素の中央に配置されます */
+   max-width: 800px;
    margin-left: auto;
    margin-right: auto;
    margin-top: 2.5rem;
@@ -19,19 +17,17 @@
    border-radius: 0.5rem;
 }
 
-/* --- reset.css で失われた基本スタイルを復元 --- */
+/* --- reset.css によって失われた基本スタイルを復元 --- */
 h1, h2, strong {
     display: block;
     font-weight: bold;
 }
-
 h1 {
     font-size: 2em;
     text-align: center;
     margin-bottom: 30px;
     color: #1a237e;
 }
-
 h2 {
     font-size: 1.5em;
     margin-bottom: 15px;
@@ -43,19 +39,17 @@ h2 {
 /* --- カラーピッカー固有の内部レイアウト --- */
 .main-content {
     display: flex;
-    flex-wrap: wrap; /* 画面が狭いときに折り返す */
-    gap: 30px;      /* エリア間の隙間 */
+    flex-wrap: wrap;
+    gap: 30px;
 }
-
 .image-area {
-    flex: 2; /* 表示領域の比率 */
+    flex: 2;
     min-width: 300px;
 }
-
 .info-area {
-    flex: 1; /* 表示領域の比率 */
+    flex: 1;
     min-width: 250px;
-    display: none; /* 初期状態では非表示 */
+    display: none;
 }
 
 /* --- 各パーツのスタイル --- */
@@ -70,15 +64,12 @@ h2 {
     transition: background-color 0.3s;
     margin-bottom: 20px;
 }
-
 .file-upload-label:hover {
     background-color: #1a237e;
 }
-
 #image-loader {
     display: none;
 }
-
 #preview-container {
     position: relative;
     border: 2px dashed #ccc;
@@ -90,35 +81,49 @@ h2 {
     background-color: #fafafa;
     overflow: hidden;
 }
-
 #preview {
     max-width: 100%;
     display: none;
     cursor: crosshair;
 }
 
+/* ★ここから変更★ --- 色情報表示エリアのスタイル調整 --- */
 #color-preview {
-    width: 100%;
-    height: 120px;
+    width: 100px;  /* 幅を固定 */
+    height: 100px; /* 高さを固定 */
     border: 1px solid #ccc;
     border-radius: 8px;
-    margin-bottom: 20px;
+    flex-shrink: 0; /* Flexコンテナ内で縮まないようにする */
 }
-
 .code-display {
     background-color: #f5f5f5;
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 15px;
     font-size: 1.1em;
     font-family: 'Menlo', 'Monaco', monospace;
 }
+/* ★ここまで変更★ */
 
 .code-display strong {
     margin-bottom: 5px;
     font-size: 0.9em;
     color: #555;
 }
+
+/* ★ここから追加★ --- 横並びレイアウトのための新しいスタイル --- */
+.color-details-grid {
+    display: flex;
+    align-items: center; /* 垂直方向中央揃え */
+    gap: 20px;           /* プレビューとコードの間の隙間 */
+}
+.color-codes {
+    flex: 1; /* 残りのスペースをすべて使う */
+    display: flex;
+    flex-direction: column; /* HEXとRGBを縦に並べる */
+    gap: 15px;              /* HEXとRGBの間の隙間 */
+}
+/* ★ここまで追加★ */
+
 
 /* --- ルーペとマーカーのスタイル（変更なし） --- */
 #loupe {
@@ -135,7 +140,6 @@ h2 {
     transform: translate(-50%, -50%);
     overflow: hidden;
 }
-
 #focus-marker {
     position: absolute;
     width: 20px;
