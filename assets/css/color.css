@@ -1,53 +1,61 @@
 /* -------------------------------------- */
-/* デザイン・レイアウトCSS (reset.css, base.css 適用版) */
+/* color.css (reset.css / base.css 適用後の最小構成) */
 /* -------------------------------------- */
+
+/* --- レイアウトの基本構造 --- */
+/* bodyのスタイリングは base.css に任せ、ここでは中央配置のレイアウトのみ定義 */
 body {
-    /* base.css のスタイルを基本としつつ、このページ専用のレイアウトを適用 */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     padding: 20px;
-    min-height: 100vh;
-    margin: 0; /* reset.css 対策 */
-    line-height: 1.5; /* reset.css 対策 */
 }
 
+/* containerのスタイルは base.css の main と酷似しているが、HTML構造が <div class="container"> のため再定義が必要 */
 .container {
    display: block; /* reset.css 対策 */
    background-color: #ffffff;
    padding: 2rem;
    width: 100%;
-   max-width: 800px; /* 横並びのため、少し幅を広げます */
+   max-width: 800px; /* 2カラムレイアウトのため幅を広げる */
    margin: 2.5rem auto;
    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
    border-radius: 0.5rem;
 }
 
-/* メインコンテンツエリアをFlexboxで横並びにします */
-.main-content {
-    display: flex;
-    flex-wrap: wrap; /* 画面幅が狭い場合は折り返す */
-    gap: 30px; /* 画像エリアと情報エリアの間の隙間 */
-}
-
+/* --- reset.css で失われた要素の基本スタイルを復元 --- */
 h1, h2, strong {
-    /* reset.css で無効化されるスタイルを再定義 */
     display: block;
     font-weight: bold;
 }
-
 h1 {
-    text-align: center;
     font-size: 2em;
-    margin: 0 0 30px 0;
+    text-align: center;
+    margin-bottom: 30px;
     color: #1a237e;
 }
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3949ab;
+    padding-bottom: 8px;
+    color: #3949ab;
+}
+
+/* --- コンポーネント固有のスタイル --- */
+.main-content {
+    display: flex;
+    flex-wrap: wrap; /* レスポンシブ対応 */
+    gap: 30px; /* エリア間の隙間 */
+}
 .image-area {
-    flex: 2; /* 情報エリアより少し広い幅を取る */
+    flex: 2;
     min-width: 300px;
+}
+.info-area {
+    flex: 1;
+    min-width: 250px;
+    display: none; /* 初期状態は非表示 */
 }
 .file-upload-label {
     display: block;
@@ -75,7 +83,6 @@ h1 {
     justify-content: center;
     align-items: center;
     background-color: #fafafa;
-    color: #aaa;
     overflow: hidden;
 }
 #preview {
@@ -83,25 +90,12 @@ h1 {
     display: none;
     cursor: crosshair;
 }
-.info-area {
-    flex: 1; /* 画像エリアより少し狭い幅を取る */
-    min-width: 250px;
-    display: none;
-}
-h2 {
-    font-size: 1.5em;
-    margin: 0 0 15px 0;
-    border-bottom: 2px solid #3949ab;
-    padding-bottom: 8px;
-    color: #3949ab;
-}
 #color-preview {
     width: 100%;
     height: 120px;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-bottom: 20px;
-    background-color: #fff;
 }
 .code-display {
     background-color: #f5f5f5;
@@ -112,31 +106,26 @@ h2 {
     font-family: 'Menlo', 'Monaco', monospace;
 }
 .code-display strong {
-    display: block;
-    font-weight: bold; /* reset.css 対策で再指定 */
     margin-bottom: 5px;
     font-size: 0.9em;
     color: #555;
 }
 
-/* -------------------------------------- */
-/* ルーペ & マーカー専用CSS (変更なし) */
-/* -------------------------------------- */
+/* --- ルーペ & マーカー (変更なし) --- */
 #loupe {
     position: absolute;
     width: 150px;
     height: 150px;
-    border-radius: 50%; /* 円形にする */
-    border: 4px solid #fff; /* 白い縁 */
-    box-shadow: 0 0 15px rgba(0,0,0,0.3); /* 影 */
-    pointer-events: none; /* マウスイベントを貫通させる */
-    display: none; /* 初期状態では非表示 */
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    pointer-events: none;
+    display: none;
     background-color: #fff;
-    z-index: 1000; /* 最前面に表示 */
+    z-index: 1000;
     transform: translate(-50%, -50%);
-    overflow: hidden; 
+    overflow: hidden;
 }
-
 #focus-marker {
     position: absolute;
     width: 20px;
