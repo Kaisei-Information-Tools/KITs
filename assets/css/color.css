@@ -1,7 +1,8 @@
 /* -------------------------------------- */
-/* デザイン・レイアウトCSS */
+/* デザイン・レイアウトCSS (reset.css, base.css 適用版) */
 /* -------------------------------------- */
 body {
+    /* base.css のスタイルを基本としつつ、このページ専用のレイアウトを適用 */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: #f0f2f5;
     color: #333;
@@ -10,28 +11,42 @@ body {
     align-items: flex-start;
     padding: 20px;
     min-height: 100vh;
-    margin: 0;
+    margin: 0; /* reset.css 対策 */
+    line-height: 1.5; /* reset.css 対策 */
 }
 
 .container {
+   display: block; /* reset.css 対策 */
    background-color: #ffffff;
    padding: 2rem;
    width: 100%;
-   max-width: 600px;
-   margin-top: 2.5rem;
-   margin-left: auto;
-   margin-right: auto;
-   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 1);
+   max-width: 800px; /* 横並びのため、少し幅を広げます */
+   margin: 2.5rem auto;
+   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
    border-radius: 0.5rem;
 }
+
+/* メインコンテンツエリアをFlexboxで横並びにします */
+.main-content {
+    display: flex;
+    flex-wrap: wrap; /* 画面幅が狭い場合は折り返す */
+    gap: 30px; /* 画像エリアと情報エリアの間の隙間 */
+}
+
+h1, h2, strong {
+    /* reset.css で無効化されるスタイルを再定義 */
+    display: block;
+    font-weight: bold;
+}
+
 h1 {
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 30px;
+    font-size: 2em;
+    margin: 0 0 30px 0;
     color: #1a237e;
 }
 .image-area {
-    flex: 2;
+    flex: 2; /* 情報エリアより少し広い幅を取る */
     min-width: 300px;
 }
 .file-upload-label {
@@ -69,12 +84,13 @@ h1 {
     cursor: crosshair;
 }
 .info-area {
-    flex: 1;
+    flex: 1; /* 画像エリアより少し狭い幅を取る */
     min-width: 250px;
     display: none;
 }
 h2 {
-    margin-top: 0;
+    font-size: 1.5em;
+    margin: 0 0 15px 0;
     border-bottom: 2px solid #3949ab;
     padding-bottom: 8px;
     color: #3949ab;
@@ -97,13 +113,14 @@ h2 {
 }
 .code-display strong {
     display: block;
+    font-weight: bold; /* reset.css 対策で再指定 */
     margin-bottom: 5px;
     font-size: 0.9em;
     color: #555;
 }
 
 /* -------------------------------------- */
-/* ルーペ専用CSS */
+/* ルーペ & マーカー専用CSS (変更なし) */
 /* -------------------------------------- */
 #loupe {
     position: absolute;
@@ -116,14 +133,10 @@ h2 {
     display: none; /* 初期状態では非表示 */
     background-color: #fff;
     z-index: 1000; /* 最前面に表示 */
-    /* 変形原点を中心に設定し、描画を円形にクリップ */
     transform: translate(-50%, -50%);
     overflow: hidden; 
 }
 
-/* -------------------------------------- */
-/* 固定位置マーカーのCSS (追加) */
-/* -------------------------------------- */
 #focus-marker {
     position: absolute;
     width: 20px;
@@ -132,7 +145,7 @@ h2 {
     border: 2px solid white;
     box-shadow: 0 0 8px rgba(0,0,0,0.7);
     transform: translate(-50%, -50%);
-    pointer-events: none; /* マウスイベントを妨げない */
-    display: none; /* 初期状態では非表示 */
+    pointer-events: none;
+    display: none;
     z-index: 500;
 }
