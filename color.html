@@ -5,6 +5,8 @@ css: color
 js: color
 ---
 
+<body>
+
     <div class="container">
         <h1>画像カラーピッカー</h1>
         
@@ -16,22 +18,29 @@ js: color
                 <div id="preview-container">
                     <img id="preview" alt="">
                     <span id="placeholder-text">ここに画像が表示されます</span>
-                    <!-- クリック位置を固定表示するためのマーカー -->
                     <div id="focus-marker"></div>
                 </div>
             </div>
 
             <div class="info-area" id="info-area">
                 <h2>カラー情報</h2>
-                <div id="color-preview"></div>
-                <div class="code-display">
-                    <strong>HEX</strong>
-                    <span id="hex-code"></span>
+                <!-- ★ここから変更★ Flexboxで横並びにするためのコンテナを追加 -->
+                <div class="color-details-grid">
+                    <!-- 左側のプレビュー -->
+                    <div id="color-preview"></div>
+                    <!-- 右側のコード（HEXとRGB）をまとめるコンテナ -->
+                    <div class="color-codes">
+                        <div class="code-display">
+                            <strong>HEX</strong>
+                            <span id="hex-code"></span>
+                        </div>
+                        <div class="code-display">
+                            <strong>RGB</strong>
+                            <span id="rgb-code"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="code-display">
-                    <strong>RGB</strong>
-                    <span id="rgb-code"></span>
-                </div>
+                <!-- ★ここまで変更★ -->
             </div>
         </div>
     </div>
@@ -40,5 +49,4 @@ js: color
     <canvas id="loupe"></canvas>
     <!-- 画像データ保持用（非表示） -->
     <canvas id="source-canvas" style="display:none;"></canvas>
-
 
