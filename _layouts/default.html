@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ja">
 
@@ -115,27 +116,6 @@
       <button class="accept">同意する</button>
     </div>
   </div>
-  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast">
-      <div class="toast-header">
-        <strong class="me-auto">アンケートのお願い</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        ニーズ再調査アンケートにご協力ください（必須）！
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeC2KrViAyuMA-gN6lywmTp3fe0H49c3xAgxtiRQAUR10_MPQ/viewform">
-          アンケートはこちら
-        </a>
-        <div class="form-check mt-2">
-          <input class="form-check-input" type="checkbox" id="answeredCheck" />
-          <label class="form-check-label" for="answeredCheck">
-            もう回答しました
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
   {% if page.no_popup != true %}
   <script>
     document
@@ -174,7 +154,7 @@
   </script>
   {{ content }}
   <footer>
-    <p>&copy; 2024 Kaisei Information Technology for support</p>
+    <p>&copy; 2024 - 2025 Kaisei Information Technology for support</p>
   </footer>
   {% if page.js %}
   <script src="assets/js/{{ page.js }}.js" defer></script>

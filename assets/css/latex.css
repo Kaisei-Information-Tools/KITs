@@ -9,6 +9,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 4rem;
   margin: 0;
   padding: 0;
 }
@@ -164,4 +165,8 @@ h1 {
 footer {
   position: fixed;
   bottom: 0;
+}
+
+body {
+  overflow-x: visible;
 }

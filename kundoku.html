@@ -1,18 +1,14 @@
 ---
-layout: main
+layout: default_new
 title: 訓読文エディタ
 css: kundoku
+old_base_css: true
 ---
 
 <h1>訓読文エディタ</h1>
 <div class="editor">
   <div class="input-area">
-    <textarea
-      id="kanbunInput"
-      rows="10"
-      cols="30"
-      placeholder="ここに漢文を入力"
-    ></textarea>
+    <textarea id="kanbunInput" rows="10" cols="30" placeholder="ここに漢文を入力"></textarea>
     <br />
     <button onclick="renderPreview()">プレビュー更新</button>
     <p>返り点や送り仮名ををつけたい文字をクリックすることで入力できます</p>

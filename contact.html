@@ -1,0 +1,68 @@
+---
+layout: default_new
+title: お問い合わせ
+css: contact
+js: contact
+old_base_css: true
+---
+<!-- コンテンツ -->
+<div id="content" class="content">
+  <!-- 非表示 iframe（フォームのレスポンス受け取り用） -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display: none"></iframe>
+
+  <!-- お問い合わせフォーム -->
+  <section class="contact-form">
+    <h2>お問い合わせ</h2>
+    <form
+      action="https://script.google.com/macros/s/AKfycbzeCeHdkxryOo4HxUmdVAUfTTLQjcr_HAmo6Ycd11u1qfS-saJu5KgoSdEl8sL_U9yu/exec"
+      method="post" target="hidden_iframe">
+      <label for="name">お名前</label>
+      <input type="text" id="name" name="name" placeholder="お名前を入力してください" required />
+
+      <label for="email">メールアドレス</label>
+      <input type="email" id="email" name="email" placeholder="example@example.com" required />
+
+      <label for="age">年代</label>
+      <select id="age" name="age" required>
+        <option value="" disabled selected>選択してください</option>
+        <option value="10代">10代</option>
+        <option value="20代">20代</option>
+        <option value="30代">30代</option>
+        <option value="40代">40代</option>
+        <option value="50代">50代</option>
+        <option value="60代以上">60代以上</option>
+      </select>
+
+      <label for="occupation">職業</label>
+      <select id="occupation" name="occupation" required>
+        <option value="" disabled selected>選択してください</option>
+        <option value="生徒">生徒</option>
+        <option value="保護者">保護者</option>
+        <option value="教員">教員</option>
+        <option value="その他">その他</option>
+      </select>
+
+      <label for="genre">お問い合わせの種類</label>
+      <select id="genre" name="genre" required>
+        <option value="" disabled selected>選択してください</option>
+        <option value="バグ">バグ</option>
+        <option value="ツール及び機能の要望">ツール及び機能の要望</option>
+        <option value="技術提供依頼">技術提供依頼</option>
+        <option value="協力依頼">協力依頼</option>
+        <option value="入会希望">入会希望</option>
+        <option value="ツールの使い方">ツールの使い方</option>
+        <option value="その他">その他</option>
+      </select>
+
+      <label for="message">メッセージ</label>
+      <textarea id="message" name="message" placeholder="ご用件を入力してください" required></textarea>
+
+      <button type="submit" class="btn-submit">送信</button>
+    </form>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display: none"></iframe>
+    <p id="formStatus" style="display: none">
+      送信が完了しました。ありがとうございます!
+    </p>
+  </section>
+</div>
+</main>
