@@ -69,8 +69,7 @@ convertBtn.addEventListener("click", () => {
   }
 
   const format = formatSelect.value;
-  const baseName = originalFile.name.split(".").slice(0, -1).join(".") ||
-    "converted_image";
+  const baseName = originalFile.name.replace(/\.[^.]*$/, '') || "converted_image";
   const fileName = `${baseName}.${format}`;
 
   // --- SVGへの簡易変換処理 ---
