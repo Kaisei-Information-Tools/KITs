@@ -3,28 +3,23 @@ body {
 }
 
 .clock-container {
-  height: 100%;
+  height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
   align-items: center;
   background: transparent;
+  padding: 20px;
 }
 
 #clock {
-  font-size: clamp(2rem, calc(1rem + 6vw), 10rem);
+  font-size: clamp(3rem, calc(2rem + 8vw), 12rem);
   width: 100%;
-  max-width: 800px;
-  margin: 8% auto;
+  max-width: none;
+  margin: 0;
   text-align: center;
   color: var(--text-primary);
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 40px;
-  border-radius: 30px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  font-weight: 300;
+  line-height: 1.2;
 }
 
 footer {

@@ -154,6 +154,5 @@ main h1 {
 
 footer {
   margin-top: 0;
-  position: fixed;
-  bottom: 0;
+  width: 100%;
 }

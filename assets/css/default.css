@@ -126,8 +126,18 @@ body {
   font-family: sans-serif;
 }
 
-.sidebar.hidden {
-  left: -300px;
+/* On desktop, sidebar is visible by default */
+@media (min-width: 801px) {
+  .sidebar {
+    left: 0 !important;
+  }
+}
+
+/* On mobile, sidebar starts hidden */
+@media (max-width: 800px) {
+  .sidebar.hidden {
+    left: -300px;
+  }
 }
 
 .sidebar__title {
@@ -231,16 +241,16 @@ footer {
     padding: 6px 8px;
   }
   .sidebar {
-    transform: translateX(-100%);
     width: 60%;
     max-width: 250px;
     padding: 5px 0px;
+    left: -300px;
   }
   .sidebar__title {
     padding-left: 10px; /* ← 左に余白をつける */
   }
   .sidebar.visible {
-    transform: translateX(0);
+    left: 0;
   }
   .sidebar__menu {
     display: flex;
