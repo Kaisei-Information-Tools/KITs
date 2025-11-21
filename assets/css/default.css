@@ -36,6 +36,29 @@ body {
   box-sizing: border-box;
 }
 
+/* Main layout container */
+.main {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 60px;
+}
+
+/* Content area inside main - adjust for sidebar on desktop */
+@media (min-width: 801px) {
+  .main > *:not(.sidebar):not(#terms-popup):not(#to-top) {
+    margin-left: clamp(200px, 20%, 280px);
+    flex: 1;
+  }
+}
+
+/* On mobile, no margin needed */
+@media (max-width: 800px) {
+  .main > *:not(.sidebar):not(#terms-popup):not(#to-top) {
+    margin-left: 0;
+    flex: 1;
+  }
+}
+
 /* ヘッダー */
 .header {
   position: fixed;
