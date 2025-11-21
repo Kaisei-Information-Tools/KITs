@@ -121,8 +121,12 @@ footer {
   bottom: 0;
 }
 
+:root {
+  --status-error-bg: rgba(178, 34, 34, 0.9);
+}
+
 #statusDisplay {
-  background: rgba(178, 34, 34, 0.9);
+  background: var(--status-error-bg);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);

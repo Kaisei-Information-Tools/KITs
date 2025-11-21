@@ -11,8 +11,13 @@
             color: #e2e8f0;
         }
         
+        :root {
+            --bg-gradient-start: #e8f0f7;
+            --bg-gradient-end: #f5f8fa;
+        }
+
         body.light-mode {
-            background: linear-gradient(135deg, #e8f0f7 0%, #f5f8fa 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             background-attachment: fixed;
             color: #1e293b;
         }
