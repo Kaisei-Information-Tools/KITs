@@ -1,13 +1,12 @@
 :root {
-  --purple: #3c3c6c;
-  --light: #e2e2f4;
-  --cyan: #efefef;
-  --white: #ffffff;
-  --input-bg: #ffffff;
-  --input-border: #cccccc;
-  --input-focus-border: #3c3c6c;
-  --btn-bg: #3c3c6c;
-  --btn-hover-bg: #5c5c8c;
+  /* Glassmorphism color palette */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.15);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --backdrop-blur: blur(10px);
 }
 
 html,
@@ -16,7 +15,9 @@ body {
   padding: 0;
   overflow-x: visible;
   font-family: sans-serif;
-  background-color: var(--cyan);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 *,
@@ -34,9 +35,13 @@ body {
   z-index: 100;
   display: flex;
   align-items: center;
-  background: var(--purple);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
   padding: 10px 20px;
-  color: var(--white);
+  color: var(--text-primary);
   overflow-x: auto;
   gap: 8px;
 }
@@ -61,17 +66,21 @@ body {
   margin: 0 5px;
   padding: 5px 10px;
   border-radius: 10px;
-  background: var(--purple);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
   font-size: 1.2rem;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .nav a:hover {
-  background: #5c5c8c;
+  background: var(--glass-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
 }
 
 .settings-btn {
@@ -90,7 +99,11 @@ body {
   left: 0;
   width: clamp(200px, 20%, 280px);
   height: calc(100vh - 55px);
-  background: #4c4c7c;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
   padding: 10px 5px;
   display: flex;
   flex-direction: column;
@@ -106,10 +119,11 @@ body {
 }
 
 .sidebar__title {
-  color: white;
+  color: var(--text-primary);
   font-size: 1.3rem;
   margin-bottom: 5px;
-  padding-left: 10px; /* ← 左に余白をつける */
+  padding-left: 10px;
+  font-weight: 600;
 }
 
 .sidebar__menu {
@@ -132,10 +146,11 @@ body {
   width: 100%;
   padding: 8px 6px;
   border-radius: 8px;
-  color: var(--white);
+  color: var(--text-primary);
   text-decoration: none;
-  background: #5c5c8c;
-  transition: background 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
   font-size: 1rem;
   word-break: break-word;
   white-space: normal;
@@ -143,7 +158,9 @@ body {
 }
 
 .sidebar__menu li a:hover {
-  background: #3c3c6c;
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
 }
 
 /* トップへ戻る */
@@ -153,23 +170,33 @@ body {
   right: 20px;
   width: 45px;
   height: 45px;
-  background: var(--purple);
-  color: var(--white);
-  border: none;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  color: var(--text-primary);
   border-radius: 50%;
   display: none;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 #to-top:hover {
-  background: var(--btn-hover-bg);
+  background: var(--glass-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px 0 var(--glass-shadow);
 }
 
 /* フッター */
 footer {
-  background: var(--purple);
-  color: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-top: 1px solid var(--glass-border);
+  box-shadow: 0 -8px 32px 0 var(--glass-shadow);
+  color: var(--text-primary);
   text-align: center;
   padding: 10px 0;
   margin-top: 40px;
@@ -272,13 +299,16 @@ footer {
 
 /* ポップアップボックスのスタイル */
 .popup-content {
-  background: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 16px;
   width: 90%;
   max-width: 650px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .popup-content h2 {
@@ -299,13 +329,18 @@ footer {
 }
 
 .popup-content button.accept {
-  background-color: #3c3c6c;
-  color: white;
-  transition: color 0.15s ease-in-out;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-weight: 600;
 }
 
 .popup-content button.accept:hover {
-  color: #ddd;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
 }
 
 /* --- ハンバーガーメニュー --- */

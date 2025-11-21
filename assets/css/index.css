@@ -10,7 +10,7 @@
 /* メインレイアウト */
 .main {
   display: flex;
-  background-color: var(--cyan);
+  background: transparent;
   min-height: 100vh;
   padding-top: 60px;
 }
@@ -42,7 +42,11 @@
 
 /* タイル */
 .square {
-  background: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
   border-radius: 20px;
   width: 100%;
   overflow: hidden;
@@ -52,12 +56,13 @@
   align-items: center;
   text-align: center;
   padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  transition: all 0.3s ease;
 }
 
 .square:hover {
   transform: translateY(-5px);
+  background: var(--glass-hover);
+  box-shadow: 0 12px 36px 0 var(--glass-shadow);
 }
 
 .square a {
@@ -92,12 +97,13 @@
 .text-parts h4 {
   font-size: 1.4rem;
   margin: 5px 0;
-  color: #000;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .text-parts p {
   font-size: 1rem;
-  color: #333;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -124,8 +130,12 @@
 
 /* 時計 */
 .clock {
-  background: var(--purple);
-  color: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  color: var(--text-primary);
   border-radius: 20px;
   font-size: 4rem; /* メイン時刻 */
   padding: 40px;
@@ -134,7 +144,7 @@
   white-space: pre-line;
   overflow: hidden;
   transition: all 0.3s ease;
-  --clock-date-font: 2rem; /* ← 初期値をCSS変数で定義 */
+  --clock-date-font: 2rem;
 }
 
 .clock::first-line {
@@ -143,8 +153,12 @@
 
 /* ToDo */
 .todo-list {
-  background: var(--purple);
-  color: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  color: var(--text-primary);
   padding: 30px;
   font-size: 1.2rem;
 }
@@ -168,10 +182,13 @@
 }
 
 .settings-panel {
-  background: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   width: 320px;
   max-width: 90%;
   position: relative;
@@ -211,10 +228,18 @@ input[type="range"] {
   width: 100%;
 }
 
+.settings-panel label {
+  color: var(--text-secondary);
+}
+
 /* フッター */
 footer {
-  background: var(--purple);
-  color: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-top: 1px solid var(--glass-border);
+  box-shadow: 0 -8px 32px 0 var(--glass-shadow);
+  color: var(--text-primary);
   text-align: center;
   padding: 10px 0;
   font-size: 0.9rem;
@@ -227,22 +252,26 @@ footer {
   right: 20px;
   width: 45px;
   height: 45px;
-  background-color: var(--purple);
-  color: white;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  color: var(--text-primary);
   font-size: 1.5rem;
-  border: none;
   border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 999;
   display: none;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 #to-top:hover {
-  background-color: #5c5c8c;
+  background: var(--glass-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px 0 var(--glass-shadow);
 }
 
 /* --- レスポンシブ対応 --- */
@@ -325,7 +354,7 @@ footer {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #3c3c6c;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -340,7 +369,7 @@ footer {
 
 #loader-inner {
   text-align: center;
-  color: white;
+  color: var(--text-primary);
 }
 
 /* 円形リング */

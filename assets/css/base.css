@@ -1,10 +1,18 @@
 @charset "utf-8";
 
 :root {
-  --color-primary: #3c3c6c;
-  --color-text-black: #333;
+  /* Glassmorphism variables */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.15);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --backdrop-blur: blur(10px);
+  --color-primary: rgba(103, 232, 249, 0.3);
+  --color-text-black: #ffffff;
   --color-text-white: #ffffff;
-  --color-background: #efefef;
+  --color-background: transparent;
 }
 
 a.black {
@@ -17,20 +25,25 @@ body {
     "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
   font-size: 15px;
   line-height: 1.5;
-  color: #333;
-  background-color: #efefef;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 main {
-  background-color: #ffffff;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
   padding: 2rem;
   width: 100%;
   max-width: 600px;
   margin-top: 4rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 1);
-  border-radius: 0.5rem;
+  border-radius: 1rem;
 }
 
 .title {
@@ -38,62 +51,82 @@ main {
   font-weight: 700;
   line-height: 2rem;
   margin-bottom: 1.5rem;
+  color: var(--text-primary);
 }
 
 .border {
   box-sizing: border-box;
   border-style: solid;
-  border-color: rgb(229, 231, 235);
+  border-color: var(--glass-border);
 }
 
 .text-input {
-  border-radius: 0.25rem;
-  border-width: 1px;
+  border-radius: 0.5rem;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.15);
   width: 100%;
   padding: 0.5rem;
   font-size: 100%;
   font-family: inherit;
   line-height: inherit;
   margin: 0px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.text-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .text-input::placeholder {
-  color: #cccccc;
+  color: var(--text-secondary);
 }
 
 .button {
   padding: 0.5rem;
-
   width: 2.5rem;
   height: 2.5rem;
-
-  border-radius: 0.25rem;
-
-  background-color: #3c3c6c;
-  color: #ffffff;
-
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
   font-family: inherit;
   line-height: inherit;
   font-size: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--glass-shadow);
+}
 
-  box-shadow: none;
+.button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--glass-shadow);
 }
 
 .submit {
   margin-top: 1.5rem;
   padding: 0.5rem;
   width: 100%;
-
-  border-radius: 0.25rem;
-
-  background-color: #3c3c6c;
-  color: #ffffff;
-
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
   font-family: inherit;
   line-height: inherit;
   font-size: 100%;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--glass-shadow);
+}
 
-  box-shadow: none;
+.submit:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--glass-shadow);
 }
 
 nav {
