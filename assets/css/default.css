@@ -43,19 +43,16 @@ body {
   padding-top: 60px;
 }
 
-/* Content area inside main - adjust for sidebar on desktop */
-.main > *:not(.sidebar):not(#terms-popup):not(#to-top) {
+/* Content area inside main - adjust for sidebar on desktop for tool pages */
+.main > *:not(.sidebar):not(#terms-popup):not(#to-top):not(.content) {
   flex: 1;
 }
 
 @media (min-width: 801px) {
-  .main > *:not(.sidebar):not(#terms-popup):not(#to-top) {
+  /* Add margin for direct children (tool page content) but not .content div */
+  .main > *:not(.sidebar):not(#terms-popup):not(#to-top):not(.content) {
     margin-left: clamp(200px, 20%, 280px);
-  }
-  
-  /* No margin for fullwidth content (e.g., index page) */
-  .main > .content.fullwidth {
-    margin-left: 0;
+    padding: 20px;
   }
 }
 

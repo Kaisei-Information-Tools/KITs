@@ -17,7 +17,6 @@
 
 /* コンテンツ */
 .content {
-  margin-left: clamp(200px, 20%, 280px);
   flex: 1;
   display: flex;
   gap: 30px;
@@ -25,6 +24,13 @@
   transition: all 0.3s ease;
   align-items: flex-start;
   overflow-x: hidden;
+}
+
+/* Index page with sidebar visible - add margin */
+@media (min-width: 801px) {
+  .content:not(.fullwidth) {
+    margin-left: clamp(200px, 20%, 280px);
+  }
 }
 
 .content.fullwidth {
