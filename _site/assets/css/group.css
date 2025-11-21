@@ -1,157 +1,154 @@
 @charset "utf-8";
 
 body {
-    font-family: "Noto Sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans",
-        "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    color: #333;
-    background-color: #efefef;
+  font-family: "Noto Sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #efefef;
 }
 
 main {
-    background-color: #ffffff;
-    padding: 2rem;
-    width: 100%;
-    max-width: 70rem;
-    margin-top: 3rem;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 10);
-    border-radius: 1rem;
+  background-color: #ffffff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 70rem;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 10);
+  border-radius: 1rem;
+  min-height: auto !important;
 }
 
 .title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 2rem;
-    margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .border {
-    box-sizing: border-box;
-    border-style: solid;
-    border-color: rgb(229, 231, 235);
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: rgb(229, 231, 235);
 }
 
 .text-input {
-    border-radius: 0.25rem;
-    border-width: 1px;
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 100%;
-    font-family: inherit;
-    line-height: inherit;
-    margin: 0px;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 100%;
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0px;
 }
 
 .submit {
-    margin-top: 1.5rem;
-    padding: 0.5rem;
-    width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
+  width: 100%;
 
-    border-radius: 0.25rem;
+  border-radius: 0.25rem;
 
-    background-color: #3c3c6c;
-    color: #ffffff;
+  background-color: #3c3c6c;
+  color: #ffffff;
 
-    font-family: inherit;
-    line-height: inherit;
-    font-size: 100%;
+  font-family: inherit;
+  line-height: inherit;
+  font-size: 100%;
 
-    box-shadow: none;
+  box-shadow: none;
 }
 
 #result {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 /*** The new CSS reset - version 1.11.1 (last updated 24.10.2023) ***/
 
 *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg*, symbol*)) {
-    all: unset;
-    display: revert;
+  all: unset;
+  display: revert;
 }
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 html {
-    -moz-text-size-adjust: none;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 a,
 button {
-    cursor: revert;
+  cursor: revert;
 }
 ol,
 ul,
 menu,
 summary {
-    list-style: none;
+  list-style: none;
 }
 img {
-    max-inline-size: 100%;
-    max-block-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 100%;
 }
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 input,
 textarea {
-    -webkit-user-select: auto;
+  -webkit-user-select: auto;
 }
 textarea {
-    white-space: revert;
+  white-space: revert;
 }
 meter {
-    -webkit-appearance: revert;
-    appearance: revert;
+  -webkit-appearance: revert;
+  appearance: revert;
 }
 :where(pre) {
-    all: revert;
-    box-sizing: border-box;
+  all: revert;
+  box-sizing: border-box;
 }
 ::placeholder {
-    color: unset;
+  color: unset;
 }
 :where([hidden]) {
-    display: none;
+  display: none;
 }
 :where([contenteditable]:not([contenteditable="false"])) {
-    -moz-user-modify: read-write;
-    -webkit-user-modify: read-write;
-    overflow-wrap: break-word;
-    -webkit-line-break: after-white-space;
-    -webkit-user-select: auto;
+  -moz-user-modify: read-write;
+  -webkit-user-modify: read-write;
+  overflow-wrap: break-word;
+  -webkit-line-break: after-white-space;
+  -webkit-user-select: auto;
 }
 :where([draggable="true"]) {
-    -webkit-user-drag: element;
+  -webkit-user-drag: element;
 }
 :where(dialog:modal) {
-    all: revert;
-    box-sizing: border-box;
+  all: revert;
+  box-sizing: border-box;
 }
 
 .autofill-container {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .flex-grow {
-    flex-grow: 1;
-    min-height: 1rem;
-    margin: 1rem;
+  flex-grow: 1;
+  min-height: 1rem;
+  margin: 1rem;
 }
-footer {
-    margin-top: auto;
-}
-
 html,
 body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }

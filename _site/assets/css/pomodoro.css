@@ -89,3 +89,22 @@ footer {
   position: fixed;
   bottom: 0;
 }
+
+#statusDisplay {
+  background-color: #b22222;
+  /* 初期は濃い赤色 */
+  color: #ffffff;
+  /* 文字色は白 */
+  font-size: 20px;
+  /* フォントサイズ */
+  padding: 15px 20px;
+  /* 上下に15px、左右に20pxのパディング */
+  text-align: center;
+  /* 中央揃え */
+  border-radius: 10px;
+  /* 角を丸める */
+  margin: 20px 0;
+  /* 上下に20pxのマージン */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* 軽いボックスシャドウで立体感を追加 */
+}

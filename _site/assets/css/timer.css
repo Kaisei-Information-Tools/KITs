@@ -1,27 +1,46 @@
-.timer-container {
-  height: 100vh;
-  background-color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-
 main {
-  width: 20vw;
+  text-align: center;
+  margin-bottom: 10px;
+  max-width: 60vw;
+  color: var(--text-primary);
 }
 
-.timer-container h1 {
+main h1 {
   font-weight: 700;
+  color: var(--text-primary);
+}
+
+.timer {
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--text-primary);
 }
 
 .input-container {
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
 .timer-input {
-  width: 3rem;
+  margin: 0 5px;
+  width: 7rem;
+  height: 3rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-primary);
   padding: 5px;
-  text-align: center;
+  font-size: 1rem;
+}
+
+.timer-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .timer-button {
@@ -30,23 +49,115 @@ main {
   margin: 0 5px;
   width: 7rem;
   height: 3rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.timer-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
+}
+
+.add-button {
+  background: rgba(103, 232, 249, 0.2);
+  border-color: rgba(103, 232, 249, 0.3);
+}
+
+.add-button:hover {
+  background: rgba(103, 232, 249, 0.3);
 }
 
 .start-button {
-  background-color: #60d351;
-  color: white;
+  background: rgba(96, 211, 81, 0.2);
+  border-color: rgba(96, 211, 81, 0.3);
+}
+
+.start-button:hover {
+  background: rgba(96, 211, 81, 0.3);
 }
 
 .stop-button {
-  background-color: #d351a1;
-  color: white;
+  background: rgba(211, 81, 161, 0.2);
+  border-color: rgba(211, 81, 161, 0.3);
+}
+
+.stop-button:hover {
+  background: rgba(211, 81, 161, 0.3);
+}
+
+.sound-setting {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: large;
+  color: var(--text-primary);
+}
+
+.toggle-button {
+  margin: 0.3rem 1rem;
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  border-radius: 1.5rem;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  box-sizing: content-box;
+  cursor: pointer;
+  transition: all .4s;
+}
+
+.toggle-button:has(:checked) {
+  border-color: rgba(75, 216, 101, 0.5);
+  background: rgba(75, 216, 101, 0.2);
+}
+
+.toggle-button::after {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  content: '';
+  transition: all .4s;
+}
+
+.toggle-button:has(:checked)::after {
+  left: 1.5rem;
+  background-color: #4bd865;
+}
+
+#toggle-sound {
+  display: none;
 }
 
 .timer-display {
   font-size: 4rem;
   margin-top: 20px;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+#timers {
+  place-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  gap: 10px;
+  margin-top: 10px;
 }
 
 footer {
   margin-top: 0;
+  position: fixed;
+  bottom: 0;
 }

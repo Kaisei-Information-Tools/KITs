@@ -1,34 +1,64 @@
 .stopwatch-container {
   text-align: center;
-  background-color: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
   margin-bottom: 20px;
 }
 
 .display {
   font-size: 3em;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 20px;
+  font-weight: 700;
 }
 
 .stopwatch-buttons {
-  color: #ffffff;
+  color: var(--text-primary);
   width: 7rem;
   margin: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.stopwatch-buttons:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
 }
 
 .toggle-button {
-  background-color: #60d351;
+  background: rgba(96, 211, 81, 0.2);
+  border-color: rgba(96, 211, 81, 0.3);
+}
+
+.toggle-button:hover {
+  background: rgba(96, 211, 81, 0.3);
 }
 
 .reset-button {
-  background-color: #d351a1;
+  background: rgba(211, 81, 161, 0.2);
+  border-color: rgba(211, 81, 161, 0.3);
+}
+
+.reset-button:hover {
+  background: rgba(211, 81, 161, 0.3);
 }
 
 .lap-button {
-  background-color: var(--color-primary);
+  background: rgba(103, 232, 249, 0.2);
+  border-color: rgba(103, 232, 249, 0.3);
+}
+
+.lap-button:hover {
+  background: rgba(103, 232, 249, 0.3);
 }
 
 .lap-container {
@@ -39,11 +69,12 @@
 }
 
 .lap {
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
   padding: 5px;
   margin: 5px 0;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px var(--glass-shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,7 +82,7 @@
 
 .lap .lap-time {
   font-size: 1.5em;
-  color: #333;
+  color: var(--text-primary);
   margin-right: 10px;
 }
 
@@ -68,7 +99,6 @@
 /*   font-size: 0.8em; */
 /* } */
 
-footer {
-  bottom: 0;
-  position: fixed;
+#container {
+  min-height: calc(100vh - 174px);
 }

@@ -3,11 +3,11 @@ body {
 }
 
 .clock-container {
-  height: calc(100% - 56px);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #3c3c6c;
+  background-color: transparent;
 }
 
 #clock {
@@ -15,10 +15,31 @@ body {
   width: 100%;
   margin: 8% auto;
   text-align: center;
-  color: #ffffff;
-  text-shadow: #00ffff 0 0 30px;
+  color: var(--text-primary);
+  text-shadow: rgba(255, 255, 255, 0.5) 0 0 30px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 80%;
 }
 
 footer {
   margin-top: 0;
+}
+
+main {
+  background-color: transparent;
+  padding: 0;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  box-shadow: none;
+  border-radius: 0;
+  height: 100%;
 }

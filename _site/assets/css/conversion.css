@@ -1,0 +1,46 @@
+h1 {
+  font-size: 20px;
+}
+
+select,
+input,
+button:not(.btn) {
+  width: 100%; /* 全て同じ幅 */
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* 幅を内側に計算 */
+}
+
+button:not(.btn) {
+  background: #3c3c6c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+p.description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+button:not(.btn):hover {
+  color: #ddd;
+}
+
+#result {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+main {
+  height: 764px;
+  min-height: 0 !important;
+}

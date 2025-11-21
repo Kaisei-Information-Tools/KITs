@@ -2,36 +2,80 @@ body {
   height: 100vh;
 }
 .calc-container {
-    height: calc(100vh - 56px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
+  height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
 }
 .calculator {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 400px;
-    margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 400px;
+  margin: auto;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  border-radius: 20px;
+  padding: 20px;
 }
-.calculator input, button {
-    font-size: 1.5em;
-    padding: 10px;
-    text-align: center;
+.calculator input,
+button {
+  font-size: 1.5em;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
 }
 .calculator input {
-    grid-column: span 4;
+  grid-column: span 4;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
+.calculator input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 .calculator button {
-    cursor: pointer;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+.calculator button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
 }
 .operator {
-    background-color: var(--color-primary);
-    color: white;
+  background: rgba(103, 232, 249, 0.2);
+  border-color: rgba(103, 232, 249, 0.3);
+}
+.operator:hover {
+  background: rgba(103, 232, 249, 0.3);
 }
 .equals {
-    grid-column: span 4;
-    background-color: var(--color-primary);
-    color: white;
+  grid-column: span 4;
+  background: rgba(96, 211, 81, 0.2);
+  border-color: rgba(96, 211, 81, 0.3);
+}
+.equals:hover {
+  background: rgba(96, 211, 81, 0.3);
+}
+
+main {
+  background-color: transparent;
+  padding: 0;
+  width: auto;
+  max-width: unset;
+  margin-top: 0;
+  margin-left: unset;
+  margin-right: unset;
+  box-shadow: none;
+  border-radius: 0;
 }
