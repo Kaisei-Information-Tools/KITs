@@ -43,13 +43,13 @@ body {
   padding-top: 60px;
 }
 
-/* Content area inside main - adjust for sidebar on desktop for tool pages */
+/* Direct children of .main (excluding sidebar, popups, and .content divs) */
 .main > *:not(.sidebar):not(#terms-popup):not(#to-top):not(.content) {
   flex: 1;
 }
 
 @media (min-width: 801px) {
-  /* Add margin for direct children (tool page content) but not .content div */
+  /* Add left margin for direct children to account for sidebar width */
   .main > *:not(.sidebar):not(#terms-popup):not(#to-top):not(.content) {
     margin-left: clamp(200px, 20%, 280px);
     padding: 20px;

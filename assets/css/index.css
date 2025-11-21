@@ -26,7 +26,7 @@
   overflow-x: hidden;
 }
 
-/* Index page with sidebar visible - add margin */
+/* Add left margin for content when sidebar is visible (not fullwidth) */
 @media (min-width: 801px) {
   .content:not(.fullwidth) {
     margin-left: clamp(200px, 20%, 280px);
