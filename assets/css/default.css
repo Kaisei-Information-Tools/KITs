@@ -52,6 +52,11 @@ body {
   .main > *:not(.sidebar):not(#terms-popup):not(#to-top) {
     margin-left: clamp(200px, 20%, 280px);
   }
+  
+  /* No margin for fullwidth content (e.g., index page) */
+  .main > .content.fullwidth {
+    margin-left: 0;
+  }
 }
 
 /* ヘッダー */
@@ -144,10 +149,15 @@ body {
   font-family: sans-serif;
 }
 
-/* On desktop, sidebar is visible by default */
+/* On desktop, sidebar is visible by default on tool pages */
 @media (min-width: 801px) {
   .sidebar {
     left: 0 !important;
+  }
+  
+  /* Hide sidebar when fullwidth content is present (e.g., index page) */
+  .main:has(.content.fullwidth) .sidebar {
+    left: -300px !important;
   }
 }
 
