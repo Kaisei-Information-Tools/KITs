@@ -12,7 +12,9 @@ main {
   height: auto;
 }
 .card-footer {
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .ck-reset {
   width: 100%;
@@ -27,7 +29,11 @@ main {
 #editor {
   width: 600px;
   height: auto;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(221, 221, 221, 0.5);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 8px;
 }
 #toolbar {
   margin-top: 10px;

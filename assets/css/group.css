@@ -6,18 +6,22 @@ body {
   font-size: 15px;
   line-height: 1.5;
   color: #333;
-  background-color: #efefef;
+  background: linear-gradient(135deg, #e8f0f7 0%, #f5f8fa 100%);
+  background-attachment: fixed;
 }
 
 main {
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 2rem;
   width: 100%;
   max-width: 70rem;
   margin-top: 3rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 10);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   border-radius: 1rem;
   min-height: auto !important;
 }
