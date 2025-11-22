@@ -9,28 +9,47 @@ main {
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  gap: 20px;
   min-height: 0 !important;
 }
 
 .left,
 .right {
   padding: 20px;
-  margin: 8px;
 }
 
 .left {
-  width: 60%;
+  flex: 1 1 60%;
+  min-width: 0;
 }
 
 .right {
-  width: 35%;
+  flex: 0 0 35%;
+  min-width: 250px;
   background: rgba(249, 249, 249, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-left: 1px solid rgba(221, 221, 221, 0.5);
   overflow-y: auto;
   max-height: 400px;
+}
+
+@media (max-width: 800px) {
+  main {
+    flex-wrap: wrap;
+  }
+  
+  .left,
+  .right {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  
+  .right {
+    border-left: none;
+    border-top: 1px solid rgba(221, 221, 221, 0.5);
+  }
 }
 
 textarea {
