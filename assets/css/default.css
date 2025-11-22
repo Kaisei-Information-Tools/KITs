@@ -43,16 +43,16 @@ body {
   padding-top: 60px;
 }
 
-/* Direct children of .main (excluding sidebar, popups, and .content divs) */
-.main > *:not(.sidebar):not(#terms-popup):not(#to-top):not(.content) {
+/* Page content wrapper for tool pages */
+.page-content {
   flex: 1;
+  padding: 20px;
 }
 
 @media (min-width: 801px) {
-  /* Add left margin for direct children to account for sidebar width */
-  .main > *:not(.sidebar):not(#terms-popup):not(#to-top):not(.content) {
+  /* Add left margin to page content to account for sidebar width */
+  .page-content {
     margin-left: clamp(200px, 20%, 280px);
-    padding: 20px;
   }
 }
 
