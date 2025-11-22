@@ -20,13 +20,13 @@ main {
 }
 
 .left {
-  flex: 1 1 60%;
+  flex: 1 1 65%;
   min-width: 0;
 }
 
 .right {
-  flex: 0 0 35%;
-  min-width: 250px;
+  flex: 0 1 35%;
+  min-width: 0;
   background: rgba(249, 249, 249, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -35,7 +35,7 @@ main {
   max-height: 400px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   main {
     flex-wrap: wrap;
   }
