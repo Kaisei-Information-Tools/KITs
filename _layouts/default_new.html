@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="assets/css/{{ page.css }}.css" />
   {% endif %} {% if page.css2 %}
   <link rel="stylesheet" href="assets/css/{{ page.css2 }}.css" />
-  {% endif %}/>
+  {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
@@ -40,7 +40,7 @@
 
 <body>
   <!-- ハンバーガーメニュー用チェックボックス -->
-  <input type="checkbox" id="menu" />
+  <input type="checkbox" id="menu">
 
   <!-- ヘッダー -->
   <header class="header">
@@ -50,7 +50,7 @@
       <span></span>
     </label>
     <div class="logo">
-      <img src="assets/images/logo.svg" width="32" alt="Logo" />
+      <img src="assets/images/logo.svg" width="32" alt="Logo">
     </div>
     <nav class="nav">
       <a href="about.html">About</a>
@@ -137,8 +137,9 @@
       {{ content }}
     </div>
     <!-- トップへ戻るボタン -->
-    <button id="to-top">↑</button>
   </main>
+  <button id="to-top" style="z-index: 9999;">↑</button>
+
 
   <!-- フッター -->
   <footer>

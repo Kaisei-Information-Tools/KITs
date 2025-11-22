@@ -8,7 +8,7 @@
   --input-focus-border: #3c3c6c;
   --btn-bg: #3c3c6c;
   --btn-hover-bg: #5c5c8c;
-  
+
   /* Glassmorphism colors */
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.3);
@@ -25,7 +25,11 @@ body {
   padding: 0;
   overflow-x: visible;
   font-family: sans-serif;
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-end) 100%
+  );
   background-attachment: fixed;
   min-height: 100vh;
 }
@@ -40,6 +44,7 @@ body {
 .main {
   min-height: 100vh;
   padding-top: 60px;
+  margin-top: 5rem;
 }
 
 /* Page content wrapper for tool pages */
@@ -386,7 +391,7 @@ footer {
   position: absolute;
   width: 20px;
   height: 2px;
-  background-color: white;
+  background-color: black;
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;

@@ -21,7 +21,7 @@
   margin: 0.25rem;
   padding: 0.5rem 0.25rem;
   border-radius: 10px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     inset 0 1px 1px rgba(255, 255, 255, 0.6);
   transition: all 0.3s ease;
@@ -29,19 +29,19 @@
 
 .source-selection button:hover {
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
   transform: translateY(-2px);
 }
 
 .source-selection button.selected {
-  background: rgba(100, 100, 140, 0.5);
+  background: rgba(100, 100, 140, 1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
   color: #ffffff;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.15),
     inset 0 1px 1px rgba(255, 255, 255, 0.4);
   pointer-events: none;
@@ -61,7 +61,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0.6);
   color: var(--text-primary);
   font-weight: 600;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     inset 0 1px 1px rgba(255, 255, 255, 0.6);
   transition: all 0.3s ease;
@@ -69,7 +69,7 @@
 
 .reset:hover {
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
   transform: translateY(-2px);
@@ -149,16 +149,17 @@
   font-weight: 600;
   padding: 0.75rem;
   border-radius: 10px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     inset 0 1px 1px rgba(255, 255, 255, 0.6);
   transition: all 0.3s ease;
   cursor: pointer;
+  height: 48px;
 }
 
 #auto-get-data:hover {
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
   transform: translateY(-2px);

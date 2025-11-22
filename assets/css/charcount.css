@@ -74,30 +74,6 @@ ul li {
   border-radius: 6px;
 }
 
-nav {
-  background-color: var(--color-primary);
-  color: #fff;
-  padding: 10px;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li {
-  background: none;
-  padding: 0;
-  margin-right: 10px;
-  border-radius: 0;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
 footer {
   position: fixed;
 }

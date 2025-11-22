@@ -23,7 +23,7 @@
   padding: 20px;
   transition: all 0.3s ease;
   align-items: flex-start;
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 /* Content takes full width since sidebar is hidden by default */
@@ -347,7 +347,11 @@ footer {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-end) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
