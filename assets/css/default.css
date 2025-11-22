@@ -47,12 +47,15 @@ body {
 .page-content {
   flex: 1;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 801px) {
   /* Add left margin to page content to account for sidebar width */
   .page-content {
     margin-left: clamp(200px, 20%, 280px);
+    width: calc(100% - clamp(200px, 20%, 280px));
   }
 }
 
@@ -144,6 +147,7 @@ body {
     left 0.3s ease,
     width 0.3s ease;
   font-family: sans-serif;
+  z-index: 50;
 }
 
 /* On desktop, sidebar is visible by default on tool pages */
