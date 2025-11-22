@@ -47,8 +47,6 @@ body {
 .page-content {
   flex: 1;
   padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 @media (min-width: 801px) {
