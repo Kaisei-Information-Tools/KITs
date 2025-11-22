@@ -38,14 +38,12 @@ body {
 
 /* Main layout container */
 .main {
-  display: flex;
   min-height: 100vh;
   padding-top: 60px;
 }
 
 /* Page content wrapper for tool pages */
 .page-content {
-  flex: 1;
   padding: 20px;
 }
 
@@ -53,7 +51,6 @@ body {
   /* Add left margin to page content to account for sidebar width */
   .page-content {
     margin-left: clamp(200px, 20%, 280px);
-    width: calc(100% - clamp(200px, 20%, 280px));
   }
 }
 
@@ -155,7 +152,7 @@ body {
   }
   
   /* Hide sidebar when fullwidth content is present (e.g., index page) */
-  .main:has(.content.fullwidth) .sidebar {
+  body:has(.content.fullwidth) .sidebar {
     left: -300px !important;
   }
 }
