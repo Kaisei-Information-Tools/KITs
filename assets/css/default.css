@@ -45,13 +45,8 @@ body {
 /* Page content wrapper for tool pages */
 .page-content {
   padding: 20px;
-}
-
-@media (min-width: 801px) {
-  /* Add left margin to page content to account for sidebar width */
-  .page-content {
-    margin-left: clamp(200px, 20%, 280px);
-  }
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ヘッダー */
@@ -145,23 +140,14 @@ body {
   z-index: 50;
 }
 
-/* On desktop, sidebar is visible by default on tool pages */
-@media (min-width: 801px) {
-  .sidebar {
-    left: 0 !important;
-  }
-  
-  /* Hide sidebar when fullwidth content is present (e.g., index page) */
-  body:has(.content.fullwidth) .sidebar {
-    left: -300px !important;
-  }
+/* Sidebar starts hidden by default, shown only when toggled */
+.sidebar.hidden {
+  left: -300px;
 }
 
-/* On mobile, sidebar starts hidden */
-@media (max-width: 800px) {
-  .sidebar.hidden {
-    left: -300px;
-  }
+/* When sidebar is visible (not hidden) */
+.sidebar:not(.hidden) {
+  left: 0;
 }
 
 .sidebar__title {

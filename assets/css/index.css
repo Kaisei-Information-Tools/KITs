@@ -26,14 +26,8 @@
   overflow-x: hidden;
 }
 
-/* Add left margin for content when sidebar is visible (not fullwidth) */
-@media (min-width: 801px) {
-  .content:not(.fullwidth) {
-    margin-left: clamp(200px, 20%, 280px);
-  }
-}
-
-.content.fullwidth {
+/* Content takes full width since sidebar is hidden by default */
+.content {
   margin-left: 0;
 }
 
