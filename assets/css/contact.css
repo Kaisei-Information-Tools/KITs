@@ -13,7 +13,6 @@
   position: absolute;
   width: 20px;
   height: 2px;
-  background-color: var(--white);
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
@@ -64,7 +63,7 @@
   flex: 1;
   margin-left: 0 !important;
   width: 100%;
-  padding: 100px 40px 40px;
+  padding: 0px 40px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,7 +83,9 @@
   border: 1.5px solid rgba(255, 255, 255, 0.6);
   padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
   margin: 0 auto;
 }
 .contact-form h2 {
@@ -109,7 +110,9 @@
   transition: all 0.3s ease;
   appearance: none;
   background-image: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 /* プルダウン（select）— 高さ自動＆矢印中央配置 */
@@ -134,7 +137,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 /* プルダウン先頭のプレースホルダを小さく */
@@ -149,7 +154,9 @@
   outline: none;
   background: rgba(255, 255, 255, 0.6);
   border-color: rgba(60, 60, 108, 0.5);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 /* ラベル文字を少し大きく */
 .contact-form label {
@@ -179,10 +186,14 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .contact-form .btn-submit:hover {
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
   transform: translateY(-2px);
 }

@@ -410,13 +410,13 @@ footer {
   transform: translateY(6px);
 }
 
-#menu:checked ~ .menu span:nth-of-type(1) {
+#menu:checked ~ .header .menu span:nth-of-type(1) {
   transform: rotate(45deg);
 }
-#menu:checked ~ .menu span:nth-of-type(2) {
+#menu:checked ~ .header .menu span:nth-of-type(2) {
   opacity: 0;
 }
-#menu:checked ~ .menu span:nth-of-type(3) {
+#menu:checked ~ .header .menu span:nth-of-type(3) {
   transform: rotate(-45deg);
 }
 
