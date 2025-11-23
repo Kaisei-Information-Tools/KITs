@@ -168,3 +168,7 @@
 .required {
   color: #d351a1;
 }
+
+main {
+  max-width: 1000px !important;
+}
