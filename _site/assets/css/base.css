@@ -5,6 +5,15 @@
   --color-text-black: #333;
   --color-text-white: #ffffff;
   --color-background: #efefef;
+
+  /* Glassmorphism colors */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --bg-gradient-start: #e8f0f7;
+  --bg-gradient-end: #f5f8fa;
+  --text-primary: #2c2c2c;
+  --text-secondary: #5a5a5a;
 }
 
 a.black {
@@ -14,23 +23,32 @@ a.black {
 
 body {
   font-family: "Noto Sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans",
-  "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+    "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
   font-size: 15px;
   line-height: 1.5;
-  color: #333;
-  background-color: #efefef;
+  color: var(--text-primary);
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-end) 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 main {
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 2rem;
   width: 100%;
   max-width: 600px;
-  margin-top: 2.5rem;
+  margin-top: 4rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 1);
-  border-radius: 0.5rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
 }
 
 .title {
@@ -67,38 +85,70 @@ main {
   width: 2.5rem;
   height: 2.5rem;
 
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
 
-  background-color: #3c3c6c;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-weight: 600;
 
   font-family: inherit;
   line-height: inherit;
   font-size: 100%;
 
-  box-shadow: none;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
 }
 
 .submit {
   margin-top: 1.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
   width: 100%;
 
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
 
-  background-color: #3c3c6c;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-weight: 600;
 
   font-family: inherit;
   line-height: inherit;
   font-size: 100%;
 
-  box-shadow: none;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
 }
 
 nav {
-  background-color: var(--color-primary);
-  color: #fff;
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-primary);
   padding: 10px;
 }
 
@@ -114,15 +164,20 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #fff;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
 /* ページコンテンツのスタイル */
-.container {
+body > .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  min-height: calc(100vh - 134.063px);
+}
+
+body > main {
+  min-height: calc(100vh - 173.562531px);
 }
 
 .white {
@@ -135,9 +190,16 @@ nav ul li a {
   margin-bottom: auto !important;
 }
 
+.nav-link:hover {
+  color: #ddd !important;
+}
+
 footer {
-  background-color: #3c3c6c;
-  color: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-secondary);
   text-align: center;
   padding: 10px;
   bottom: 0;
@@ -184,6 +246,23 @@ footer {
   --bs-btn-disabled-border-color: #3c3c6c;
 }
 
+.btn-theme-2 {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #3c3c6c;
+  --bs-btn-border-color: #3c3c6c;
+  --bs-btn-hover-color: #ddd;
+  --bs-btn-hover-bg: #3c3c6c;
+  --bs-btn-hover-border-color: #3c3c6c;
+  --bs-btn-focus-shadow-rgb: none;
+  --bs-btn-active-color: #ddd;
+  --bs-btn-active-bg: #3c3c6c;
+  --bs-btn-active-border-color: #3c3c6c;
+  --bs-btn-active-shadow: none;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #3c3c6c;
+  --bs-btn-disabled-border-color: #3c3c6c;
+}
+
 .text-color {
   color: transparent !important;
   background-clip: text;
@@ -193,9 +272,11 @@ footer {
   color: transparent !important;
   background-clip: text !important;
   background-image: linear-gradient(to right, Magenta, yellow, Cyan, Magenta);
-  background-size: 200% 100%;  /*背景のサイズを2倍にする*/
+  background-size: 200% 100%;
+  /*背景のサイズを2倍にする*/
   animation: gaming 2s linear infinite;
 }
+
 @keyframes gaming {
   /* backgroundを移動させる */
   100% {
@@ -206,6 +287,388 @@ footer {
 .golden {
   color: transparent !important;
   background-clip: text !important;
-  background: linear-gradient(45deg, #B67B03 0%, #DAAF08 45%, #FEE9A0 70%, #DAAF08 85%, #B67B03 90% 100%);
-  text-shadow: #FF0 0 0 30px !important;
+  background: linear-gradient(
+    45deg,
+    #b67b03 0%,
+    #daaf08 45%,
+    #fee9a0 70%,
+    #daaf08 85%,
+    #b67b03 90% 100%
+  );
+  text-shadow: #ff0 0 0 30px !important;
+}
+
+.silver {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #757575 0%,
+    #9e9e9e 45%,
+    #e8e8e8 70%,
+    #9e9e9e 85%,
+    #757575 90% 100%
+  );
+  text-shadow: #fff 0 0 30px !important;
+}
+
+.toast {
+  --bs-toast-bg: rgba(var(--bs-body-bg-rgb), 1);
+  opacity: 1 !important;
+}
+
+.platinum {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #e0f7ff 0%,
+    #d0e7f0 25%,
+    #bccfd6 50%,
+    #e6f5ff 75%,
+    #d0e7f0 100%
+  );
+  text-shadow: #e0f7ff 0 0 30px !important;
+}
+
+.amethyst {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #9b59b6 0%,
+    #8e44ad 25%,
+    #d2b4de 50%,
+    #8e44ad 75%,
+    #9b59b6 100%
+  );
+  text-shadow: #b182c8 0 0 30px !important;
+}
+
+.emerald {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #50c878 0%,
+    #46b267 25%,
+    #a0e8af 50%,
+    #46b267 75%,
+    #50c878 100%
+  );
+  text-shadow: #8de6a2 0 0 30px !important;
+}
+
+.ruby {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #e0115f 0%,
+    #c20044 25%,
+    #ff6699 50%,
+    #c20044 75%,
+    #e0115f 100%
+  );
+  text-shadow: #ff88aa 0 0 30px !important;
+}
+
+.topaz {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #ffc87c 0%,
+    #ffa500 25%,
+    #ffe5b4 50%,
+    #ffa500 75%,
+    #ffc87c 100%
+  );
+  text-shadow: #ffdd99 0 0 30px !important;
+}
+
+.diamond {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #b0e0e6 0%,
+    #e6e8fa 25%,
+    #ffffff 50%,
+    #e6e8fa 75%,
+    #b0e0e6 100%
+  );
+  text-shadow: #ccf2ff 0 0 30px !important;
+}
+
+.sapphire {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #0f52ba 0%,
+    #1034a6 25%,
+    #4682b4 50%,
+    #1034a6 75%,
+    #0f52ba 100%
+  );
+  text-shadow: #6699cc 0 0 30px !important;
+}
+
+.opal {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #ffccff 0%,
+    #add8e6 25%,
+    #90ee90 50%,
+    #fffacd 75%,
+    #ffccff 100%
+  );
+  text-shadow: #e6e6fa 0 0 30px !important;
+}
+
+.peridot {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #99ff99 0%,
+    #66ff66 25%,
+    #b2ff66 50%,
+    #66ff66 75%,
+    #99ff99 100%
+  );
+  text-shadow: #ccff99 0 0 30px !important;
+}
+
+.rosegold {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #b76e79 0%,
+    #d99394 25%,
+    #f4c2c2 50%,
+    #d99394 75%,
+    #b76e79 100%
+  );
+  text-shadow: #f8c8dc 0 0 30px !important;
+}
+
+.obsidian {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #0c0c0c 0%,
+    #1c1c1c 25%,
+    #3a3a3a 50%,
+    #1c1c1c 75%,
+    #0c0c0c 100%
+  );
+  text-shadow: #555555 0 0 20px !important;
+}
+
+.aquamarine {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #7fffd4 0%,
+    #40e0d0 25%,
+    #afeeee 50%,
+    #40e0d0 75%,
+    #7fffd4 100%
+  );
+  text-shadow: #a0ffff 0 0 30px !important;
+}
+
+.quartz {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #e0ffff 0%,
+    #f8f8ff 25%,
+    #ffffff 50%,
+    #f8f8ff 75%,
+    #e0ffff 100%
+  );
+  text-shadow: #ccffff 0 0 30px !important;
+}
+
+.bismuth {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #8a2be2 0%,
+    #4b0082 20%,
+    #00ffff 40%,
+    #ff69b4 60%,
+    #8a2be2 100%
+  );
+  text-shadow: #a020f0 0 0 30px !important;
+}
+
+.watermelontourmaline {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #2e8b57 0%,
+    /* 濃い緑 */ #66cdaa 25%,
+    /* 明るい緑 */ #ffffff 50%,
+    /* 中央の透明感 */ #ff69b4 75%,
+    /* 鮮やかなピンク */ #ff1493 100%
+  );
+  text-shadow:
+    #e6ffe6 0 0 30px,
+    #ffccd5 0 0 20px !important;
+}
+
+.mystictopaz {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #2b004d 0%,
+    /* 深い紫 */ #4b0082 15%,
+    /* インディゴ */ #00ffff 30%,
+    /* アクアブルー */ #7fff00 45%,
+    /* ライムグリーン */ #ff69b4 60%,
+    /* ホットピンク */ #ff4500 75%,
+    /* オレンジレッド */ #2b004d 100% /* 再び深い紫 */
+  );
+  text-shadow:
+    #ff80ff 0 0 30px,
+    #80ffff 0 0 20px !important;
+}
+
+.catseye {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    90deg,
+    #2c2c2c 0%,
+    /* 黒に近い暗灰色 */ #ffffff 45%,
+    /* 明るい光の筋 */ #2c2c2c 55%,
+    /* 暗灰色に戻る */ #000000 100% /* 深い黒 */
+  );
+  text-shadow:
+    #ffffe0 0 0 30px,
+    #777777 0 0 15px !important;
+}
+
+.alexandrite {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #4b0082 0%,
+    /* 暗いインディゴ */ #7f00ff 25%,
+    /* 紫色 */ #00ff7f 50%,
+    /* エメラルドグリーン */ #7f00ff 75%,
+    /* 再び紫色 */ #4b0082 100% /* 暗いインディゴ */
+  );
+  text-shadow:
+    #8a2be2 0 0 30px,
+    #00ff7f 0 0 20px !important;
+}
+
+.amber {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #ffe4b5 0%,
+    /* ミルクティー色の薄い琥珀 */ #ffcc99 25%,
+    /* 薄いオレンジ */ #ff9966 50%,
+    /* 透明感のあるオレンジ */ #ffcc99 75%,
+    /* 再び薄いオレンジ */ #ffe4b5 100% /* ミルクティー色の薄い琥珀 */
+  );
+  text-shadow: #ffd700 0 0 15px !important;
+}
+
+.pearl {
+  color: transparent !important;
+  background-clip: text !important;
+  background: linear-gradient(
+    45deg,
+    #ffffff 0%,
+    /* 純白 */ #f8f8ff 20%,
+    /* わずかに青みがかった白 */ #e6e6fa 40%,
+    /* ラベンダーの淡い光沢 */ #f8f8ff 60%,
+    /* 再び青みがかった白 */ #ffffff 100% /* 純白に戻る */
+  );
+  text-shadow: #ffffff 0 0 20px !important;
+}
+
+/* ポップアップ全体のスタイル */
+#terms-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* ポップアップボックスのスタイル */
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 650px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+  margin-top: 0;
+}
+
+.popup-content p {
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-content button.accept {
+  background-color: #3c3c6c;
+  color: white;
+  transition: color 0.15s ease-in-out;
+}
+
+.popup-content button.accept:hover {
+  color: #ddd;
+}
+
+.dropdown-menu-theme {
+  --bs-dropdown-color: #fff;
+  --bs-dropdown-bg: #3c3c6c;
+  --bs-dropdown-border-color: var(--bs-border-color-translucent);
+  --bs-dropdown-box-shadow: ;
+  --bs-dropdown-link-color: #fff;
+  --bs-dropdown-link-hover-color: #ddd;
+  --bs-dropdown-divider-bg: var(--bs-border-color-translucent);
+  --bs-dropdown-link-hover-bg: #3c3c6c;
+  --bs-dropdown-link-active-color: #ddd;
+  --bs-dropdown-link-active-bg: #3c3c6c;
+  --bs-dropdown-link-disabled-color: #adb5bd;
+  --bs-dropdown-header-color: #adb5bd;
 }

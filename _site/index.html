@@ -1,187 +1,362 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"
-        />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap"
-        rel="stylesheet"
-        />
-    <link rel="stylesheet" href="assets/css/reset.css" />
-    <link rel="stylesheet" href="assets/css/base.css" />
-    
-    <link rel="stylesheet" href="assets/css/index.css">
-    
-    
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"
-        ></script>
-    
-    
-    <title>ホーム - KITs</title>
-    <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="assets/favicon/apple-touch-icon.png"
-        />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="assets/favicon/favicon-32x32.png"
-        />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="assets/favicon/favicon-16x16.png"
-        />
-    <link rel="manifest" href="assets/favicon/site.webmanifest" />
-    <link
-        rel="mask-icon"
-        href="assets/favicon/safari-pinned-tab.svg"
-        color="#5bbad5"
-        />
-    <meta name="msapplication-TileColor" content="#3c3c6c" />
-    <meta name="theme-color" content="#3c3c6c" />
-    
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-sm">
-      <div class="container-fluid">
-        <a class="navbar-brand white" href="index.html">
-          <img src="assets/images/logo.svg" width="32px" />
-        </a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active white" aria-current="page" href="index.html">ホーム</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link white" href="about.html">KITsとは？</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link white" href="links.html">リンク集</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link white" href="https://blog.kits-tools.net/">開発者ブログ・使い方など</a>
-          </li>
-        </ul>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+  <title>tools - KITs</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+  <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  
+  <link rel="stylesheet" href="assets/css/default.css" />
+  
+  <link rel="stylesheet" href="assets/css/index.css" />
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+   
+
+</head>
+
+<body>
+  <!-- ハンバーガーメニュー用チェックボックス -->
+  <input type="checkbox" id="menu">
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <label for="menu" class="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="logo">
+      <img src="assets/images/logo.svg" width="32" alt="Logo">
+    </div>
+    <nav class="nav">
+      <a href="about.html">About</a>
+      <a href="index.html">Tools</a>
+      <a href="https://blog.kits-tools.net/">Blog</a>
+      <a href="links.html">Link</a>
+      <a href="contact.html">Contact</a>
     </nav>
-    <div class="container">
-  <div class="list-grid1-parts">
-  <div class="list-parts">
-    <a href="clock.html" class="black">
-      <figure>
-        <img src="assets/images/clock.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>時計</h4>
-        <p>現在時刻を見ることができます。</p>
-      </div>
-    </a>
-  </div>
+  </header>
 
-  <div class="list-parts">
-    <a href="apa.html" class="black">
-      <figure>
-        <img src="assets/images/apa.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>APAスタイル作成</h4>
-        <p>APAスタイルで引用文献を作成できます。</p>
-      </div>
-    </a>
-  </div>
+  <!-- サイドバー -->
+  <aside id="sidebar" class="sidebar hidden">
+    <div class="sidebar__title">Tools</div>
+    <ul class="sidebar__menu">
+      <li><a href="apa">APAスタイル作成</a></li>
+      <li><a href="clock">時計</a></li>
+      <li><a href="timer">タイマー</a></li>
+      <li><a href="stopwatch">ストップウォッチ</a></li>
+      <li><a href="group">グループ分け</a></li>
+      <li><a href="conversion">単位変換</a></li>
+      <li><a href="vertical">縦書きエディタ</a></li>
+      <li><a href="kundoku">訓読文エディタ</a></li>
+      <li><a href="charcount">文字カウント</a></li>
+      <li><a href="todo">todoリスト</a></li>
+      <li><a href="calculator">電卓</a></li>
+      <li><a href="pomodoro">ポモドーロ時計</a></li>
+      <li><a href="number">数字読み方変換</a></li>
+      <li><a href="https://memo.kits-tools.net/">メモ帳</a></li>
+      <li><a href="count">カウンター</a></li>
+      <li><a href="latex">LaTeX</a></li>
+    </ul>
+  </aside>
 
-  <div class="list-parts">
-    <a href="vertical.html" class="black">
-      <figure>
-        <img src="assets/images/vertical.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>縦書きエディタ</h4>
+  <!-- メイン -->
+  <main class="main">
+    <div id="terms-popup">
+      <div class="popup-content">
+        <h2>利用規約に同意してください</h2>
         <p>
-        縦書きで書くことができます。<br />Googleドキュメントと同じように書くことができます。
+          このサイトを利用する前に、<a href="terms.html" target="_blank">利用規約・プライバシーポリシー</a>をお読みください。
+          <br />続行するには<wbr />「同意する」<wbr />をクリックしてください。
         </p>
+        <button class="accept">同意する</button>
       </div>
-    </a>
-  </div>
+    </div>
 
-  <div class="list-parts">
-    <a href="todo.html" class="black">
-      <figure>
-        <img src="assets/images/todo.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>todoリスト</h4>
-        <p>やることを記録し、管理することができます。</p>
-      </div>
-    </a>
-  </div>
+    
+    <script>
+      document
+        .querySelector(".popup-content .accept")
+        .addEventListener("click", function () {
+          // ユーザーの同意をCookieまたはローカルストレージに保存
+          localStorage.setItem("termsAccepted", "true");
+          // ポップアップを非表示にする
+          document.getElementById("terms-popup").style.display = "none";
+        });
 
-  <div class="list-parts">
-    <a href="group.html" class="black">
-      <figure>
-        <img src="assets/images/group.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>グループ分け</h4>
-        <p>名前や出席番号によりグループ分けができます。</p>
-      </div>
-    </a>
-  </div>
+      // ページ読み込み時に同意済みか確認
+      window.addEventListener("load", function () {
+        if (localStorage.getItem("termsAccepted") !== "true") {
+          document.getElementById("terms-popup").style.display = "flex";
+        }
+      }); // ローカルストレージを確認
+    </script>
+    
+    <script>
+      if (!localStorage.getItem("surveyAnswered3")) {
+        var toastEl = document.getElementById("liveToast");
+        var toast = new bootstrap.Toast(toastEl, {autohide: false});
+        toast.show();
+      }
 
-  <div class="list-parts">
-    <a href="number.html" class="black">
-      <figure>
-        <img src="assets/images/number.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>数字→読み方変換</h4>
-        <p>長い数字を日本語の読み方にします。<br />例:200010000→2億1万</p>
-      </div>
-    </a>
-  </div>
-
-  <div class="list-parts">
-    <a href="calculator.html" class="black">
-      <figure>
-        <img src="assets/images/calculator.png" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>電卓</h4>
-        <p>シンプルな電卓です。</p>
-      </div>
+      // チェックボックスの変更を監視
+      document
+        .getElementById("answeredCheck")
+        .addEventListener("change", function () {
+          if (this.checked) {
+            // ローカルストレージにデータを書き込み
+            localStorage.setItem("surveyAnswered3", "true");
+          }
+        });
+    </script>
+    <div class="page-content">
+      <div class="content fullwidth" id="content">
+  <div class="grid">
+    <div class="square">
+      <a href="apa.html" class="black">
+        <figure>
+          <img src="assets/images/apa.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>APAスタイル作成</h4>
+          <p>APAスタイルで引用文献を作成できます。</p>
+        </div>
+      </a>
+    </div>
+    <div class="square">
+      <a href="clock.html" class="black">
+        <figure>
+          <img src="assets/images/clock.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>時計</h4>
+          <p>現在時刻を見ることができます。</p>
+        </div>
+      </a>
+    </div>
+    <div class="square">
+      <a href="timer.html" class="black">
+        <figure>
+          <img src="assets/images/timer.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>タイマー</h4>
+          <p>音のなるタイマーです。</p>
+        </div>
       </a>
     </div>
 
-  <div class="list-parts">
-    <a href="timer.html" class="black">
-      <figure>
-        <img src="assets/images/timer.svg" alt="" />
-      </figure>
-      <div class="text-parts">
-        <h4>タイマー</h4>
-        <p>音のなるタイマーです。</p>
-      </div>
-    </a>
+    <div class="square">
+      <a href="stopwatch.html" class="black">
+        <figure>
+          <img src="assets/images/stopwatch.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>ストップウォッチ</h4>
+          <p>無制限にラップをとれます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="group.html" class="black">
+        <figure>
+          <img src="assets/images/group.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>グループ分け</h4>
+          <p>名前や出席番号によりグループ分けができます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="conversion.html" class="black">
+        <figure>
+          <img src="assets/images/conversion.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>単位変換ツール</h4>
+          <p>様々な単位を別の単位に変換することができます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="vertical.html" class="black">
+        <figure>
+          <img src="assets/images/vertical.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>縦書きエディタ</h4>
+          <p>
+            縦書きで書くことができます。<br />Googleドキュメントと同じように書くことができます。
+          </p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="kundoku.html" class="black">
+        <figure>
+          <img src="assets/images/kundoku.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>訓読文エディタ</h4>
+          <p>漢文に返り点と送り仮名を追加することができます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="charcount.html" class="black">
+        <figure>
+          <img src="assets/images/charcount.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>文字カウント</h4>
+          <p>文字数をカウントできます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="todo.html" class="black">
+        <figure>
+          <img src="assets/images/todo.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>todoリスト</h4>
+          <p>やることを記録し、管理することができます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="calculator.html" class="black">
+        <figure>
+          <img src="assets/images/calculator.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>電卓</h4>
+          <p>シンプルな電卓です。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="pomodoro.html" class="black">
+        <figure>
+          <img src="assets/images/pomodoro.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>ポモドーロ時計</h4>
+          <p>自分に合った作業・休憩時間を設定できます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="number.html" class="black">
+        <figure>
+          <img src="assets/images/number.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>数字→読み方変換</h4>
+          <p>
+            長い数字を日本語の読み方にします。<br />例:200010000→2億1万
+          </p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="https://memo.kits-tools.net/" class="black">
+        <figure>
+          <img src="assets/images/memo.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>メモ帳</h4>
+          <p>マークダウン対応のメモ帳です。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="count.html" class="black">
+        <figure>
+          <img src="assets/images/count.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>カウンター</h4>
+          <p>数字を数えることができます。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
+      <a href="latex.html" class="black">
+        <figure>
+          <img src="assets/images/latex.svg" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>LaTeX</h4>
+          <p>LaTeXで数式を入力できます。</p>
+        </div>
+      </a>
+    </div>
   </div>
-</div>
 
-</div>
+  <div class="side-content">
+    <div id="clock" class="clock">2000年1月1日（日）<br />0:00:00</div>
+  </div>
+  </main>
+  <div id="settings-overlay" class="settings-overlay hidden">
+    <div id="settings-panel" class="settings-panel">
+      <button id="settings-close" class="close-btn">&times;</button>
+      <h2>表示設定</h2>
+      <label><input type="checkbox" id="toggle-clock" checked /> 時計を表示</label><br />
 
-    <footer>
-      <p>&copy; 2024 Kaisei Information Technologies</p>
-    </footer>
-  </body>
+      <label>ツールの列数：
+        <select id="column-count"></select> </label><br /><br />
+
+      <label>時計サイズ：
+        <input type="range" id="clock-size" min="1" max="2" step="0.1" value="1" /> </label><br /><br />
+    </div>
+  </div>
+
+    </div>
+    <!-- トップへ戻るボタン -->
+  </main>
+  <button id="to-top" style="z-index: 9999;">↑</button>
+
+
+  <!-- フッター -->
+  <footer>
+    <p>© 2024 - 2025 Kaisei Information Technology for support</p>
+  </footer>
+
+  <!-- 外部JS -->
+  <script src="assets/js/base.js" defer></script>
+  
+  <script src="assets/js/index.js" defer></script>
+  
+</body>
+
 </html>

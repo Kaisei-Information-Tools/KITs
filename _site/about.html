@@ -1,107 +1,276 @@
-<!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"
-        />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap"
-        rel="stylesheet"
-        />
-    <link rel="stylesheet" href="assets/css/reset.css" />
-    <link rel="stylesheet" href="assets/css/base.css" />
-    
-    <link rel="stylesheet" href="assets/css/about.css">
-    
-    
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"
-        ></script>
-    
-    
-    <title>KITsについて - KITs</title>
-    <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="assets/favicon/apple-touch-icon.png"
-        />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="assets/favicon/favicon-32x32.png"
-        />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="assets/favicon/favicon-16x16.png"
-        />
-    <link rel="manifest" href="assets/favicon/site.webmanifest" />
-    <link
-        rel="mask-icon"
-        href="assets/favicon/safari-pinned-tab.svg"
-        color="#5bbad5"
-        />
-    <meta name="msapplication-TileColor" content="#3c3c6c" />
-    <meta name="theme-color" content="#3c3c6c" />
-    
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-sm">
-      <div class="container-fluid">
-        <a class="navbar-brand white" href="index.html">
-          <img src="assets/images/logo.svg" width="32px" />
-        </a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active white" aria-current="page" href="index.html">ホーム</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link white" href="about.html">KITsとは？</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link white" href="links.html">リンク集</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link white" href="https://blog.kits-tools.net/">開発者ブログ・使い方など</a>
-          </li>
-        </ul>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KITs - about</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+  <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/about.css" />
+</head>
+
+<body class="dark-mode">
+  <!-- テーマ切り替えボタン -->
+  <div class="theme-toggle" id="theme-toggle">
+    <i class="fas fa-sun"></i>
+  </div>
+
+  <!-- ナビゲーションバー -->
+  <nav class="fixed w-full z-50 bg-opacity-80 backdrop-blur-md border-b border-color transition-colors">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <div class="text-2xl font-bold gradient-text">
+          <a href="https://www.kits-tools.net/index.html">KITs</a>
+        </div>
       </div>
-    </nav>
-    <div class="container">
-  <div class="list-parts">
-  <section id="home">
-    <h1>ようこそ、KITsのサイトへ!</h1>
-    <p>ここはKITsについてのページです。</p>
+
+      <div class="hidden md:flex space-x-8">
+        <a href="about.html" class="nav-link text-content hover:text-content transition-colors">About</a>
+        <a href="index.html" class="nav-link text-content hover:text-content transition-colors">Tools</a>
+        <a href="https://blog.kits-tools.net/"
+          class="nav-link text-content hover:text-content transition-colors">Blog</a>
+        <a href="links.html" class="nav-link text-content hover:text-content transition-colors">Link</a>
+        <a href="contact.html" class="nav-link text-content hover:text-content transition-colors">Contact</a>
+      </div>
+
+      <div class="md:hidden">
+        <button id="menu-toggle" class="text-content focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- モバイルメニュー -->
+    <div id="mobile-menu" class="md:hidden hidden border-b border-color">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+        <a href="about.html" class="text-content hover:text-content py-2 transition-colors">About</a>
+        <a href="index.html" class="text-content hover:text-content py-2 transition-colors">Tools</a>
+        <a href="https://blog.kits-tools.net/" class="text-content hover:text-content py-2 transition-colors">Blog</a>
+        <a href="contact.html" class="text-content hover:text-content py-2 transition-colors">Contact</a>
+        <a href="links.html" class="text-content hover:text-content py-2 transition-colors">Link</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ヒーローセクション -->
+  <section class="relative min-h-screen flex items-center pt-20">
+    <div class="hero-shape"></div>
+    <div class="container mx-auto px-4 py-20">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-content">
+            便利な<br /><span class="gradient-text">マナビ</span>を<br />min-naに。
+          </h1>
+          <p class="text-muted text-lg mb-8 max-w-lg">
+            私たちはこの活動を通して、学習に携わる「min-na」の様々な「マナビ」がより「便利に」なることを願っています。
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="#features"
+              class="bg-transparent border border-color text-content font-medium py-3 px-8 rounded-full hover:bg-opacity-10 hover:bg-slate-800 transition-colors text-center">
+              詳細を見る
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="animate-float">
+            <svg class="w-full h-auto" viewBox="0 0 500 400" src="assets/images/logo.svg">
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color: #3b82f6; stop-opacity: 1"></stop>
+                  <stop offset="100%" style="stop-color: #8b5cf6; stop-opacity: 1"></stop>
+                </linearGradient>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color: #8b5cf6; stop-opacity: 1"></stop>
+                  <stop offset="100%" style="stop-color: #ec4899; stop-opacity: 1"></stop>
+                </linearGradient>
+              </defs>
+              <circle cx="250" cy="200" r="120" fill="url(#grad1)" opacity="0.2"></circle>
+              <circle cx="250" cy="200" r="100" fill="url(#grad1)" opacity="0.3"></circle>
+              <circle cx="250" cy="200" r="80" fill="url(#grad1)" opacity="0.4"></circle>
+              <path d="M250,120 L290,200 L250,280 L210,200 Z" fill="url(#grad2)"></path>
+              <circle cx="250" cy="200" r="40" fill="url(#grad2)"></circle>
+              <circle cx="250" cy="200" r="15" fill="#ffffff"></circle>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="about">
-    <h2>私たちについて</h2>
-    <p>
-    私たちは授業などでクロームブックを使う際により便利に、使いやすくするためにできたグループです。
-    </p>
-  </section>
-  <section id="term">
-    <h2>利用規約など</h2>
-    <p>
-    <a href="terms.html">利用規約・プライバシーポリシーはこちら</a>
-    </p>
-  </section>
-</div>
+  <!-- 理念と活動内容セクション -->
+  <section id="features" class="py-20 bg-section">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-content">
+          私たちの<span class="gradient-text">理念</span>と<span class="gradient-text">活動</span>
+        </h2>
+        <p class="text-muted max-w-3xl mx-auto">
+          当法人は、青少年の学習に携わる全ての人に対して、時間の有効活用のための電子機器の使用促進や情報化社会への教育の促進に関する事業を行い、青少年の成長を通じて社会全体の発展に寄与することを目的としています。
+        </p>
+      </div>
 
-</div>
+      <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card rounded-xl p-8">
+          <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+            <i class="fas fa-laptop-code text-2xl text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4 text-content">
+            ICTを用いた学校生活のサポート
+          </h3>
+          <p class="text-muted">
+            「このツールサイト使いたいのに、フィルタリングサービスによってアクセスが制限されている...」そんな経験ありませんか？学習目的なのに使いたいサイトが開けない、そんな悩みを少しでも減らすことを目的に、私たちは生徒自らツールサイトを作り、公開するという活動を行っています。
+          </p>
+        </div>
 
-    <footer>
-      <p>&copy; 2024 Kaisei Information Technologies</p>
-    </footer>
-  </body>
+        <div class="card rounded-xl p-8">
+          <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+            <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4 text-content">
+            web開発のサポート
+          </h3>
+          <p class="text-muted">
+            「こんなwebサイトを作りたいけど作り方がわからない！」そんな人たちを助けるため、依頼に応じてwebサイトの作成、開発サポートをしています。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="features" class="py-20 bg-section">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-content">
+          作成中...<br />公開をお待ちください
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="bg-section border-t border-color py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="text-2xl font-bold gradient-text mb-4">KITs</div>
+          <p class="text-muted mb-4">
+            「便利なマナビをmin-naに。」を理念に活動しています。
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-content">法人情報</h3>
+          <ul class="space-y-2 text-muted">
+            <li class="flex items-center">
+              <i class="fas fa-envelope mr-3"></i>
+              <span>kits.information.technologies@gmail.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-color mt-12 pt-8 text-center text-muted">
+        <p>© 2024 - 2025 Kaisei Information Technology for support</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== JavaScript コード =====
+
+    // モバイルメニューの切り替え
+    document
+      .getElementById("menu-toggle")
+      .addEventListener("click", function () {
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("hidden");
+      });
+
+    // スムーススクロール
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute("href");
+        if (targetId === "#") return;
+
+        const target = document.querySelector(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: "smooth",
+          });
+
+          // モバイルメニューを閉じる
+          document.getElementById("mobile-menu").classList.add("hidden");
+        }
+      });
+    });
+
+    // テーマ切り替え
+    const themeToggle = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    themeToggle.addEventListener("click", function () {
+      if (body.classList.contains("dark-mode")) {
+        body.classList.remove("dark-mode");
+        body.classList.add("light-mode");
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+      } else {
+        body.classList.remove("light-mode");
+        body.classList.add("dark-mode");
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+    });
+  </script>
+  <script>
+    (function () {
+      function c() {
+        var b = a.contentDocument || a.contentWindow.document;
+        if (b) {
+          var d = b.createElement("script");
+          d.innerHTML =
+            "window.__CF$cv$params={r:'94e13fc460a4e353',t:'MTc0OTY0NjM4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+          b.getElementsByTagName("head")[0].appendChild(d);
+        }
+      }
+      if (document.body) {
+        var a = document.createElement("iframe");
+        a.height = 1;
+        a.width = 1;
+        a.style.position = "absolute";
+        a.style.top = 0;
+        a.style.left = 0;
+        a.style.border = "none";
+        a.style.visibility = "hidden";
+        document.body.appendChild(a);
+        if ("loading" !== document.readyState) c();
+        else if (window.addEventListener)
+          document.addEventListener("DOMContentLoaded", c);
+        else {
+          var e = document.onreadystatechange || function () { };
+          document.onreadystatechange = function (b) {
+            e(b);
+            "loading" !== document.readyState &&
+              ((document.onreadystatechange = e), c());
+          };
+        }
+      }
+    })();
+  </script>
+  <iframe height="1" width="1" style="
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border: none;
+        visibility: hidden;
+      "></iframe>
+</body>
+
 </html>

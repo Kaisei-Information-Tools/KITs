@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+  <title>LaTeXエディタ - KITs</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+  <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  
+  <link rel="stylesheet" href="assets/css/base.css" />
+  
+  <link rel="stylesheet" href="assets/css/default.css" />
+  
+  <link rel="stylesheet" href="assets/css/latex.css" />
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+   
+
+</head>
+
+<body>
+  <!-- ハンバーガーメニュー用チェックボックス -->
+  <input type="checkbox" id="menu">
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <label for="menu" class="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="logo">
+      <img src="assets/images/logo.svg" width="32" alt="Logo">
+    </div>
+    <nav class="nav">
+      <a href="about.html">About</a>
+      <a href="index.html">Tools</a>
+      <a href="https://blog.kits-tools.net/">Blog</a>
+      <a href="links.html">Link</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- サイドバー -->
+  <aside id="sidebar" class="sidebar hidden">
+    <div class="sidebar__title">Tools</div>
+    <ul class="sidebar__menu">
+      <li><a href="apa">APAスタイル作成</a></li>
+      <li><a href="clock">時計</a></li>
+      <li><a href="timer">タイマー</a></li>
+      <li><a href="stopwatch">ストップウォッチ</a></li>
+      <li><a href="group">グループ分け</a></li>
+      <li><a href="conversion">単位変換</a></li>
+      <li><a href="vertical">縦書きエディタ</a></li>
+      <li><a href="kundoku">訓読文エディタ</a></li>
+      <li><a href="charcount">文字カウント</a></li>
+      <li><a href="todo">todoリスト</a></li>
+      <li><a href="calculator">電卓</a></li>
+      <li><a href="pomodoro">ポモドーロ時計</a></li>
+      <li><a href="number">数字読み方変換</a></li>
+      <li><a href="https://memo.kits-tools.net/">メモ帳</a></li>
+      <li><a href="count">カウンター</a></li>
+      <li><a href="latex">LaTeX</a></li>
+    </ul>
+  </aside>
+
+  <!-- メイン -->
+  <main class="main">
+    <div id="terms-popup">
+      <div class="popup-content">
+        <h2>利用規約に同意してください</h2>
+        <p>
+          このサイトを利用する前に、<a href="terms.html" target="_blank">利用規約・プライバシーポリシー</a>をお読みください。
+          <br />続行するには<wbr />「同意する」<wbr />をクリックしてください。
+        </p>
+        <button class="accept">同意する</button>
+      </div>
+    </div>
+
+    
+    <script>
+      document
+        .querySelector(".popup-content .accept")
+        .addEventListener("click", function () {
+          // ユーザーの同意をCookieまたはローカルストレージに保存
+          localStorage.setItem("termsAccepted", "true");
+          // ポップアップを非表示にする
+          document.getElementById("terms-popup").style.display = "none";
+        });
+
+      // ページ読み込み時に同意済みか確認
+      window.addEventListener("load", function () {
+        if (localStorage.getItem("termsAccepted") !== "true") {
+          document.getElementById("terms-popup").style.display = "flex";
+        }
+      }); // ローカルストレージを確認
+    </script>
+    
+    <script>
+      if (!localStorage.getItem("surveyAnswered3")) {
+        var toastEl = document.getElementById("liveToast");
+        var toast = new bootstrap.Toast(toastEl, {autohide: false});
+        toast.show();
+      }
+
+      // チェックボックスの変更を監視
+      document
+        .getElementById("answeredCheck")
+        .addEventListener("change", function () {
+          if (this.checked) {
+            // ローカルストレージにデータを書き込み
+            localStorage.setItem("surveyAnswered3", "true");
+          }
+        });
+    </script>
+    <div class="page-content">
+      <h1>LaTeX エディタ</h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<!-- ▼▼▼ 【重要】化学式(\ce)を有効にするための拡張機能を追加 ▼▼▼ -->
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="assets/js/svg2pdf.umd.min.js"></script>
+</head>
+
+<body>
+  <div class="tabs">
+    <button class="tab active" data-target="basic">基本</button>
+    <button class="tab" data-target="func">関数</button>
+    <button class="tab" data-target="calc">微積</button>
+    <button class="tab" data-target="set-logic">集合・論理</button>
+    <button class="tab" data-target="matrix">行列</button>
+    <button class="tab" data-target="greek">ギリシャ</button>
+    <button class="tab" data-target="special">特殊</button>
+    <button class="tab" data-target="physics">物理</button>
+    <button class="tab" data-target="chemistry">化学</button>
+    <button class="tab" data-target="statistics">統計</button>
+  </div>
+
+  <!-- 基本 -->
+  <div id="basic" class="toolbar active">
+    <button data-insert="\times">×</button>
+    <button data-insert="\cdot">・</button>
+    <button data-insert="\div">÷</button>
+    <button data-insert="\pm">±</button>
+    <button data-insert="\mp">∓</button>
+    <button data-insert="\approx">≈</button>
+    <button data-insert="\fallingdotseq">≒</button>
+    <button data-insert="<">&lt;</button>
+    <button data-insert=">">&gt;</button>
+    <button data-insert="\le">≦</button>
+    <button data-insert="\ge">≧</button>
+    <button data-insert="\neq">≠</button>
+    <button data-insert="\frac{a}{b}">a/b</button>
+    <button data-insert="x^{}">xⁿ</button>
+    <button data-insert="x_{n}">xₙ</button>
+    <button data-insert="\sqrt{x}">√x</button>
+    <button data-insert="\sqrt[n]{x}">ⁿ√x</button>
+    <button data-insert="|x|">|x|</button>
+    <button data-insert="\left\|x\right\|">‖x‖</button>
+    <button data-insert="\\\">改行</button>
+  </div>
+
+  <!-- 関数 -->
+  <div id="func" class="toolbar">
+    <button data-insert="\sin">sin</button>
+    <button data-insert="\cos">cos</button>
+    <button data-insert="\tan">tan</button>
+    <button data-insert="\log">log</button>
+    <button data-insert="\ln">ln</button>
+    <button data-insert="\exp">exp</button>
+    <button data-insert="\lim_{x\to 0}">lim x→0</button>
+  </div>
+
+  <!-- 微積 -->
+  <div id="calc" class="toolbar">
+    <button data-insert="\frac{d}{dx}">d/dx</button>
+    <button data-insert="\partial">∂</button>
+    <button data-insert="\dot{x}">ẋ</button>
+    <button data-insert="\nabla">∇</button>
+    <button data-insert="\int">∫</button>
+    <button data-insert="\int_{a}^{b}">∫_{a}^{b}</button>
+    <button data-insert="\sum_{k=1}^{n}">Σ</button>
+    <button data-insert="\prod_{k=1}^{n}">Π</button>
+  </div>
+
+  <!-- 集合・論理 -->
+  <div id="set-logic" class="toolbar">
+    <button data-insert="\{a, b, c\}">{}</button>
+    <button data-insert="\in">∈</button>
+    <button data-insert="\notin">∉</button>
+    <button data-insert="\subset">⊂</button>
+    <button data-insert="\subseteq">⊆</button>
+    <button data-insert="\cup">∪</button>
+    <button data-insert="\cap">∩</button>
+    <button data-insert="\mid">|</button>
+    <button data-insert="\land">∧</button>
+    <button data-insert="\lor">∨</button>
+    <button data-insert="\neg">¬</button>
+    <button data-insert="\forall">∀</button>
+    <button data-insert="\exists">∃</button>
+    <button data-insert="\Rightarrow">⇒</button>
+    <button data-insert="\Leftrightarrow">⇔</button>
+    <button data-insert="\therefore">∴</button>
+    <button data-insert="\because">∵</button>
+    <button data-insert="\varnothing">∅</button>
+    <button data-insert="\mathbb{R}">ℝ</button>
+    <button data-insert="\mathbb{Z}">ℤ</button>
+    <button data-insert="\mathbb{Q}">ℚ</button>
+    <button data-insert="\mathbb{N}">ℕ</button>
+    <button data-insert="\mathbb{C}">ℂ</button>
+  </div>
+
+  <!-- 行列 -->
+  <div id="matrix" class="toolbar">
+    <button data-insert="\left(\begin{array}{c}a \\\\ b\end{array}\right)">(a; b)</button>
+    <button data-insert="\left[\begin{array}{cc}a & b \\\\ c & d\end{array}\right]">[a b; c d]</button>
+    <button data-insert="\left|\begin{array}{cc}a & b \\\\ c & d\end{array}\right|">|a b; c d|</button>
+    <button data-insert="\vec{v}">\vec{v}</button>
+    <button data-insert="\bm{v}">**v**</button>
+    <button data-insert="\overrightarrow{OP}">→OP</button>
+    <button data-insert="\det(A)">det</button>
+  </div>
+
+  <!-- ギリシャ -->
+  <div id="greek" class="toolbar">
+    <button data-insert="\alpha">α</button>
+    <button data-insert="\beta">β</button>
+    <button data-insert="\gamma">γ</button>
+    <button data-insert="\delta">δ</button>
+    <button data-insert="\epsilon">ϵ</button>
+    <button data-insert="\varepsilon">ε</button>
+    <button data-insert="\zeta">ζ</button>
+    <button data-insert="\eta">η</button>
+    <button data-insert="\theta">θ</button>
+    <button data-insert="\iota">ι</button>
+    <button data-insert="\kappa">κ</button>
+    <button data-insert="\lambda">λ</button>
+    <button data-insert="\mu">μ</button>
+    <button data-insert="\nu">ν</button>
+    <button data-insert="\xi">ξ</button>
+    <button data-insert="\pi">π</button>
+    <button data-insert="\rho">ρ</button>
+    <button data-insert="\sigma">σ</button>
+    <button data-insert="\tau">τ</button>
+    <button data-insert="\phi">φ</button>
+    <button data-insert="\chi">χ</button>
+    <button data-insert="\psi">ψ</button>
+    <button data-insert="\omega">ω</button>
+    <button data-insert="\Gamma">Γ</button>
+    <button data-insert="\Delta">Δ</button>
+    <button data-insert="\Theta">Θ</button>
+    <button data-insert="\Lambda">Λ</button>
+    <button data-insert="\Xi">Ξ</button>
+    <button data-insert="\Pi">Π</button>
+    <button data-insert="\Sigma">Σ</button>
+    <button data-insert="\Phi">Φ</button>
+    <button data-insert="\Psi">Ψ</button>
+    <button data-insert="\Omega">Ω</button>
+  </div>
+
+  <!-- 特殊 -->
+  <div id="special" class="toolbar">
+    <button data-insert="\infty">∞</button>
+    <button data-insert="\dots">...</button>
+    <button data-insert="\angle">∠</button>
+    <button data-insert="\sim">∼</button>
+    <button data-insert="\equiv">≡</button>
+    <button data-insert="\propto">∝</button>
+    <button data-insert="\langle">⟨</button>
+    <button data-insert="\rangle">⟩</button>
+    <button data-insert="\mathrm{abc}">abc(Roman)</button>
+  </div>
+
+  <!-- 物理 -->
+  <div id="physics" class="toolbar">
+    <button data-insert="\hbar">ħ</button>
+    <button data-insert="\Delta E">ΔE</button>
+    <button data-insert="\rightarrow">→</button>
+    <button data-insert="\leftarrow">←</button>
+    <button data-insert="\leftrightarrow">↔</button>
+    <button data-insert="\Leftrightarrow">⇔</button>
+    <button data-insert="\longrightarrow">⟶</button>
+    <button data-insert="\rightleftharpoons">⇌</button>
+    <button data-insert="F=ma">F=ma</button>
+    <button data-insert="\bm{F}=m\bm{a}">**F**=m**a**</button>
+  </div>
+
+  <!-- 化学 -->
+  <div id="chemistry" class="toolbar">
+    <button data-insert="\ce{H2O}">H₂O</button>
+    <button data-insert="\ce{CO2}">CO₂</button>
+    <button data-insert="\ce{Na+}">Na⁺</button>
+    <button data-insert="\ce{OH-}">OH⁻</button>
+    <button data-insert="\ce{Ca(OH)2}">Ca(OH)₂</button>
+    <button data-insert="\rightarrow">→</button>
+    <button data-insert="\rightleftharpoons">⇌</button>
+  </div>
+
+  <!-- 統計 -->
+  <div id="statistics" class="toolbar">
+    <button data-insert="\mu">μ</button>
+    <button data-insert="\sigma">σ</button>
+    <button data-insert="\rho">ρ</button>
+    <button data-insert="\bar{x}">x̄</button>
+    <button data-insert="\hat{p}">p̂</button>
+    <button data-insert="\text{Var}(X)">Var(X)</button>
+    <button data-insert="\text{Cov}(X,Y)">Cov(X,Y)</button>
+    <button data-insert="P(A)">P(A)</button>
+    <button data-insert="E[X]">E[X]</button>
+  </div>
+
+
+  <div class="container">
+    <textarea id="editor" placeholder="ここにLaTeXコードを入力してください。"></textarea>
+    <div id="preview"></div>
+  </div>
+  <button id="openCHTMLBtn" class="submit">印刷用に開く</button>
+
+    </div>
+    <!-- トップへ戻るボタン -->
+  </main>
+  <button id="to-top" style="z-index: 9999;">↑</button>
+
+
+  <!-- フッター -->
+  <footer>
+    <p>© 2024 - 2025 Kaisei Information Technology for support</p>
+  </footer>
+
+  <!-- 外部JS -->
+  <script src="assets/js/base.js" defer></script>
+  
+  <script src="assets/js/latex.js" defer></script>
+  
+</body>
+
+</html>
