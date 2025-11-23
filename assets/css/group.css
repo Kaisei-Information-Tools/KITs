@@ -1,23 +1,36 @@
 @charset "utf-8";
 
+:root {
+  --bg-gradient-start: #e8f0f7;
+  --bg-gradient-end: #f5f8fa;
+}
+
 body {
   font-family: "Noto Sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans",
     "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
   font-size: 15px;
   line-height: 1.5;
   color: #333;
-  background-color: #efefef;
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-end) 100%
+  );
+  background-attachment: fixed;
 }
 
 main {
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 2rem;
-  width: 100%;
+  width: 90%;
   max-width: 70rem;
   margin-top: 3rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 10);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   border-radius: 1rem;
   min-height: auto !important;
 }
@@ -44,23 +57,6 @@ main {
   font-family: inherit;
   line-height: inherit;
   margin: 0px;
-}
-
-.submit {
-  margin-top: 1.5rem;
-  padding: 0.5rem;
-  width: 100%;
-
-  border-radius: 0.25rem;
-
-  background-color: #3c3c6c;
-  color: #ffffff;
-
-  font-family: inherit;
-  line-height: inherit;
-  font-size: 100%;
-
-  box-shadow: none;
 }
 
 #result {

@@ -5,6 +5,15 @@
   --color-text-black: #333;
   --color-text-white: #ffffff;
   --color-background: #efefef;
+
+  /* Glassmorphism colors */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --bg-gradient-start: #e8f0f7;
+  --bg-gradient-end: #f5f8fa;
+  --text-primary: #2c2c2c;
+  --text-secondary: #5a5a5a;
 }
 
 a.black {
@@ -17,20 +26,29 @@ body {
     "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
   font-size: 15px;
   line-height: 1.5;
-  color: #333;
-  background-color: #efefef;
+  color: var(--text-primary);
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-end) 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 main {
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 2rem;
   width: 100%;
   max-width: 600px;
   margin-top: 4rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 1);
-  border-radius: 0.5rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
 }
 
 .title {
@@ -67,38 +85,70 @@ main {
   width: 2.5rem;
   height: 2.5rem;
 
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
 
-  background-color: #3c3c6c;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-weight: 600;
 
   font-family: inherit;
   line-height: inherit;
   font-size: 100%;
 
-  box-shadow: none;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
 }
 
 .submit {
   margin-top: 1.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
   width: 100%;
 
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
 
-  background-color: #3c3c6c;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-weight: 600;
 
   font-family: inherit;
   line-height: inherit;
   font-size: 100%;
 
-  box-shadow: none;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
 }
 
 nav {
-  background-color: var(--color-primary);
-  color: #fff;
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-primary);
   padding: 10px;
 }
 
@@ -114,7 +164,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #fff;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
@@ -145,8 +195,11 @@ body > main {
 }
 
 footer {
-  background-color: #3c3c6c;
-  color: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-secondary);
   text-align: center;
   padding: 10px;
   bottom: 0;

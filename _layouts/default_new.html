@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="assets/css/{{ page.css }}.css" />
   {% endif %} {% if page.css2 %}
   <link rel="stylesheet" href="assets/css/{{ page.css2 }}.css" />
-  {% endif %}/>
+  {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
@@ -40,7 +40,7 @@
 
 <body>
   <!-- ハンバーガーメニュー用チェックボックス -->
-  <input type="checkbox" id="menu" />
+  <input type="checkbox" id="menu">
 
   <!-- ヘッダー -->
   <header class="header">
@@ -50,7 +50,7 @@
       <span></span>
     </label>
     <div class="logo">
-      <img src="assets/images/logo.svg" width="32" alt="Logo" />
+      <img src="assets/images/logo.svg" width="32" alt="Logo">
     </div>
     <nav class="nav">
       <a href="about.html">About</a>
@@ -61,30 +61,31 @@
     </nav>
   </header>
 
+  <!-- サイドバー -->
+  <aside id="sidebar" class="sidebar hidden">
+    <div class="sidebar__title">Tools</div>
+    <ul class="sidebar__menu">
+      <li><a href="apa">APAスタイル作成</a></li>
+      <li><a href="clock">時計</a></li>
+      <li><a href="timer">タイマー</a></li>
+      <li><a href="stopwatch">ストップウォッチ</a></li>
+      <li><a href="group">グループ分け</a></li>
+      <li><a href="conversion">単位変換</a></li>
+      <li><a href="vertical">縦書きエディタ</a></li>
+      <li><a href="kundoku">訓読文エディタ</a></li>
+      <li><a href="charcount">文字カウント</a></li>
+      <li><a href="todo">todoリスト</a></li>
+      <li><a href="calculator">電卓</a></li>
+      <li><a href="pomodoro">ポモドーロ時計</a></li>
+      <li><a href="number">数字読み方変換</a></li>
+      <li><a href="https://memo.kits-tools.net/">メモ帳</a></li>
+      <li><a href="count">カウンター</a></li>
+      <li><a href="latex">LaTeX</a></li>
+    </ul>
+  </aside>
+
   <!-- メイン -->
   <main class="main">
-    <!-- サイドバー -->
-    <aside id="sidebar" class="sidebar hidden">
-      <div class="sidebar__title">Tools</div>
-      <ul class="sidebar__menu">
-        <li><a href="apa">APAスタイル作成</a></li>
-        <li><a href="clock">時計</a></li>
-        <li><a href="timer">タイマー</a></li>
-        <li><a href="stopwatch">ストップウォッチ</a></li>
-        <li><a href="group">グループ分け</a></li>
-        <li><a href="conversion">単位変換</a></li>
-        <li><a href="vertical">縦書きエディタ</a></li>
-        <li><a href="kundoku">訓読文エディタ</a></li>
-        <li><a href="charcount">文字カウント</a></li>
-        <li><a href="todo">todoリスト</a></li>
-        <li><a href="calculator">電卓</a></li>
-        <li><a href="pomodoro">ポモドーロ時計</a></li>
-        <li><a href="number">数字読み方変換</a></li>
-        <li><a href="https://memo.kits-tools.net/">メモ帳</a></li>
-        <li><a href="count">カウンター</a></li>
-        <li><a href="latex">LaTeX</a></li>
-      </ul>
-    </aside>
     <div id="terms-popup">
       <div class="popup-content">
         <h2>利用規約に同意してください</h2>
@@ -132,10 +133,13 @@
           }
         });
     </script>
-    {{ content }}
+    <div class="page-content">
+      {{ content }}
+    </div>
     <!-- トップへ戻るボタン -->
-    <button id="to-top">↑</button>
   </main>
+  <button id="to-top" style="z-index: 9999;">↑</button>
+
 
   <!-- フッター -->
   <footer>

@@ -1,34 +1,75 @@
 .stopwatch-container {
   text-align: center;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   margin-bottom: 20px;
 }
 
 .display {
   font-size: 3em;
-  color: #333;
+  color: var(--text-primary);
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
 .stopwatch-buttons {
-  color: #ffffff;
+  color: var(--text-primary);
   width: 7rem;
   margin: 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.stopwatch-buttons:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
 }
 
 .toggle-button {
-  background-color: #60d351;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.toggle-button:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .reset-button {
-  background-color: #d351a1;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.reset-button:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .lap-button {
-  background-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.lap-button:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .lap-container {
@@ -39,19 +80,30 @@
 }
 
 .lap {
-  background-color: #fff;
-  padding: 5px;
-  margin: 5px 0;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.lap:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .lap .lap-time {
   font-size: 1.5em;
-  color: #333;
+  color: var(--text-primary);
+  font-weight: 500;
   margin-right: 10px;
 }
 
