@@ -44,7 +44,7 @@ body {
 .main {
   min-height: 100vh;
   padding-top: 60px;
-  margin-top: 5rem;
+  margin-top: 6rem;
 }
 
 /* Page content wrapper for tool pages */
@@ -57,21 +57,23 @@ body {
 /* ヘッダー */
 .header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 16px;
+  left: 16px;
+  right: 16px;
   z-index: 100;
   display: flex;
   align-items: center;
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border-bottom: 1px solid var(--glass-border);
   box-shadow: 0 4px 20px var(--glass-shadow);
   padding: 10px 20px;
   color: var(--text-primary);
   overflow-x: auto;
   gap: 8px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 1);
 }
 
 .logo {
@@ -125,12 +127,12 @@ body {
 /* サイドバー */
 .sidebar {
   position: fixed;
-  top: 55px;
-  left: 0;
+  top: 100px;
+  left: 16px;
   width: clamp(200px, 20%, 280px);
-  height: calc(100vh - 55px);
+  height: calc(100vh - 116px);
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(20px);
   border-right: 1px solid var(--glass-border);
   box-shadow: 4px 0 20px var(--glass-shadow);
@@ -143,6 +145,8 @@ body {
     width 0.3s ease;
   font-family: sans-serif;
   z-index: 50;
+  border-radius: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 1);
 }
 
 /* Sidebar starts hidden by default, shown only when toggled */
@@ -152,7 +156,7 @@ body {
 
 /* When sidebar is visible (not hidden) */
 .sidebar:not(.hidden) {
-  left: 0;
+  left: 16px;
 }
 
 .sidebar__title {
