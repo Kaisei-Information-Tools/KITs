@@ -17,8 +17,8 @@ const startBtn = document.getElementById('startBtn');
 const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 
-const beepSound = new Audio('https://www.soundjay.com/button/beep-07.wav');
-const endSound = new Audio('https://www.soundjay.com/button/beep-09.wav');
+const beepSound = new Audio('assets/sounds/alerm.mp3');
+const endSound = new Audio('assets/sounds/alerm.mp3');
 
 setButton.addEventListener('click', setTimer);
 startBtn.addEventListener('click', startTimer);
