@@ -8,8 +8,11 @@
     // Initialize theme before page renders to avoid flash
     (function() {
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else if (savedTheme === 'light') {
+        // Light mode is default, no attribute needed
+        document.documentElement.removeAttribute('data-theme');
       } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
