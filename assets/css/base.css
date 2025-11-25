@@ -21,6 +21,9 @@
   --glass-bg-input: rgba(255, 255, 255, 0.8);
   --glass-border-strong: rgba(255, 255, 255, 1);
   --glass-inset: rgba(255, 255, 255, 0.6);
+  
+  /* Toggle/switch colors */
+  --toggle-active: #4bd865;
 }
 
 /* Dark mode variables - high contrast natural dark theme */
@@ -45,6 +48,9 @@
   --glass-bg-input: rgba(45, 50, 65, 0.95);
   --glass-border-strong: rgba(90, 100, 120, 0.6);
   --glass-inset: rgba(80, 90, 110, 0.4);
+  
+  /* Toggle/switch colors for dark mode */
+  --toggle-active: #5ce878;
 }
 
 a.black {

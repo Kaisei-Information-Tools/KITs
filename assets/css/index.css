@@ -212,7 +212,7 @@
 .settings-panel h2 {
   margin-top: 0;
   font-size: 1.3rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 15px;
 }
 
@@ -224,7 +224,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 input[type="range"] {

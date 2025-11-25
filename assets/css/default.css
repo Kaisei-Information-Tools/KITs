@@ -25,6 +25,12 @@
   --glass-border-strong: rgba(255, 255, 255, 1);
   --glass-inset: rgba(255, 255, 255, 0.6);
   --hamburger-color: black;
+  
+  /* Toggle/switch colors */
+  --toggle-active: #4bd865;
+  
+  /* Dropdown arrow color */
+  --dropdown-arrow-color: %23666;
 }
 
 /* Dark mode variables - high contrast natural dark theme */
@@ -58,6 +64,12 @@
 
   /* Icon color for dark mode */
   --icon-color: #d0d0d0;
+  
+  /* Toggle/switch colors for dark mode */
+  --toggle-active: #5ce878;
+  
+  /* Dropdown arrow color for dark mode */
+  --dropdown-arrow-color: %23aab;
 }
 
 /* Dark mode image styling for logo and tool icons - softer gray for better readability */
