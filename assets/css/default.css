@@ -57,6 +57,15 @@
   --hamburger-color: #e8e8f0;
 }
 
+/* Dark mode image inversion for logo and tool icons */
+[data-theme="dark"] .logo img {
+  filter: invert(1) brightness(2);
+}
+
+[data-theme="dark"] .square img {
+  filter: invert(1) brightness(1.5);
+}
+
 html,
 body {
   margin: 0;
