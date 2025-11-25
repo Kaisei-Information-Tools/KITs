@@ -4,22 +4,9 @@
         body {
             font-family: 'Poppins', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        body.dark-mode {
-            background-color: #0f172a;
-            color: #e2e8f0;
-        }
-        
-        :root {
-            --bg-gradient-start: #e8f0f7;
-            --bg-gradient-end: #f5f8fa;
-        }
-
-        body.light-mode {
             background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             background-attachment: fixed;
-            color: #1e293b;
+            color: var(--text-primary);
         }
         
         .gradient-text {
@@ -35,32 +22,16 @@
         
         .card {
             transition: all 0.3s ease;
-        }
-        
-        .dark-mode .card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .light-mode .card {
-            background: rgba(255, 255, 255, 0.75);
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 24px var(--glass-shadow);
         }
         
         .card:hover {
             transform: translateY(-5px);
-        }
-        
-        .dark-mode .card:hover {
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .light-mode .card:hover {
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 32px var(--glass-shadow);
         }
         
         .animate-float {
@@ -81,14 +52,11 @@
             height: 100%;
             clip-path: polygon(50% 0, 100% 0, 100% 100%, 20% 100%);
             z-index: -1;
-        }
-        
-        .dark-mode .hero-shape {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
-        }
-        
-        .light-mode .hero-shape {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+        }
+        
+        [data-theme="dark"] .hero-shape {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
         }
         
         .btn-primary {
@@ -177,75 +145,24 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
         }
         
-        .dark-mode .text-content {
-            color: #e2e8f0;
+        .text-content {
+            color: var(--text-primary);
         }
         
-        .light-mode .text-content {
-            color: #1e293b;
+        .text-muted {
+            color: var(--text-secondary);
         }
         
-        .dark-mode .text-muted {
-            color: #94a3b8;
+        .bg-section {
+            background-color: var(--glass-bg);
         }
         
-        .light-mode .text-muted {
-            color: #64748b;
+        .bg-section-alt {
+            background-color: transparent;
         }
         
-        .dark-mode .bg-section {
-            background-color: #1e293b;
-        }
-        
-        .light-mode .bg-section {
-            background-color: #f1f5f9;
-        }
-        
-        .dark-mode .bg-section-alt {
-            background-color: #0f172a;
-        }
-        
-        .light-mode .bg-section-alt {
-            background-color: #ffffff;
-        }
-        
-        .dark-mode .border-color {
-            border-color: #334155;
-        }
-        
-        .light-mode .border-color {
-            border-color: #e2e8f0;
-        }
-        
-        .theme-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .dark-mode .theme-toggle {
-            background-color: #334155;
-            color: #f8fafc;
-        }
-        
-        .light-mode .theme-toggle {
-            background-color: #f8fafc;
-            color: #334155;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .theme-toggle:hover {
-            transform: scale(1.1);
+        .border-color {
+            border-color: var(--glass-border);
         }
         
         @media (max-width: 768px) {
