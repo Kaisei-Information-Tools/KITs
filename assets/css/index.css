@@ -44,10 +44,10 @@
 /* タイル */
 .square {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  border-radius: 16px;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -56,13 +56,13 @@
   align-items: center;
   text-align: center;
   padding: 15px;
-  box-shadow: 0 8px 24px var(--glass-shadow);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
 }
 
 .square:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 32px var(--glass-shadow);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   background: var(--glass-bg-hover);
 }
 
@@ -132,11 +132,11 @@
 /* 時計 */
 .clock {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
-  border-radius: 20px;
+  border-radius: 16px;
   font-size: 4rem; /* メイン時刻 */
   font-weight: 600;
   padding: 40px;
@@ -144,7 +144,7 @@
   line-height: 1.2;
   white-space: pre-line;
   overflow: hidden;
-  box-shadow: 0 8px 24px var(--glass-shadow);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
   --clock-date-font: 2rem; /* ← 初期値をCSS変数で定義 */
 }
@@ -156,13 +156,13 @@
 /* ToDo */
 .todo-list {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
   padding: 30px;
   font-size: 1.2rem;
-  box-shadow: 0 8px 24px var(--glass-shadow);
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 
 /* 設定パネル */
@@ -185,12 +185,12 @@
 
 .settings-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 8px 20px var(--glass-shadow);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   width: 320px;
   max-width: 90%;
   position: relative;

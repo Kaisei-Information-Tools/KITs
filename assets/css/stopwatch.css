@@ -1,12 +1,12 @@
 .stopwatch-container {
   text-align: center;
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 12px 32px var(--glass-shadow);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--glass-shadow);
   margin-bottom: 20px;
 }
 
@@ -23,29 +23,25 @@
   margin: 0.5rem;
   border-radius: 12px;
   cursor: pointer;
-  border: 1.5px solid var(--glass-inset);
+  border: 1px solid var(--glass-inset);
   transition: all 0.3s ease;
   font-weight: 600;
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 
 .stopwatch-buttons:hover {
   background: var(--glass-bg-hover);
-  box-shadow: 
-    0 12px 40px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   transform: translateY(-2px);
 }
 
 .toggle-button {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .toggle-button:hover {
@@ -54,8 +50,8 @@
 
 .reset-button {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .reset-button:hover {
@@ -64,8 +60,8 @@
 
 .lap-button {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .lap-button:hover {
@@ -81,13 +77,13 @@
 
 .lap {
   background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   padding: 10px;
   margin: 10px 0;
   border-radius: 12px;
-  box-shadow: 0 6px 20px var(--glass-shadow);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -97,7 +93,7 @@
 .lap:hover {
   background: var(--glass-bg-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--glass-shadow);
+  box-shadow: 0 8px 30px var(--glass-shadow);
 }
 
 .lap .lap-time {

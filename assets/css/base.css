@@ -23,28 +23,28 @@
   --glass-inset: rgba(255, 255, 255, 0.6);
 }
 
-/* Dark mode variables - iOS-style soft dark with glassmorphism */
+/* Dark mode variables - calmer, natural dark theme */
 [data-theme="dark"] {
-  --color-primary: #8080d0;
-  --color-text-black: #f0f0f8;
-  --color-text-white: #2d2d44;
-  --color-background: #2d2d44;
+  --color-primary: #7a8dbd;
+  --color-text-black: #d0d7e0;
+  --color-text-white: #1a1d23;
+  --color-background: #1a1d23;
 
-  /* Glassmorphism colors for dark mode - softer, more translucent */
-  --glass-bg: rgba(70, 70, 100, 0.5);
-  --glass-border: rgba(150, 150, 190, 0.25);
-  --glass-shadow: rgba(0, 0, 0, 0.2);
-  --bg-gradient-start: #2a2a40;
-  --bg-gradient-end: #363652;
-  --text-primary: #f0f0f8;
-  --text-secondary: #b8b8d0;
+  /* Dark mode colors - natural, calmer palette */
+  --glass-bg: rgba(26, 29, 35, 0.95);
+  --glass-border: rgba(60, 70, 90, 0.4);
+  --glass-shadow: rgba(0, 0, 0, 0.25);
+  --bg-gradient-start: #0f1115;
+  --bg-gradient-end: #151820;
+  --text-primary: #d0d7e0;
+  --text-secondary: #8a95a5;
 
-  /* Additional dark mode variables - enhanced glassmorphism */
-  --glass-bg-hover: rgba(90, 90, 130, 0.55);
-  --glass-bg-alt: rgba(80, 80, 120, 0.45);
-  --glass-bg-input: rgba(70, 70, 100, 0.5);
-  --glass-border-strong: rgba(160, 160, 200, 0.4);
-  --glass-inset: rgba(150, 150, 190, 0.25);
+  /* Additional dark mode variables */
+  --glass-bg-hover: rgba(35, 40, 50, 0.95);
+  --glass-bg-alt: rgba(30, 35, 45, 0.9);
+  --glass-bg-input: rgba(35, 40, 50, 0.95);
+  --glass-border-strong: rgba(70, 80, 100, 0.5);
+  --glass-inset: rgba(60, 70, 90, 0.3);
 }
 
 a.black {

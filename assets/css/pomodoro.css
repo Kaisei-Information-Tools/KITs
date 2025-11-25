@@ -40,51 +40,43 @@ main {
   width: 70px;
   text-align: center;
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 2px solid var(--glass-inset);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
   border-radius: 10px;
   transition: all 0.3s ease;
   color: var(--text-primary);
   font-weight: 500;
-  box-shadow:
-    0 4px 16px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 
 .controls input:focus {
   outline: none;
   background: var(--glass-bg-hover);
   border-color: var(--glass-border);
-  box-shadow:
-    0 6px 20px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
 .set-button {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--text-primary);
-  border: 1.5px solid var(--glass-inset);
+  border: 1px solid var(--glass-inset);
   padding: 12px 25px;
   font-size: 18px;
   cursor: pointer;
   border-radius: 12px;
   margin-top: 15px;
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
   font-weight: 600;
 }
 
 .set-button:hover {
   background: var(--glass-bg-hover);
-  box-shadow:
-    0 12px 40px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   transform: translateY(-2px);
 }
 
@@ -96,53 +88,45 @@ main {
 
 .settings-action button {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--text-primary);
-  border: 1.5px solid var(--glass-inset);
+  border: 1px solid var(--glass-inset);
   padding: 12px 25px;
   font-size: 18px;
   cursor: pointer;
   border-radius: 12px;
   margin: 0 8px;
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
   font-weight: 600;
 }
 
 .settings-action button:hover {
   background: var(--glass-bg-hover);
-  box-shadow:
-    0 12px 40px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   transform: translateY(-2px);
 }
 
 .pause-button {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--text-primary);
-  border: 1.5px solid var(--glass-inset);
+  border: 1px solid var(--glass-inset);
   padding: 12px 25px;
   font-size: 18px;
   cursor: pointer;
   border-radius: 12px;
   margin: 0 8px;
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
   font-weight: 600;
 }
 
 .pause-button:hover {
   background: var(--glass-bg-hover);
-  box-shadow:
-    0 12px 40px var(--glass-shadow),
-    inset 0 1px 1px var(--glass-inset);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   transform: translateY(-2px);
 }
 
@@ -156,9 +140,9 @@ footer {
 
 #statusDisplay {
   background: var(--status-error-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 2px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   color: #ffffff;
   font-size: 20px;
   font-weight: 600;
@@ -166,8 +150,6 @@ footer {
   text-align: center;
   border-radius: 12px;
   margin: 20px 0;
-  box-shadow:
-    0 8px 24px var(--glass-shadow),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }

@@ -23,15 +23,15 @@
         .card {
             transition: all 0.3s ease;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 24px var(--glass-shadow);
+            box-shadow: 0 4px 20px var(--glass-shadow);
         }
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 32px var(--glass-shadow);
+            box-shadow: 0 8px 30px var(--glass-shadow);
         }
         
         .animate-float {
