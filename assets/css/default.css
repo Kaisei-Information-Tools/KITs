@@ -17,6 +17,44 @@
   --bg-gradient-end: #f5f8fa;
   --text-primary: #2c2c2c;
   --text-secondary: #5a5a5a;
+
+  /* Additional dark mode variables */
+  --glass-bg-hover: rgba(255, 255, 255, 0.8);
+  --glass-bg-alt: rgba(255, 255, 255, 0.5);
+  --glass-bg-input: rgba(255, 255, 255, 0.8);
+  --glass-border-strong: rgba(255, 255, 255, 1);
+  --glass-inset: rgba(255, 255, 255, 0.6);
+  --hamburger-color: black;
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+  --purple: #6c6cbc;
+  --light: #2a2a4a;
+  --cyan: #1a1a2e;
+  --white: #1a1a2e;
+  --input-bg: rgba(30, 30, 50, 0.8);
+  --input-border: rgba(100, 100, 140, 0.5);
+  --input-focus-border: #8080c0;
+  --btn-bg: #5050a0;
+  --btn-hover-bg: #7070c0;
+
+  /* Glassmorphism colors for dark mode */
+  --glass-bg: rgba(30, 30, 50, 0.7);
+  --glass-border: rgba(100, 100, 140, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --bg-gradient-start: #1a1a2e;
+  --bg-gradient-end: #16213e;
+  --text-primary: #e8e8f0;
+  --text-secondary: #a0a0b8;
+
+  /* Additional dark mode variables */
+  --glass-bg-hover: rgba(50, 50, 80, 0.8);
+  --glass-bg-alt: rgba(40, 40, 70, 0.5);
+  --glass-bg-input: rgba(30, 30, 50, 0.8);
+  --glass-border-strong: rgba(100, 100, 140, 0.6);
+  --glass-inset: rgba(100, 100, 140, 0.3);
+  --hamburger-color: #e8e8f0;
 }
 
 html,
@@ -73,7 +111,7 @@ body {
   overflow-x: auto;
   gap: 8px;
   border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 1);
+  border: 2px solid var(--glass-border-strong);
 }
 
 .logo {
@@ -96,10 +134,10 @@ body {
   margin: 0 5px;
   padding: 5px 10px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--glass-bg-alt);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   font-size: 1.2rem;
   text-decoration: none;
@@ -110,8 +148,8 @@ body {
 }
 
 .nav a:hover {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
@@ -146,7 +184,7 @@ body {
   font-family: sans-serif;
   z-index: 50;
   border-radius: 16px;
-  border: 1.5px solid rgba(255, 255, 255, 1);
+  border: 1.5px solid var(--glass-border-strong);
 }
 
 /* Sidebar starts hidden by default, shown only when toggled */
@@ -189,10 +227,10 @@ body {
   border-radius: 8px;
   color: var(--text-primary);
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--glass-bg-alt);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
   font-size: 1rem;
   word-break: break-word;
@@ -201,8 +239,8 @@ body {
 }
 
 .sidebar__menu li a:hover {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
@@ -335,16 +373,17 @@ footer {
 
 /* ポップアップボックスのスタイル */
 .popup-content {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--glass-border);
   padding: 20px;
   border-radius: 16px;
   width: 90%;
   max-width: 650px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
 }
 
 .popup-content h2 {
@@ -365,16 +404,17 @@ footer {
 }
 
 .popup-content button.accept {
-  background: rgba(60, 60, 108, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: white;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
 }
 
 .popup-content button.accept:hover {
-  background: rgba(60, 60, 108, 1);
-  box-shadow: 0 4px 12px rgba(60, 60, 108, 0.3);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
@@ -395,7 +435,7 @@ footer {
   position: absolute;
   width: 20px;
   height: 2px;
-  background-color: black;
+  background-color: var(--hamburger-color);
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
@@ -422,4 +462,48 @@ footer {
 
 #menu {
   display: none;
+}
+
+/* --- Theme toggle button --- */
+.theme-toggle {
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: auto;
+}
+
+.theme-toggle:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
+  transform: translateY(-1px);
+}
+
+.theme-toggle i {
+  transition: transform 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle .fa-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-sun {
+  display: inline-block;
+}
+
+:root .theme-toggle .fa-sun {
+  display: none;
+}
+
+:root .theme-toggle .fa-moon {
+  display: inline-block;
 }
