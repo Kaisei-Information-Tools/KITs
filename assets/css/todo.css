@@ -25,24 +25,24 @@
 
 .delete {
   width: 3.5rem;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg-alt, rgba(255, 255, 255, 0.4));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border: 1.5px solid var(--glass-inset, rgba(255, 255, 255, 0.6));
   color: var(--text-primary);
   font-weight: 600;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 8px 32px var(--glass-shadow, rgba(0, 0, 0, 0.1)),
+    inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.6));
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .delete:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg-hover, rgba(255, 255, 255, 0.6));
   box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.15)),
+    inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
   transform: translateY(-2px);
 }
 
@@ -56,7 +56,7 @@ label input {
 }
 
 .completed {
-  color: #cccccc;
+  color: var(--text-secondary, #cccccc);
   order: 2;
 }
 

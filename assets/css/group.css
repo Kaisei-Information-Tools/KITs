@@ -10,7 +10,7 @@ body {
     "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
   font-size: 15px;
   line-height: 1.5;
-  color: #333;
+  color: var(--text-primary, #333);
   background: linear-gradient(
     135deg,
     var(--bg-gradient-start) 0%,
@@ -20,17 +20,17 @@ body {
 }
 
 main {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
   padding: 2rem;
   width: 90%;
   max-width: 70rem;
   margin-top: 3rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 32px var(--glass-shadow, rgba(0, 0, 0, 0.15));
   border-radius: 1rem;
   min-height: auto !important;
 }
@@ -45,18 +45,21 @@ main {
 .border {
   box-sizing: border-box;
   border-style: solid;
-  border-color: rgb(229, 231, 235);
+  border-color: var(--glass-border, rgb(229, 231, 235));
 }
 
 .text-input {
   border-radius: 0.25rem;
   border-width: 1px;
+  border-color: var(--glass-border, rgb(229, 231, 235));
   width: 100%;
   padding: 0.5rem;
   font-size: 100%;
   font-family: inherit;
   line-height: inherit;
   margin: 0px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.6));
+  color: var(--text-primary, #333);
 }
 
 #result {
@@ -112,7 +115,7 @@ meter {
   box-sizing: border-box;
 }
 ::placeholder {
-  color: unset;
+  color: var(--text-secondary, unset);
 }
 :where([hidden]) {
   display: none;
