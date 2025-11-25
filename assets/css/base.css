@@ -67,6 +67,20 @@ body {
   min-height: 100vh;
 }
 
+/* Global form elements styling for dark mode */
+input,
+textarea,
+select {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.6));
+  color: var(--text-primary);
+  border-color: var(--glass-border, rgba(204, 204, 204, 0.5));
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+}
+
 main {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -92,22 +106,32 @@ main {
 .border {
   box-sizing: border-box;
   border-style: solid;
-  border-color: rgb(229, 231, 235);
+  border-color: var(--glass-border, rgb(229, 231, 235));
 }
 
 .text-input {
   border-radius: 0.25rem;
   border-width: 1px;
+  border-color: var(--glass-border, rgb(229, 231, 235));
   width: 100%;
   padding: 0.5rem;
   font-size: 100%;
   font-family: inherit;
   line-height: inherit;
   margin: 0px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.6));
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.text-input:focus {
+  outline: none;
+  background: var(--glass-bg-hover, rgba(255, 255, 255, 0.8));
+  box-shadow: 0 4px 12px var(--glass-shadow, rgba(0, 0, 0, 0.1));
 }
 
 .text-input::placeholder {
-  color: #cccccc;
+  color: var(--text-secondary, #cccccc);
 }
 
 .button {

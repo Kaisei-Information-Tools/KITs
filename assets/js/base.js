@@ -14,17 +14,29 @@ if (toTop) {
 const menuCheckbox = document.getElementById("menu");
 const sidebar = document.getElementById("sidebar");
 const content = document.getElementById("content");
+const pageContent = document.querySelector(".page-content");
+
 // 初回チェックで状態反映
 const handleSidebarToggle = () => {
-  if (menuCheckbox && sidebar && content) {
+  if (menuCheckbox && sidebar) {
     if (menuCheckbox.checked) {
       sidebar.classList.add("visible");
       sidebar.classList.remove("hidden");
-      content.classList.remove("fullwidth");
+      if (content) {
+        content.classList.remove("fullwidth");
+      }
+      if (pageContent) {
+        pageContent.classList.remove("fullwidth");
+      }
     } else {
       sidebar.classList.remove("visible");
       sidebar.classList.add("hidden");
-      content.classList.add("fullwidth");
+      if (content) {
+        content.classList.add("fullwidth");
+      }
+      if (pageContent) {
+        pageContent.classList.add("fullwidth");
+      }
     }
   }
 };

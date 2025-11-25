@@ -489,6 +489,10 @@ footer {
   justify-content: center;
   transition: all 0.3s ease;
   margin-left: auto;
+  width: auto;
+  min-width: 40px;
+  max-width: 50px;
+  flex-shrink: 0;
 }
 
 .theme-toggle:hover {
