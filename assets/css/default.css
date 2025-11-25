@@ -27,34 +27,34 @@
   --hamburger-color: black;
 }
 
-/* Dark mode variables */
+/* Dark mode variables - iOS-style soft dark with glassmorphism */
 [data-theme="dark"] {
-  --purple: #6c6cbc;
-  --light: #2a2a4a;
-  --cyan: #1a1a2e;
-  --white: #1a1a2e;
-  --input-bg: rgba(30, 30, 50, 0.8);
-  --input-border: rgba(100, 100, 140, 0.5);
-  --input-focus-border: #8080c0;
-  --btn-bg: #5050a0;
-  --btn-hover-bg: #7070c0;
+  --purple: #8080d0;
+  --light: #3a3a5c;
+  --cyan: #2d2d44;
+  --white: #2d2d44;
+  --input-bg: rgba(60, 60, 90, 0.6);
+  --input-border: rgba(140, 140, 180, 0.4);
+  --input-focus-border: #9090d0;
+  --btn-bg: #6060b0;
+  --btn-hover-bg: #8080d0;
 
-  /* Glassmorphism colors for dark mode */
-  --glass-bg: rgba(30, 30, 50, 0.7);
-  --glass-border: rgba(100, 100, 140, 0.3);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-  --bg-gradient-start: #1a1a2e;
-  --bg-gradient-end: #16213e;
-  --text-primary: #e8e8f0;
-  --text-secondary: #a0a0b8;
+  /* Glassmorphism colors for dark mode - softer, more translucent */
+  --glass-bg: rgba(70, 70, 100, 0.5);
+  --glass-border: rgba(150, 150, 190, 0.25);
+  --glass-shadow: rgba(0, 0, 0, 0.2);
+  --bg-gradient-start: #2a2a40;
+  --bg-gradient-end: #363652;
+  --text-primary: #f0f0f8;
+  --text-secondary: #b8b8d0;
 
-  /* Additional dark mode variables */
-  --glass-bg-hover: rgba(50, 50, 80, 0.8);
-  --glass-bg-alt: rgba(40, 40, 70, 0.5);
-  --glass-bg-input: rgba(30, 30, 50, 0.8);
-  --glass-border-strong: rgba(100, 100, 140, 0.6);
-  --glass-inset: rgba(100, 100, 140, 0.3);
-  --hamburger-color: #e8e8f0;
+  /* Additional dark mode variables - enhanced glassmorphism */
+  --glass-bg-hover: rgba(90, 90, 130, 0.55);
+  --glass-bg-alt: rgba(80, 80, 120, 0.45);
+  --glass-bg-input: rgba(70, 70, 100, 0.5);
+  --glass-border-strong: rgba(160, 160, 200, 0.4);
+  --glass-inset: rgba(150, 150, 190, 0.25);
+  --hamburger-color: #f0f0f8;
 }
 
 /* Dark mode image inversion for logo and tool icons */
