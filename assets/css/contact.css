@@ -144,7 +144,7 @@
   color: var(--text-primary, #333);
 }
 
-/* Dark mode dropdown arrow */
+/* Dark mode dropdown arrow - using separate selector because CSS variables cannot be used in data URIs */
 [data-theme="dark"] .contact-form select {
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23aab'/%3E%3C/svg%3E");
 }

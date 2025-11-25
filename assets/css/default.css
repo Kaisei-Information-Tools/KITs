@@ -28,9 +28,6 @@
   
   /* Toggle/switch colors */
   --toggle-active: #4bd865;
-  
-  /* Dropdown arrow color */
-  --dropdown-arrow-color: %23666;
 }
 
 /* Dark mode variables - high contrast natural dark theme */
@@ -67,9 +64,6 @@
   
   /* Toggle/switch colors for dark mode */
   --toggle-active: #5ce878;
-  
-  /* Dropdown arrow color for dark mode */
-  --dropdown-arrow-color: %23aab;
 }
 
 /* Dark mode image styling for logo and tool icons - softer gray for better readability */
