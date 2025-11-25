@@ -472,3 +472,79 @@ footer {
 input[type="range"] {
   width: 100%;
 }
+
+/* ===== Dark mode accent colors for index page ===== */
+
+/* Tool cards accent hover in dark mode */
+[data-theme="dark"] .square:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 8px 30px var(--accent-glow), 0 4px 20px var(--glass-shadow);
+}
+
+/* Tool card title gradient in dark mode */
+[data-theme="dark"] .text-parts h4 {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Clock accent border in dark mode */
+[data-theme="dark"] .clock {
+  position: relative;
+}
+
+[data-theme="dark"] .clock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: var(--accent-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Settings panel accent in dark mode */
+[data-theme="dark"] .settings-panel {
+  position: relative;
+}
+
+[data-theme="dark"] .settings-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: var(--accent-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .settings-panel h2 {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Progress ring accent in dark mode */
+[data-theme="dark"] .progress-ring .fg {
+  stroke: url(#accent-gradient);
+}
+
+/* To-top button accent in dark mode */
+[data-theme="dark"] #to-top:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 12px 32px var(--accent-glow);
+}

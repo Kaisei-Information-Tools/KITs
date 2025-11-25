@@ -28,6 +28,14 @@
   
   /* Toggle/switch colors */
   --toggle-active: #4bd865;
+  
+  /* Accent colors (subtle for light mode) */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.03));
+  --accent-glow: rgba(139, 92, 246, 0.1);
 }
 
 /* Dark mode variables - high contrast natural dark theme */
@@ -64,6 +72,14 @@
   
   /* Toggle/switch colors for dark mode */
   --toggle-active: #5ce878;
+  
+  /* Accent colors for dark mode (matching about.html gradient) */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+  --accent-glow: rgba(139, 92, 246, 0.3);
 }
 
 /* Dark mode image styling for logo and tool icons - softer gray for better readability */
@@ -532,4 +548,85 @@ footer {
 
 [data-theme="dark"] .theme-toggle .fa-sun {
   display: inline-block;
+}
+
+/* ===== Dark mode accent colors ===== */
+
+/* Header accent border in dark mode */
+[data-theme="dark"] .header {
+  border-bottom: 2px solid transparent;
+  border-image: var(--accent-gradient) 1;
+  border-image-slice: 1;
+  background: linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
+              var(--accent-gradient) border-box;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background-clip: padding-box;
+  position: relative;
+}
+
+[data-theme="dark"] .header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: var(--accent-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Sidebar accent in dark mode */
+[data-theme="dark"] .sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: var(--accent-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .sidebar {
+  position: relative;
+}
+
+/* Sidebar title accent in dark mode */
+[data-theme="dark"] .sidebar__title {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Nav link hover accent in dark mode */
+[data-theme="dark"] .nav a:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Sidebar menu link hover accent in dark mode */
+[data-theme="dark"] .sidebar__menu li a:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+/* Theme toggle accent in dark mode */
+[data-theme="dark"] .theme-toggle {
+  border-color: var(--accent-purple);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
