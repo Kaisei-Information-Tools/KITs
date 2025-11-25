@@ -43,7 +43,8 @@ const themeToggle = document.getElementById("theme-toggle");
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
-    // Toggle between dark and light (null/empty = light mode)
+    // Toggle between dark and light mode
+    // When data-theme attribute is removed, the page uses default light mode styles
     if (currentTheme === "dark") {
       document.documentElement.removeAttribute("data-theme");
       localStorage.setItem("theme", "light");

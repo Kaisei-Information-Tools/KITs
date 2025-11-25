@@ -492,18 +492,20 @@ footer {
   transition: transform 0.3s ease;
 }
 
+/* Light mode (default): show moon, hide sun */
+.theme-toggle .fa-sun {
+  display: none;
+}
+
+.theme-toggle .fa-moon {
+  display: inline-block;
+}
+
+/* Dark mode: show sun, hide moon */
 [data-theme="dark"] .theme-toggle .fa-moon {
   display: none;
 }
 
 [data-theme="dark"] .theme-toggle .fa-sun {
-  display: inline-block;
-}
-
-:root .theme-toggle .fa-sun {
-  display: none;
-}
-
-:root .theme-toggle .fa-moon {
   display: inline-block;
 }
