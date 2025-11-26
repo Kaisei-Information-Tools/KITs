@@ -491,44 +491,14 @@ input[type="range"] {
 
 /* Clock accent border in dark mode */
 [data-theme="dark"] .clock {
-  position: relative;
-}
-
-[data-theme="dark"] .clock::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  padding: 1px;
-  background: var(--accent-gradient);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 /* Settings panel accent in dark mode */
 [data-theme="dark"] .settings-panel {
-  position: relative;
-}
-
-[data-theme="dark"] .settings-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  padding: 1px;
-  background: var(--accent-gradient);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 [data-theme="dark"] .settings-panel h2 {

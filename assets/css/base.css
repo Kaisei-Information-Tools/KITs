@@ -809,23 +809,8 @@ footer {
 
 /* Main container accent border in dark mode */
 [data-theme="dark"] main {
-  position: relative;
-}
-
-[data-theme="dark"] main::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: var(--accent-gradient);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 /* Button accent hover in dark mode */
@@ -845,37 +830,18 @@ footer {
 
 /* Footer accent line in dark mode */
 [data-theme="dark"] footer {
-  border-top-color: transparent;
-  background: linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
-              var(--accent-gradient) border-box;
-  border-top: 1px solid transparent;
+  border-top-color: var(--accent-purple);
 }
 
 /* Navbar accent in dark mode (for default layout) */
 [data-theme="dark"] .navbar {
-  border-bottom: 2px solid;
-  border-image: var(--accent-gradient) 1;
+  border-bottom-color: var(--accent-purple);
 }
 
 /* Popup content accent in dark mode */
 [data-theme="dark"] .popup-content {
-  position: relative;
-}
-
-[data-theme="dark"] .popup-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  padding: 1px;
-  background: var(--accent-gradient);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 8px 32px var(--accent-glow);
 }
 
 /* H1, H2 headings with gradient text in dark mode */
