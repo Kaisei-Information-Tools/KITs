@@ -478,15 +478,9 @@ input[type="range"] {
 /* Tool cards accent hover in dark mode */
 [data-theme="dark"] .square:hover {
   border-color: var(--accent-purple);
-  box-shadow: 0 8px 30px var(--accent-glow), 0 4px 20px var(--glass-shadow);
-}
-
-/* Tool card title gradient in dark mode */
-[data-theme="dark"] .text-parts h4 {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  box-shadow:
+    0 8px 30px var(--accent-glow),
+    0 4px 20px var(--glass-shadow);
 }
 
 /* Clock accent border in dark mode */

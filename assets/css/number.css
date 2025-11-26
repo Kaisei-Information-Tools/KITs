@@ -29,11 +29,15 @@
   width: 80% !important; /* 結果のコンテナを幅100%にする */
   margin-top: 1rem; /* 上部に余白を設ける */
 }
-footer {
-  position: fixed;
-  bottom: 0;
-}
 
 #result {
   margin-left: 1rem;
+}
+
+body {
+  min-height: 0;
+}
+
+main {
+  min-height: calc(100vh - 210px) !important;
 }

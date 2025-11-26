@@ -25,16 +25,20 @@
   --glass-border-strong: rgba(255, 255, 255, 1);
   --glass-inset: rgba(255, 255, 255, 0.6);
   --hamburger-color: black;
-  
+
   /* Toggle/switch colors */
   --toggle-active: #4bd865;
-  
+
   /* Accent colors (subtle for light mode) */
   --accent-blue: #3b82f6;
   --accent-purple: #8b5cf6;
   --accent-pink: #ec4899;
   --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.03));
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.03),
+    rgba(139, 92, 246, 0.03)
+  );
   --accent-glow: rgba(139, 92, 246, 0.1);
 }
 
@@ -69,16 +73,20 @@
 
   /* Icon color for dark mode */
   --icon-color: #d0d0d0;
-  
+
   /* Toggle/switch colors for dark mode */
   --toggle-active: #5ce878;
-  
+
   /* Accent colors for dark mode (matching about.html gradient) */
   --accent-blue: #3b82f6;
   --accent-purple: #8b5cf6;
   --accent-pink: #ec4899;
   --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.15),
+    rgba(139, 92, 246, 0.15)
+  );
   --accent-glow: rgba(139, 92, 246, 0.3);
 }
 
@@ -562,14 +570,6 @@ footer {
 [data-theme="dark"] .sidebar {
   border-color: var(--accent-purple);
   box-shadow: 0 4px 20px var(--accent-glow);
-}
-
-/* Sidebar title accent in dark mode */
-[data-theme="dark"] .sidebar__title {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Nav link hover accent in dark mode */

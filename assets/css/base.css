@@ -21,16 +21,20 @@
   --glass-bg-input: rgba(255, 255, 255, 0.8);
   --glass-border-strong: rgba(255, 255, 255, 1);
   --glass-inset: rgba(255, 255, 255, 0.6);
-  
+
   /* Toggle/switch colors */
   --toggle-active: #4bd865;
-  
+
   /* Accent colors (subtle for light mode) */
   --accent-blue: #3b82f6;
   --accent-purple: #8b5cf6;
   --accent-pink: #ec4899;
   --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.03));
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.03),
+    rgba(139, 92, 246, 0.03)
+  );
   --accent-glow: rgba(139, 92, 246, 0.1);
 }
 
@@ -56,16 +60,20 @@
   --glass-bg-input: rgba(45, 50, 65, 0.95);
   --glass-border-strong: rgba(90, 100, 120, 0.6);
   --glass-inset: rgba(80, 90, 110, 0.4);
-  
+
   /* Toggle/switch colors for dark mode */
   --toggle-active: #5ce878;
-  
+
   /* Accent colors for dark mode (matching about.html gradient) */
   --accent-blue: #3b82f6;
   --accent-purple: #8b5cf6;
   --accent-pink: #ec4899;
   --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.15),
+    rgba(139, 92, 246, 0.15)
+  );
   --accent-glow: rgba(139, 92, 246, 0.3);
 }
 
@@ -844,16 +852,8 @@ footer {
   box-shadow: 0 8px 32px var(--accent-glow);
 }
 
-/* H1, H2 headings with gradient text in dark mode */
-[data-theme="dark"] h1,
-[data-theme="dark"] h2 {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 /* Links with accent color in dark mode */
-[data-theme="dark"] a:not(.nav a):not(.sidebar__menu a):not(.navbar a):not(.black):hover {
+[data-theme="dark"]
+  a:not(.nav a):not(.sidebar__menu a):not(.navbar a):not(.black):hover {
   color: var(--accent-purple);
 }
