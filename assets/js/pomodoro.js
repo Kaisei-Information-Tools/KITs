@@ -141,11 +141,13 @@ function updateDisplay(time) {
   const seconds = time % 60;
   timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
+  // Use CSS variables for dark mode compatibility
+  const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
   if (time <= 3) {
     timerDisplay.style.color = "#ff0000"; // 赤色
   } else if (time <= 5) {
     timerDisplay.style.color = "#0000ff"; // 青色
   } else {
-    timerDisplay.style.color = "#000000"; // 黒色（デフォルト）
+    timerDisplay.style.color = isDarkMode ? "#e0e5ec" : "#000000"; // Dark mode white / Light mode black
   }
 }

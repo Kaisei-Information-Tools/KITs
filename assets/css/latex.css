@@ -192,10 +192,14 @@ h1 {
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
+  position: relative;
+  width: 100%;
+  margin-top: auto;
 }
 
 body {
   overflow-x: visible;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

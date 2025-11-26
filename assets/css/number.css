@@ -19,12 +19,32 @@
 
 .number-container .form-control {
   flex: 1; /* 入力欄を伸ばす */
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
+  color: var(--text-primary, #333);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+}
+
+.number-container .form-control::placeholder {
+  color: var(--text-secondary, #666);
 }
 
 .number-container button {
   margin-left: 1rem; /* ボタンと入力欄の間に余白を設ける */
   margin-bottom: 1rem;
 }
+
+/* Dark mode button styling */
+[data-theme="dark"] .number-container .btn-theme {
+  background: var(--glass-bg-alt, rgba(50, 55, 70, 0.9));
+  border-color: var(--accent-purple, #8b5cf6);
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] .number-container .btn-theme:hover {
+  background: var(--glass-bg-hover, rgba(55, 60, 75, 0.95));
+  box-shadow: 0 4px 20px var(--accent-glow, rgba(139, 92, 246, 0.3));
+}
+
 .result-container {
   width: 80% !important; /* 結果のコンテナを幅100%にする */
   margin-top: 1rem; /* 上部に余白を設ける */
@@ -32,6 +52,7 @@
 
 #result {
   margin-left: 1rem;
+  color: var(--text-primary, #333);
 }
 
 body {

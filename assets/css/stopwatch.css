@@ -119,3 +119,16 @@
 #container {
   min-height: calc(100vh - 174px);
 }
+
+/* Dark mode styling for stopwatch buttons */
+[data-theme="dark"] .toggle-button {
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] .lap h3 {
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] #lap-container h3 {
+  color: var(--text-primary, #e0e5ec);
+}
