@@ -81,9 +81,18 @@ main {
   padding: 0;
   width: auto;
   max-width: unset;
-  margin-top: 0;
+  margin-top: 0 !important;
   margin-left: unset;
   margin-right: unset;
   box-shadow: none;
   border-radius: 0;
+  padding-top: 0 !important;
+}
+
+[data-theme="dark"] footer {
+  border-top-color: transparent;
+}
+
+footer {
+  margin-top: 0 !important;
 }
