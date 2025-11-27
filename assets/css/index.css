@@ -43,11 +43,11 @@
 
 /* タイル */
 .square {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -56,14 +56,14 @@
   align-items: center;
   text-align: center;
   padding: 15px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
 }
 
 .square:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 8px 30px var(--glass-shadow);
+  background: var(--glass-bg-hover);
 }
 
 .square a {
@@ -131,12 +131,12 @@
 
 /* 時計 */
 .clock {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
-  border-radius: 20px;
+  border-radius: 16px;
   font-size: 4rem; /* メイン時刻 */
   font-weight: 600;
   padding: 40px;
@@ -144,7 +144,7 @@
   line-height: 1.2;
   white-space: pre-line;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   transition: all 0.3s ease;
   --clock-date-font: 2rem; /* ← 初期値をCSS変数で定義 */
 }
@@ -155,14 +155,14 @@
 
 /* ToDo */
 .todo-list {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   padding: 30px;
   font-size: 1.2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 
 /* 設定パネル */
@@ -184,14 +184,18 @@
 }
 
 .settings-panel {
-  background: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   width: 320px;
   max-width: 90%;
   position: relative;
   animation: fadeIn 0.3s ease-out;
+  color: var(--text-primary);
 }
 
 @keyframes fadeIn {
@@ -208,7 +212,7 @@
 .settings-panel h2 {
   margin-top: 0;
   font-size: 1.3rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 15px;
 }
 
@@ -220,7 +224,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 input[type="range"] {
@@ -246,14 +250,14 @@ footer {
   right: 20px;
   width: 45px;
   height: 45px;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   font-size: 1.5rem;
   border-radius: 50%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px var(--glass-shadow);
   cursor: pointer;
   z-index: 999;
   display: none;
@@ -263,8 +267,8 @@ footer {
 }
 
 #to-top:hover {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 12px 32px var(--glass-shadow);
   transform: translateY(-2px);
 }
 
@@ -450,7 +454,7 @@ footer {
 .settings-panel h2 {
   margin-top: 0;
   font-size: 1.3rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 15px;
 }
 
@@ -462,9 +466,49 @@ footer {
   background: none;
   border: none;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 input[type="range"] {
   width: 100%;
+}
+
+/* ===== Dark mode accent colors for index page ===== */
+
+/* Tool cards accent hover in dark mode */
+[data-theme="dark"] .square:hover {
+  border-color: var(--accent-purple);
+  box-shadow:
+    0 8px 30px var(--accent-glow),
+    0 4px 20px var(--glass-shadow);
+}
+
+/* Clock accent border in dark mode */
+[data-theme="dark"] .clock {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Settings panel accent in dark mode */
+[data-theme="dark"] .settings-panel {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+[data-theme="dark"] .settings-panel h2 {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Progress ring accent in dark mode */
+[data-theme="dark"] .progress-ring .fg {
+  stroke: url(#accent-gradient);
+}
+
+/* To-top button accent in dark mode */
+[data-theme="dark"] #to-top:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 12px 32px var(--accent-glow);
 }

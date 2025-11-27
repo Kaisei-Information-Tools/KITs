@@ -1,12 +1,12 @@
 .stopwatch-container {
   text-align: center;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--glass-shadow);
   margin-bottom: 20px;
 }
 
@@ -23,53 +23,49 @@
   margin: 0.5rem;
   border-radius: 12px;
   cursor: pointer;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--glass-inset);
   transition: all 0.3s ease;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 
 .stopwatch-buttons:hover {
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
   transform: translateY(-2px);
 }
 
 .toggle-button {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .toggle-button:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg-hover);
 }
 
 .reset-button {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .reset-button:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg-hover);
 }
 
 .lap-button {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .lap-button:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg-hover);
 }
 
 .lap-container {
@@ -80,14 +76,14 @@
 }
 
 .lap {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   padding: 10px;
   margin: 10px 0;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -95,9 +91,9 @@
 }
 
 .lap:hover {
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--glass-bg-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 30px var(--glass-shadow);
 }
 
 .lap .lap-time {
@@ -122,4 +118,17 @@
 
 #container {
   min-height: calc(100vh - 174px);
+}
+
+/* Dark mode styling for stopwatch buttons */
+[data-theme="dark"] .toggle-button {
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] .lap h3 {
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] #lap-container h3 {
+  color: var(--text-primary, #e0e5ec);
 }

@@ -1,15 +1,15 @@
 main {
   font-family: "Noto Serif JP", serif;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #333;
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
+  color: var(--text-primary, #333);
   width: 80%;
   max-width: 1200px;
   min-height: calc(100vh - 189.562531px) !important;
   margin-bottom: 40px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 32px var(--glass-shadow, rgba(0, 0, 0, 0.15));
   border-radius: 1rem;
 }
 
@@ -41,45 +41,46 @@ textarea {
   width: 100%;
   height: 500px;
   font-size: 1em;
-  border: 1px solid rgba(204, 204, 204, 0.5);
+  border: 1px solid var(--glass-border, rgba(204, 204, 204, 0.5));
   border-radius: 8px;
   padding: 8px;
   resize: vertical;
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.6));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  color: var(--text-primary, #333);
 }
 
 textarea:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--glass-bg-hover, rgba(255, 255, 255, 0.8));
+  box-shadow: 0 4px 12px var(--glass-shadow, rgba(0, 0, 0, 0.1));
 }
 
 button {
   padding: 12px;
   font-size: 1em;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg-alt, rgba(255, 255, 255, 0.4));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border: 1.5px solid var(--glass-inset, rgba(255, 255, 255, 0.6));
   border-radius: 10px;
   color: var(--text-primary);
   cursor: pointer;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 8px 32px var(--glass-shadow, rgba(0, 0, 0, 0.1)),
+    inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.6));
   transition: all 0.3s ease;
   font-family: "Noto Sans JP";
   font-weight: 600;
 }
 
 button:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg-hover, rgba(255, 255, 255, 0.6));
   box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.15)),
+    inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
   transform: translateY(-2px);
 }
 
@@ -88,8 +89,8 @@ button:hover {
    ========================== */
 .preview-area {
   width: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--glass-border, rgba(0, 0, 0, 0.2));
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 15px;
@@ -99,7 +100,7 @@ button:hover {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px var(--glass-shadow, rgba(0, 0, 0, 0.12));
 }
 
 p {

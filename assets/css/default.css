@@ -17,6 +17,88 @@
   --bg-gradient-end: #f5f8fa;
   --text-primary: #2c2c2c;
   --text-secondary: #5a5a5a;
+
+  /* Additional dark mode variables */
+  --glass-bg-hover: rgba(255, 255, 255, 0.8);
+  --glass-bg-alt: rgba(255, 255, 255, 0.5);
+  --glass-bg-input: rgba(255, 255, 255, 0.8);
+  --glass-border-strong: rgba(255, 255, 255, 1);
+  --glass-inset: rgba(255, 255, 255, 0.6);
+  --hamburger-color: black;
+
+  /* Toggle/switch colors */
+  --toggle-active: #4bd865;
+
+  /* Accent colors (subtle for light mode) */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.03),
+    rgba(139, 92, 246, 0.03)
+  );
+  --accent-glow: rgba(139, 92, 246, 0.1);
+}
+
+/* Dark mode variables - high contrast natural dark theme */
+[data-theme="dark"] {
+  --purple: #7a8dbd;
+  --light: #1e2128;
+  --cyan: #1a1d23;
+  --white: #1a1d23;
+  --input-bg: rgba(45, 50, 65, 0.95);
+  --input-border: rgba(90, 100, 130, 0.6);
+  --input-focus-border: #6a7a9a;
+  --btn-bg: #3a4a5a;
+  --btn-hover-bg: #4a5a6a;
+
+  /* Dark mode colors - high contrast palette */
+  --glass-bg: rgba(40, 45, 55, 0.95);
+  --glass-border: rgba(80, 90, 110, 0.5);
+  --glass-shadow: rgba(0, 0, 0, 0.4);
+  --bg-gradient-start: #0a0c10;
+  --bg-gradient-end: #0f1218;
+  --text-primary: #e0e5ec;
+  --text-secondary: #9aa5b5;
+
+  /* Additional dark mode variables */
+  --glass-bg-hover: rgba(55, 60, 75, 0.95);
+  --glass-bg-alt: rgba(50, 55, 70, 0.9);
+  --glass-bg-input: rgba(45, 50, 65, 0.95);
+  --glass-border-strong: rgba(90, 100, 120, 0.6);
+  --glass-inset: rgba(80, 90, 110, 0.4);
+  --hamburger-color: #e0e5ec;
+
+  /* Icon color for dark mode */
+  --icon-color: #d0d0d0;
+
+  /* Toggle/switch colors for dark mode */
+  --toggle-active: #5ce878;
+
+  /* Accent colors for dark mode (matching about.html gradient) */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.15),
+    rgba(139, 92, 246, 0.15)
+  );
+  --accent-glow: rgba(139, 92, 246, 0.3);
+}
+
+/* Dark mode image styling for logo and tool icons - softer gray for better readability */
+[data-theme="dark"] .logo img {
+  filter: invert(0.9) brightness(1.1);
+  opacity: 0.95;
+}
+
+[data-theme="dark"] .square img {
+  filter: invert(0.9) brightness(1.05);
+  opacity: 0.9;
 }
 
 html,
@@ -64,8 +146,8 @@ body {
   display: flex;
   align-items: center;
   background: var(--glass-bg);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--glass-border);
   box-shadow: 0 4px 20px var(--glass-shadow);
   padding: 10px 20px;
@@ -73,7 +155,7 @@ body {
   overflow-x: auto;
   gap: 8px;
   border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 1);
+  border: 1px solid var(--glass-border-strong);
 }
 
 .logo {
@@ -96,10 +178,10 @@ body {
   margin: 0 5px;
   padding: 5px 10px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--glass-bg-alt);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   font-size: 1.2rem;
   text-decoration: none;
@@ -110,8 +192,8 @@ body {
 }
 
 .nav a:hover {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
@@ -132,10 +214,10 @@ body {
   width: clamp(200px, 20%, 280px);
   height: calc(100vh - 116px);
   background: var(--glass-bg);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-right: 1px solid var(--glass-border);
-  box-shadow: 4px 0 20px var(--glass-shadow);
+  box-shadow: 0 4px 20px var(--glass-shadow);
   padding: 10px 5px;
   display: flex;
   flex-direction: column;
@@ -146,7 +228,7 @@ body {
   font-family: sans-serif;
   z-index: 50;
   border-radius: 16px;
-  border: 1.5px solid rgba(255, 255, 255, 1);
+  border: 1px solid var(--glass-border-strong);
 }
 
 /* Sidebar starts hidden by default, shown only when toggled */
@@ -189,10 +271,10 @@ body {
   border-radius: 8px;
   color: var(--text-primary);
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--glass-bg-alt);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
   font-size: 1rem;
   word-break: break-word;
@@ -201,8 +283,8 @@ body {
 }
 
 .sidebar__menu li a:hover {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
@@ -335,16 +417,17 @@ footer {
 
 /* ポップアップボックスのスタイル */
 .popup-content {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--glass-border);
   padding: 20px;
   border-radius: 16px;
   width: 90%;
   max-width: 650px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
 }
 
 .popup-content h2 {
@@ -365,16 +448,17 @@ footer {
 }
 
 .popup-content button.accept {
-  background: rgba(60, 60, 108, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: white;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
 }
 
 .popup-content button.accept:hover {
-  background: rgba(60, 60, 108, 1);
-  box-shadow: 0 4px 12px rgba(60, 60, 108, 0.3);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
   transform: translateY(-1px);
 }
 
@@ -395,7 +479,7 @@ footer {
   position: absolute;
   width: 20px;
   height: 2px;
-  background-color: black;
+  background-color: var(--hamburger-color);
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
@@ -422,4 +506,89 @@ footer {
 
 #menu {
   display: none;
+}
+
+/* --- Theme toggle button --- */
+.theme-toggle {
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: auto;
+  width: auto;
+  min-width: 40px;
+  max-width: 50px;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
+  transform: translateY(-1px);
+}
+
+.theme-toggle i {
+  transition: transform 0.3s ease;
+}
+
+/* Light mode (default): show moon, hide sun */
+.theme-toggle .fa-sun {
+  display: none;
+}
+
+.theme-toggle .fa-moon {
+  display: inline-block;
+}
+
+/* Dark mode: show sun, hide moon */
+[data-theme="dark"] .theme-toggle .fa-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-sun {
+  display: inline-block;
+}
+
+/* ===== Dark mode accent colors ===== */
+
+/* Header accent border in dark mode - using simple border-color to avoid layout issues */
+[data-theme="dark"] .header {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Sidebar accent border in dark mode */
+[data-theme="dark"] .sidebar {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Nav link hover accent in dark mode */
+[data-theme="dark"] .nav a:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Sidebar menu link hover accent in dark mode */
+[data-theme="dark"] .sidebar__menu li a:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+/* Theme toggle accent in dark mode */
+[data-theme="dark"] .theme-toggle {
+  border-color: var(--accent-purple);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  box-shadow: 0 4px 20px var(--accent-glow);
 }

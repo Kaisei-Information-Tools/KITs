@@ -1,25 +1,83 @@
  /* ===== CSS スタイル ===== */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
-        body {
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        body.dark-mode {
-            background-color: #0f172a;
-            color: #e2e8f0;
-        }
-        
+        /* CSS Variables for light mode (default) */
         :root {
             --bg-gradient-start: #e8f0f7;
             --bg-gradient-end: #f5f8fa;
+            --text-primary: #2c2c2c;
+            --text-secondary: #5a5a5a;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
         }
-
-        body.light-mode {
+        
+        /* CSS Variables for dark mode */
+        [data-theme="dark"] {
+            --bg-gradient-start: #0a0c10;
+            --bg-gradient-end: #0f1218;
+            --text-primary: #e0e5ec;
+            --text-secondary: #9aa5b5;
+            --glass-bg: rgba(40, 45, 55, 0.95);
+            --glass-border: rgba(80, 90, 110, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.4);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
             background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             background-attachment: fixed;
-            color: #1e293b;
+            color: var(--text-primary);
+        }
+        
+        /* Theme toggle button styling */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--glass-shadow);
+        }
+        
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        
+        /* Light mode (default): show moon, hide sun */
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+        
+        .theme-toggle .fa-moon {
+            display: inline-block;
+        }
+        
+        /* Dark mode: show sun, hide moon */
+        [data-theme="dark"] .theme-toggle .fa-moon {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            display: inline-block;
         }
         
         .gradient-text {
@@ -35,32 +93,16 @@
         
         .card {
             transition: all 0.3s ease;
-        }
-        
-        .dark-mode .card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .light-mode .card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px var(--glass-shadow);
         }
         
         .card:hover {
             transform: translateY(-5px);
-        }
-        
-        .dark-mode .card:hover {
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .light-mode .card:hover {
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 30px var(--glass-shadow);
         }
         
         .animate-float {
@@ -81,14 +123,11 @@
             height: 100%;
             clip-path: polygon(50% 0, 100% 0, 100% 100%, 20% 100%);
             z-index: -1;
-        }
-        
-        .dark-mode .hero-shape {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
-        }
-        
-        .light-mode .hero-shape {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+        }
+        
+        [data-theme="dark"] .hero-shape {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
         }
         
         .btn-primary {
@@ -177,75 +216,24 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
         }
         
-        .dark-mode .text-content {
-            color: #e2e8f0;
+        .text-content {
+            color: var(--text-primary);
         }
         
-        .light-mode .text-content {
-            color: #1e293b;
+        .text-muted {
+            color: var(--text-secondary);
         }
         
-        .dark-mode .text-muted {
-            color: #94a3b8;
+        .bg-section {
+            background-color: var(--glass-bg);
         }
         
-        .light-mode .text-muted {
-            color: #64748b;
+        .bg-section-alt {
+            background-color: transparent;
         }
         
-        .dark-mode .bg-section {
-            background-color: #1e293b;
-        }
-        
-        .light-mode .bg-section {
-            background-color: #f1f5f9;
-        }
-        
-        .dark-mode .bg-section-alt {
-            background-color: #0f172a;
-        }
-        
-        .light-mode .bg-section-alt {
-            background-color: #ffffff;
-        }
-        
-        .dark-mode .border-color {
-            border-color: #334155;
-        }
-        
-        .light-mode .border-color {
-            border-color: #e2e8f0;
-        }
-        
-        .theme-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .dark-mode .theme-toggle {
-            background-color: #334155;
-            color: #f8fafc;
-        }
-        
-        .light-mode .theme-toggle {
-            background-color: #f8fafc;
-            color: #334155;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .theme-toggle:hover {
-            transform: scale(1.1);
+        .border-color {
+            border-color: var(--glass-border);
         }
         
         @media (max-width: 768px) {
