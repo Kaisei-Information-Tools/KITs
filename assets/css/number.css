@@ -31,16 +31,17 @@
 .number-container button {
   margin-left: 1rem; /* ボタンと入力欄の間に余白を設ける */
   margin-bottom: 1rem;
+  width: 3.5rem;
 }
 
 /* Dark mode button styling */
-[data-theme="dark"] .number-container .btn-theme {
+[data-theme="dark"] .number-container button {
   background: var(--glass-bg-alt, rgba(50, 55, 70, 0.9));
   border-color: var(--accent-purple, #8b5cf6);
   color: var(--text-primary, #e0e5ec);
 }
 
-[data-theme="dark"] .number-container .btn-theme:hover {
+[data-theme="dark"] .number-container button:hover {
   background: var(--glass-bg-hover, rgba(55, 60, 75, 0.95));
   box-shadow: 0 4px 20px var(--accent-glow, rgba(139, 92, 246, 0.3));
 }

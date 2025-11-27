@@ -54,8 +54,11 @@
 /* メインレイアウト */
 .main {
   display: flex;
-  padding-top: 60px;
   max-width: 800px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 /* フォーム中央配置 */
