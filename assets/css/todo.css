@@ -31,7 +31,7 @@
   border: 1.5px solid var(--glass-inset, rgba(255, 255, 255, 0.6));
   color: var(--text-primary);
   font-weight: 600;
-  box-shadow: 
+  box-shadow:
     0 8px 32px var(--glass-shadow, rgba(0, 0, 0, 0.1)),
     inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.6));
   text-decoration: none;
@@ -40,7 +40,7 @@
 
 .delete:hover {
   background: var(--glass-bg-hover, rgba(255, 255, 255, 0.6));
-  box-shadow: 
+  box-shadow:
     0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.15)),
     inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
   transform: translateY(-2px);
@@ -66,4 +66,8 @@ label input {
 
 #container {
   min-height: calc(100vh - 174px);
+}
+
+[data-theme="dark"] button img {
+  filter: invert(1);
 }

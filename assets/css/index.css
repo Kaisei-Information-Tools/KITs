@@ -212,7 +212,7 @@
 .settings-panel h2 {
   margin-top: 0;
   font-size: 1.3rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 15px;
 }
 
@@ -224,7 +224,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 input[type="range"] {
@@ -471,4 +471,44 @@ footer {
 
 input[type="range"] {
   width: 100%;
+}
+
+/* ===== Dark mode accent colors for index page ===== */
+
+/* Tool cards accent hover in dark mode */
+[data-theme="dark"] .square:hover {
+  border-color: var(--accent-purple);
+  box-shadow:
+    0 8px 30px var(--accent-glow),
+    0 4px 20px var(--glass-shadow);
+}
+
+/* Clock accent border in dark mode */
+[data-theme="dark"] .clock {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Settings panel accent in dark mode */
+[data-theme="dark"] .settings-panel {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+[data-theme="dark"] .settings-panel h2 {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Progress ring accent in dark mode */
+[data-theme="dark"] .progress-ring .fg {
+  stroke: url(#accent-gradient);
+}
+
+/* To-top button accent in dark mode */
+[data-theme="dark"] #to-top:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 12px 32px var(--accent-glow);
 }

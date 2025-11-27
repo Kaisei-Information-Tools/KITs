@@ -1,9 +1,7 @@
 @charset "utf-8";
 
-:root {
-  --bg-gradient-start: #e8f0f7;
-  --bg-gradient-end: #f5f8fa;
-}
+/* Note: Main CSS variables are defined in base.css and default.css */
+/* These are fallback values in case this CSS is loaded independently */
 
 body {
   font-family: "Noto Sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans",

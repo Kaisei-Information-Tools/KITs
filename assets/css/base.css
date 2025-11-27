@@ -21,6 +21,21 @@
   --glass-bg-input: rgba(255, 255, 255, 0.8);
   --glass-border-strong: rgba(255, 255, 255, 1);
   --glass-inset: rgba(255, 255, 255, 0.6);
+
+  /* Toggle/switch colors */
+  --toggle-active: #4bd865;
+
+  /* Accent colors (subtle for light mode) */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.03),
+    rgba(139, 92, 246, 0.03)
+  );
+  --accent-glow: rgba(139, 92, 246, 0.1);
 }
 
 /* Dark mode variables - high contrast natural dark theme */
@@ -45,6 +60,21 @@
   --glass-bg-input: rgba(45, 50, 65, 0.95);
   --glass-border-strong: rgba(90, 100, 120, 0.6);
   --glass-inset: rgba(80, 90, 110, 0.4);
+
+  /* Toggle/switch colors for dark mode */
+  --toggle-active: #5ce878;
+
+  /* Accent colors for dark mode (matching about.html gradient) */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  --accent-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.15),
+    rgba(139, 92, 246, 0.15)
+  );
+  --accent-glow: rgba(139, 92, 246, 0.3);
 }
 
 a.black {
@@ -731,4 +761,99 @@ footer {
   --bs-dropdown-link-active-bg: #3c3c6c;
   --bs-dropdown-link-disabled-color: #adb5bd;
   --bs-dropdown-header-color: #adb5bd;
+}
+
+/* --- Theme toggle button --- */
+.theme-toggle {
+  background: var(--glass-bg-alt, rgba(255, 255, 255, 0.5));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: auto;
+  width: auto;
+  min-width: 40px;
+  max-width: 50px;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--glass-bg-hover, rgba(255, 255, 255, 0.8));
+  box-shadow: 0 4px 12px var(--glass-shadow, rgba(0, 0, 0, 0.1));
+  transform: translateY(-1px);
+}
+
+.theme-toggle i {
+  transition: transform 0.3s ease;
+}
+
+/* Light mode (default): show moon, hide sun */
+.theme-toggle .fa-sun {
+  display: none;
+}
+
+.theme-toggle .fa-moon {
+  display: inline-block;
+}
+
+/* Dark mode: show sun, hide moon */
+[data-theme="dark"] .theme-toggle .fa-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-sun {
+  display: inline-block;
+}
+
+/* ===== Dark mode accent colors for base elements ===== */
+
+/* Main container accent border in dark mode */
+[data-theme="dark"] main {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Button accent hover in dark mode */
+[data-theme="dark"] button:hover,
+[data-theme="dark"] .btn:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* Input focus accent in dark mode */
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* Footer accent line in dark mode */
+[data-theme="dark"] footer {
+  border-top-color: var(--accent-purple);
+}
+
+/* Navbar accent in dark mode (for default layout) */
+[data-theme="dark"] .navbar {
+  border-bottom-color: var(--accent-purple);
+}
+
+/* Popup content accent in dark mode */
+[data-theme="dark"] .popup-content {
+  border-color: var(--accent-purple);
+  box-shadow: 0 8px 32px var(--accent-glow);
+}
+
+/* Links with accent color in dark mode */
+[data-theme="dark"]
+  a:not(.nav a):not(.sidebar__menu a):not(.navbar a):not(.black):hover {
+  color: var(--accent-purple);
 }
