@@ -276,17 +276,9 @@ js: index
         markNewsSeen(LATEST_NEWS_ID);
       }
       
-      // Check if user has seen the latest news
-      window.addEventListener('load', function() {
-        const seenNews = getSeenNews();
-        if (!seenNews.includes(LATEST_NEWS_ID)) {
-          // Delay showing notification slightly for better UX
-          setTimeout(showNewsNotification, 1000);
-        }
-      });
-      
-      // Close button handler
+      // Initialize everything on DOMContentLoaded to avoid race conditions
       document.addEventListener('DOMContentLoaded', function() {
+        // Set up close button handler
         const closeBtn = document.getElementById('news-notification-close');
         if (closeBtn) {
           closeBtn.addEventListener('click', hideNewsNotification);
@@ -298,6 +290,13 @@ js: index
           newsLink.addEventListener('click', function() {
             markNewsSeen(LATEST_NEWS_ID);
           });
+        }
+        
+        // Check if user has seen the latest news and show notification
+        const seenNews = getSeenNews();
+        if (!seenNews.includes(LATEST_NEWS_ID)) {
+          // Delay showing notification slightly for better UX
+          setTimeout(showNewsNotification, 1000);
         }
       });
     })();
