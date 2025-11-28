@@ -221,6 +221,7 @@ js: index
   </div>
 
   {% assign latest_news = site.data.news | first %}
+  {% if latest_news %}
   <!-- News Notification Popup -->
   <div id="news-notification" class="news-notification hidden" data-news-id="{{ latest_news.id }}">
     <div class="news-notification-header">
@@ -234,6 +235,7 @@ js: index
     </div>
     <a href="news.html" class="news-notification-link">すべてのお知らせを見る →</a>
   </div>
+  {% endif %}
 
   <script>
     // News notification logic
