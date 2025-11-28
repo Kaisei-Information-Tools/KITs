@@ -127,6 +127,10 @@
   color: white;
 }
 
+main {
+  max-width: 1000px !important;
+}
+
 /* Footer position fix */
 footer {
   position: relative !important;
