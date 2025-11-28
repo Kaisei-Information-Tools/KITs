@@ -512,3 +512,145 @@ input[type="range"] {
   border-color: var(--accent-purple);
   box-shadow: 0 12px 32px var(--accent-glow);
 }
+
+/* ===== News notification popup ===== */
+.news-notification {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+.news-notification.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.news-notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.news-notification-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.news-notification-header h3::before {
+  content: "📢";
+}
+
+.news-notification-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.news-notification-close:hover {
+  color: var(--text-primary);
+}
+
+.news-notification-content {
+  margin-bottom: 15px;
+}
+
+.news-notification-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.news-notification-tag.tag-new {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+}
+
+.news-notification-tag.tag-update {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.news-notification-tag.tag-important {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.news-notification-tag.tag-maintenance {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+}
+
+.news-notification-tag.tag-scheduled {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+}
+
+.news-notification-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 8px 0 6px;
+}
+
+.news-notification-date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.news-notification-link {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background: var(--glass-bg-alt);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.news-notification-link:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-1px);
+}
+
+/* Dark mode accent for news notification */
+[data-theme="dark"] .news-notification {
+  border-color: var(--accent-purple);
+  box-shadow: 0 8px 32px var(--accent-glow);
+}

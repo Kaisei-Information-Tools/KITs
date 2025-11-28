@@ -1,0 +1,28 @@
+# お知らせデータ
+# 新しいお知らせを追加するには、このファイルの先頭に新しいエントリを追加してください
+# 
+# フォーマット:
+#   - id: "YYYYMMDD-N"      # ユニークなID（日付-連番）
+#     date: "YYYY年MM月DD日" # 表示用の日付
+#     day: "DD"              # 日
+#     month: "YYYY年MM月"    # 年月
+#     tag: "new"             # タグ: new, update, important, maintenance, scheduled
+#     tag_label: "新機能"    # タグの表示ラベル
+#     title: "タイトル"      # お知らせのタイトル
+#     content: "内容"        # お知らせの内容
+#
+# 利用可能なタグ:
+#   - new (新機能)
+#   - update (更新)
+#   - important (重要)
+#   - maintenance (メンテナンス)
+#   - scheduled (更新予定)
+
+- id: "20251127-1"
+  date: "2025年11月27日"
+  day: "27"
+  month: "2025年11月"
+  tag: "new"
+  tag_label: "新機能"
+  title: "お知らせページを公開しました"
+  content: "KITsからの最新情報やアップデートをお届けするお知らせページを公開しました。今後、新機能の追加やデザインの変更などの情報をこちらでお知らせいたします。"
