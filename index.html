@@ -220,16 +220,17 @@ js: index
     </div>
   </div>
 
+  {% assign latest_news = site.data.news | first %}
   <!-- News Notification Popup -->
-  <div id="news-notification" class="news-notification hidden">
+  <div id="news-notification" class="news-notification hidden" data-news-id="{{ latest_news.id }}">
     <div class="news-notification-header">
       <h3>最新のお知らせ</h3>
       <button id="news-notification-close" class="news-notification-close">&times;</button>
     </div>
     <div class="news-notification-content">
-      <span id="news-notification-tag" class="news-notification-tag tag-new">新機能</span>
-      <div id="news-notification-title" class="news-notification-title">お知らせページを公開しました</div>
-      <div id="news-notification-date" class="news-notification-date">2025年11月27日</div>
+      <span id="news-notification-tag" class="news-notification-tag tag-{{ latest_news.tag }}">{{ latest_news.tag_label }}</span>
+      <div id="news-notification-title" class="news-notification-title">{{ latest_news.title }}</div>
+      <div id="news-notification-date" class="news-notification-date">{{ latest_news.date }}</div>
     </div>
     <a href="news.html" class="news-notification-link">すべてのお知らせを見る →</a>
   </div>
@@ -237,8 +238,12 @@ js: index
   <script>
     // News notification logic
     (function() {
-      const LATEST_NEWS_ID = '20251127-1';
       const STORAGE_KEY = 'kits_seen_news';
+      
+      function getLatestNewsId() {
+        const notification = document.getElementById('news-notification');
+        return notification ? notification.dataset.newsId : null;
+      }
       
       function getSeenNews() {
         try {
@@ -273,11 +278,17 @@ js: index
         if (notification) {
           notification.classList.add('hidden');
         }
-        markNewsSeen(LATEST_NEWS_ID);
+        const newsId = getLatestNewsId();
+        if (newsId) {
+          markNewsSeen(newsId);
+        }
       }
       
       // Initialize everything on DOMContentLoaded to avoid race conditions
       document.addEventListener('DOMContentLoaded', function() {
+        const latestNewsId = getLatestNewsId();
+        if (!latestNewsId) return;
+        
         // Set up close button handler
         const closeBtn = document.getElementById('news-notification-close');
         if (closeBtn) {
@@ -288,13 +299,13 @@ js: index
         const newsLink = document.querySelector('.news-notification-link');
         if (newsLink) {
           newsLink.addEventListener('click', function() {
-            markNewsSeen(LATEST_NEWS_ID);
+            markNewsSeen(latestNewsId);
           });
         }
         
         // Check if user has seen the latest news and show notification
         const seenNews = getSeenNews();
-        if (!seenNews.includes(LATEST_NEWS_ID)) {
+        if (!seenNews.includes(latestNewsId)) {
           // Delay showing notification slightly for better UX
           setTimeout(showNewsNotification, 1000);
         }
