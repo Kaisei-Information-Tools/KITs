@@ -122,6 +122,11 @@
   color: white;
 }
 
+.tag-scheduled {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+}
+
 /* Footer position fix */
 footer {
   position: relative !important;

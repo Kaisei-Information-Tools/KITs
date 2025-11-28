@@ -12,7 +12,7 @@ old_base_css: true
   <div class="news-list">
     <!-- 新しいお知らせはここに追加してください -->
     <!-- テンプレート:
-    <article class="news-item">
+    <article class="news-item" data-news-id="YYYYMMDD-N">
       <div class="news-date">
         <span class="date-day">DD</span>
         <span class="date-month">YYYY年MM月</span>
@@ -23,9 +23,16 @@ old_base_css: true
         <p>内容</p>
       </div>
     </article>
+    
+    利用可能なタグ:
+    - tag-new (新機能)
+    - tag-update (更新)
+    - tag-important (重要)
+    - tag-maintenance (メンテナンス)
+    - tag-scheduled (更新予定)
     -->
 
-    <article class="news-item">
+    <article class="news-item" data-news-id="20251127-1">
       <div class="news-date">
         <span class="date-day">27</span>
         <span class="date-month">2025年11月</span>
