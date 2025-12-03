@@ -10,7 +10,7 @@ body {
 
 /* About page specific layout - no main tag */
 body > section:first-of-type {
-  margin-top: 90px; /* Space for fixed header */
+  margin-top: 70px; /* Space for fixed header */
 }
 
 .gradient-text {
@@ -88,7 +88,7 @@ body > section:first-of-type {
 
 .bg-section {
   background-color: var(--glass-bg);
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
 .bg-section-alt {
@@ -109,15 +109,21 @@ body > section:first-of-type {
 .mx-auto { margin-left: auto; margin-right: auto; }
 .px-4 { padding-left: 1rem; padding-right: 1rem; }
 .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
 .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.pt-8 { padding-top: 2rem; }
 .px-8 { padding-left: 2rem; padding-right: 2rem; }
 .mb-6 { margin-bottom: 1.5rem; }
 .mb-8 { margin-bottom: 2rem; }
 .mb-4 { margin-bottom: 1rem; }
 .mb-10 { margin-bottom: 2.5rem; }
 .mb-16 { margin-bottom: 4rem; }
+.mt-8 { margin-top: 2rem; }
 .mt-16 { margin-top: 4rem; }
 .p-8 { padding: 2rem; }
+.p-6 { padding: 1.5rem; }
+.gap-6 { gap: 1.5rem; }
 
 .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
 .text-6xl { font-size: 3.75rem; line-height: 1; }
@@ -150,7 +156,6 @@ body > section:first-of-type {
 .h-auto { height: auto; }
 
 .relative { position: relative; }
-.min-h-screen { min-height: 100vh; }
 .pt-20 { padding-top: 5rem; }
 
 .rounded-xl { border-radius: 0.75rem; }
