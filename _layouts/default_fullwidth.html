@@ -103,58 +103,56 @@
     </ul>
   </aside>
 
-  <!-- メイン -->
-  <main class="main">
-    <div id="terms-popup">
-      <div class="popup-content">
-        <h2>利用規約に同意してください</h2>
-        <p>
-          このサイトを利用する前に、<a href="terms.html" target="_blank">利用規約・プライバシーポリシー</a>をお読みください。
-          <br />続行するには<wbr />「同意する」<wbr />をクリックしてください。
-        </p>
-        <button class="accept">同意する</button>
-      </div>
+  <!-- Content area without main tag for fullwidth layout -->
+  <div id="terms-popup">
+    <div class="popup-content">
+      <h2>利用規約に同意してください</h2>
+      <p>
+        このサイトを利用する前に、<a href="terms.html" target="_blank">利用規約・プライバシーポリシー</a>をお読みください。
+        <br />続行するには<wbr />「同意する」<wbr />をクリックしてください。
+      </p>
+      <button class="accept">同意する</button>
     </div>
+  </div>
 
-    {% if page.no_popup != true %}
-    <script>
-      document
-        .querySelector(".popup-content .accept")
-        .addEventListener("click", function () {
-          // ユーザーの同意をCookieまたはローカルストレージに保存
-          localStorage.setItem("termsAccepted", "true");
-          // ポップアップを非表示にする
-          document.getElementById("terms-popup").style.display = "none";
-        });
+  {% if page.no_popup != true %}
+  <script>
+    document
+      .querySelector(".popup-content .accept")
+      .addEventListener("click", function () {
+        // ユーザーの同意をCookieまたはローカルストレージに保存
+        localStorage.setItem("termsAccepted", "true");
+        // ポップアップを非表示にする
+        document.getElementById("terms-popup").style.display = "none";
+      });
 
-      // ページ読み込み時に同意済みか確認
-      window.addEventListener("load", function () {
-        if (localStorage.getItem("termsAccepted") !== "true") {
-          document.getElementById("terms-popup").style.display = "flex";
-        }
-      }); // ローカルストレージを確認
-    </script>
-    {% endif %}
-    <script>
-      if (!localStorage.getItem("surveyAnswered3")) {
-        var toastEl = document.getElementById("liveToast");
-        var toast = new bootstrap.Toast(toastEl, {autohide: false});
-        toast.show();
+    // ページ読み込み時に同意済みか確認
+    window.addEventListener("load", function () {
+      if (localStorage.getItem("termsAccepted") !== "true") {
+        document.getElementById("terms-popup").style.display = "flex";
       }
+    }); // ローカルストレージを確認
+  </script>
+  {% endif %}
+  <script>
+    if (!localStorage.getItem("surveyAnswered3")) {
+      var toastEl = document.getElementById("liveToast");
+      var toast = new bootstrap.Toast(toastEl, {autohide: false});
+      toast.show();
+    }
 
-      // チェックボックスの変更を監視
-      document
-        .getElementById("answeredCheck")
-        .addEventListener("change", function () {
-          if (this.checked) {
-            // ローカルストレージにデータを書き込み
-            localStorage.setItem("surveyAnswered3", "true");
-          }
-        });
-    </script>
-    {{ content }}
-    <!-- トップへ戻るボタン -->
-  </main>
+    // チェックボックスの変更を監視
+    document
+      .getElementById("answeredCheck")
+      .addEventListener("change", function () {
+        if (this.checked) {
+          // ローカルストレージにデータを書き込み
+          localStorage.setItem("surveyAnswered3", "true");
+        }
+      });
+  </script>
+  {{ content }}
+  <!-- トップへ戻るボタン -->
   <button id="to-top" style="z-index: 9999;">↑</button>
 
 
