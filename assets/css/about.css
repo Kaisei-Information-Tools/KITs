@@ -109,6 +109,7 @@ body > section:first-of-type {
 .mx-auto { margin-left: auto; margin-right: auto; }
 .px-4 { padding-left: 1rem; padding-right: 1rem; }
 .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+.py-16 { padding-top: 4rem; padding-bottom: 4rem; }
 .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
 .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
 .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
@@ -125,6 +126,8 @@ body > section:first-of-type {
 .p-6 { padding: 1.5rem; }
 .gap-6 { gap: 1.5rem; }
 
+.text-5xl { font-size: 3rem; line-height: 1.2; }
+.text-7xl { font-size: 4.5rem; line-height: 1; }
 .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
 .text-6xl { font-size: 3.75rem; line-height: 1; }
 .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
@@ -156,7 +159,9 @@ body > section:first-of-type {
 .h-auto { height: auto; }
 
 .relative { position: relative; }
+.min-h-screen { min-height: 100vh; }
 .pt-20 { padding-top: 5rem; }
+.justify-center { justify-content: center; }
 
 .rounded-xl { border-radius: 0.75rem; }
 .rounded-lg { border-radius: 0.5rem; }
@@ -174,6 +179,7 @@ body > section:first-of-type {
   .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .md\:w-1\/2 { width: 50%; }
   .md\:mb-0 { margin-bottom: 0; }
+  .md\:text-7xl { font-size: 4.5rem; line-height: 1; }
   .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
   .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
 }
