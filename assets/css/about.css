@@ -38,10 +38,6 @@ body > section:first-of-type {
   box-shadow: 0 8px 30px var(--glass-shadow);
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
 @keyframes float {
   0% {
     transform: translateY(0px);
