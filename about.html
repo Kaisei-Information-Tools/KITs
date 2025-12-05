@@ -6,27 +6,29 @@ old_base_css: true
 ---
 
 <!-- ヒーローセクション -->
-  <section class="relative min-h-screen flex items-center pt-8">
-    <div class="hero-shape"></div>
-    <div class="container mx-auto px-4 py-16">
-      <div class="flex flex-col md:flex-row items-center">
-        <div class="md:w-1/2 mb-8 md:mb-0">
-          <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-content">
-            便利な<br /><span class="gradient-text">マナビ</span>を<br />min-naに。
-          </h1>
-          <p class="text-muted text-xl mb-8 max-w-lg">
-            私たちはこの活動を通して、学習に携わる「min-na」の様々な「マナビ」がより「便利に」なることを願っています。
-          </p>
-          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <a href="#features"
-              class="bg-transparent border border-color text-content font-medium py-3 px-8 rounded-full hover:bg-opacity-10 hover:bg-slate-800 transition-colors text-center">
-              詳細を見る
-            </a>
-          </div>
+<section class="relative min-h-screen flex items-center pt-8">
+  <div class="hero-shape"></div>
+  <div class="container mx-auto px-4 py-16">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-8 md:mb-0">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-content">
+          便利な<br /><span class="gradient-text">マナビ</span>を<br />min-naに。
+        </h1>
+        <p class="text-muted text-xl mb-8 max-w-lg">
+          私たちはこの活動を通して、学習に携わる「min-na」の様々な「マナビ」がより「便利に」なることを願っています。
+        </p>
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <a href="#features"
+            class="bg-transparent border border-color text-content font-medium py-3 px-8 rounded-full hover:bg-opacity-10 hover:bg-slate-800 transition-colors text-center">
+            詳細を見る
+          </a>
         </div>
-        <div class="md:w-1/2 relative flex justify-center">
-          <div class="animate-float" style="width: 450px; height: 360px;">
-            <svg class="w-full h-full" viewBox="0 0 500 400" src="assets/images/logo.svg">
+      </div>
+      <div class="md:w-1/2 relative flex justify-center">
+        <div class="animate-float" style="width: 450px; height: 360px">
+          <img src="assets/images/logo.svg" alt="" width="100%" />
+
+          <!-- <svg class="w-full h-full" viewBox="0 0 500 400" src="assets/images/logo.svg">
               <defs>
                 <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" style="stop-color: #3b82f6; stop-opacity: 1"></stop>
@@ -43,58 +45,58 @@ old_base_css: true
               <path d="M250,120 L290,200 L250,280 L210,200 Z" fill="url(#grad2)"></path>
               <circle cx="250" cy="200" r="40" fill="url(#grad2)"></circle>
               <circle cx="250" cy="200" r="15" fill="#ffffff"></circle>
-            </svg>
-          </div>
+            </svg> -->
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 理念と活動内容セクション -->
-  <section id="features" class="py-10">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-content">
-          私たちの<span class="gradient-text">理念</span>と<span class="gradient-text">活動</span>
-        </h2>
-        <p class="text-muted max-w-3xl mx-auto">
-          当法人は、青少年の学習に携わる全ての人に対して、時間の有効活用のための電子機器の使用促進や情報化社会への教育の促進に関する事業を行い、青少年の成長を通じて社会全体の発展に寄与することを目的としています。
+<!-- 理念と活動内容セクション -->
+<section id="features" class="py-10">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-content">
+        私たちの<span class="gradient-text">理念</span>と<span class="gradient-text">活動</span>
+      </h2>
+      <p class="text-muted max-w-3xl mx-auto">
+        当法人は、青少年の学習に携わる全ての人に対して、時間の有効活用のための電子機器の使用促進や情報化社会への教育の促進に関する事業を行い、青少年の成長を通じて社会全体の発展に寄与することを目的としています。
+      </p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="card rounded-xl p-6">
+        <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-4">
+          <i class="fas fa-laptop-code text-2xl text-white"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-4 text-content">
+          ICTを用いた学校生活のサポート
+        </h3>
+        <p class="text-muted">
+          「このツールサイト使いたいのに、フィルタリングサービスによってアクセスが制限されている...」そんな経験ありませんか？学習目的なのに使いたいサイトが開けない、そんな悩みを少しでも減らすことを目的に、私たちは生徒自らツールサイトを作り、公開するという活動を行っています。
         </p>
       </div>
 
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="card rounded-xl p-6">
-          <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-4">
-            <i class="fas fa-laptop-code text-2xl text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-4 text-content">
-            ICTを用いた学校生活のサポート
-          </h3>
-          <p class="text-muted">
-            「このツールサイト使いたいのに、フィルタリングサービスによってアクセスが制限されている...」そんな経験ありませんか？学習目的なのに使いたいサイトが開けない、そんな悩みを少しでも減らすことを目的に、私たちは生徒自らツールサイトを作り、公開するという活動を行っています。
-          </p>
+      <div class="card rounded-xl p-6">
+        <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-4">
+          <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
         </div>
-
-        <div class="card rounded-xl p-6">
-          <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-4">
-            <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-4 text-content">
-            web開発のサポート
-          </h3>
-          <p class="text-muted">
-            「こんなwebサイトを作りたいけど作り方がわからない！」そんな人たちを助けるため、依頼に応じてwebサイトの作成、開発サポートをしています。
-          </p>
-        </div>
+        <h3 class="text-xl font-semibold mb-4 text-content">
+          web開発のサポート
+        </h3>
+        <p class="text-muted">
+          「こんなwebサイトを作りたいけど作り方がわからない！」そんな人たちを助けるため、依頼に応じてwebサイトの作成、開発サポートをしています。
+        </p>
       </div>
     </div>
-  </section>
-  <section class="py-10">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-content">
-          作成中...<br />公開をお待ちください
-        </h2>
-      </div>
+  </div>
+</section>
+<section class="py-10">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-content">
+        作成中...<br />公開をお待ちください
+      </h2>
     </div>
-  </section>
+  </div>
+</section>
