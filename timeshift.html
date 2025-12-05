@@ -1,0 +1,102 @@
+---
+layout: default_new
+title: タイムシフトカメラ
+css: timeshift
+js: timeshift
+old_base_css: true
+---
+
+<h1>タイムシフトカメラ</h1>
+
+<div class="timeshift-container">
+  <!-- Camera View -->
+  <div class="camera-section">
+    <video id="camera-preview" autoplay playsinline></video>
+    <canvas id="camera-canvas" style="display: none;"></canvas>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-section">
+    <div class="control-group">
+      <button id="start-camera" class="button border timeshift-button primary-button">
+        <i class="fas fa-camera"></i> カメラ起動
+      </button>
+      <button id="stop-camera" class="button border timeshift-button danger-button" disabled>
+        <i class="fas fa-stop"></i> 停止
+      </button>
+    </div>
+
+    <div class="control-group">
+      <label for="buffer-duration">録画時間:</label>
+      <select id="buffer-duration" class="timeshift-select">
+        <option value="5">5秒</option>
+        <option value="10" selected>10秒</option>
+        <option value="15">15秒</option>
+        <option value="20">20秒</option>
+        <option value="30">30秒</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="playback-speed">再生速度:</label>
+      <select id="playback-speed" class="timeshift-select">
+        <option value="0.25">0.25x (超スロー)</option>
+        <option value="0.5">0.5x (スロー)</option>
+        <option value="1" selected>1x (通常)</option>
+        <option value="1.5">1.5x (少し早い)</option>
+        <option value="2">2x (早い)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Playback Controls -->
+  <div class="playback-section">
+    <h3>巻き戻し再生</h3>
+    <div class="playback-controls">
+      <button id="rewind-button" class="button border timeshift-button action-button" disabled>
+        <i class="fas fa-backward"></i> 巻き戻し再生
+      </button>
+      <button id="frame-prev" class="button border timeshift-button action-button" disabled>
+        <i class="fas fa-step-backward"></i> 1コマ戻る
+      </button>
+      <button id="frame-next" class="button border timeshift-button action-button" disabled>
+        <i class="fas fa-step-forward"></i> 1コマ進む
+      </button>
+      <button id="pause-button" class="button border timeshift-button action-button" disabled>
+        <i class="fas fa-pause"></i> 一時停止
+      </button>
+    </div>
+
+    <div class="timeline-control">
+      <label for="rewind-seconds">巻き戻し秒数:</label>
+      <input type="range" id="rewind-seconds" min="1" max="30" value="5" step="1" class="timeline-slider">
+      <span id="rewind-value">5秒</span>
+    </div>
+
+    <div class="progress-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+  </div>
+
+  <!-- Export Controls -->
+  <div class="export-section">
+    <h3>動画書き出し</h3>
+    <button id="export-button" class="button border timeshift-button success-button" disabled>
+      <i class="fas fa-download"></i> 動画をダウンロード
+    </button>
+    <div id="export-status" class="export-status"></div>
+  </div>
+
+  <!-- Help Section -->
+  <div class="help-section">
+    <h3>使い方</h3>
+    <ul>
+      <li>「カメラ起動」ボタンを押してカメラを起動します。</li>
+      <li>録画時間を選択すると、その長さの映像が保存されます。</li>
+      <li>「巻き戻し再生」ボタンで過去の映像を見ることができます。</li>
+      <li>再生速度を変更してスローモーション再生ができます。</li>
+      <li>「1コマ戻る/進む」ボタンでコマ送りができます。</li>
+      <li>「動画をダウンロード」ボタンで録画した映像を保存できます。</li>
+    </ul>
+  </div>
+</div>
