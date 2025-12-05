@@ -1,0 +1,62 @@
+---
+layout: default_new
+title: タイムシフトカメラ
+css: timeshift
+js: timeshift
+old_base_css: true
+---
+
+<h1>タイムシフトカメラ</h1>
+<div class="timeshift-description">
+  <p>カメラの映像を過去にさかのぼって撮影できます。「録画開始」を押すと映像がバッファに記録され、後から好きな瞬間を選んで写真として保存できます。</p>
+</div>
+
+<div class="timeshift-container">
+  <div class="video-container">
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <div id="no-camera-message" class="no-camera" style="display: none;">
+      <i class="fa-solid fa-video-slash"></i>
+      <p>カメラが利用できません</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="start-button" class="button border control-button start-button">
+      <i class="fa-solid fa-play"></i> 録画開始
+    </button>
+    <button id="stop-button" class="button border control-button stop-button" disabled>
+      <i class="fa-solid fa-stop"></i> 録画停止
+    </button>
+    <button id="capture-button" class="button border control-button capture-button" disabled>
+      <i class="fa-solid fa-camera"></i> 写真を撮る
+    </button>
+  </div>
+
+  <div class="time-controls" id="time-controls" style="display: none;">
+    <label for="time-slider">
+      <span id="time-label">現在</span>
+      <span id="time-value">0.0秒前</span>
+    </label>
+    <input type="range" id="time-slider" min="0" max="100" value="100" step="1" />
+  </div>
+
+  <div class="settings">
+    <label>
+      バッファ時間:
+      <select id="buffer-duration" class="buffer-select">
+        <option value="5">5秒</option>
+        <option value="10" selected>10秒</option>
+        <option value="15">15秒</option>
+        <option value="30">30秒</option>
+      </select>
+    </label>
+  </div>
+</div>
+
+<div class="captured-photos" id="captured-photos">
+  <h2>撮影した写真</h2>
+  <div id="photos-container" class="photos-container">
+    <p class="no-photos">まだ写真がありません</p>
+  </div>
+</div>
