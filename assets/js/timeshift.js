@@ -16,8 +16,11 @@ class TimeShiftCamera {
     this.delayDuration = 5; // seconds
     this.frameRate = 30; // frames per second
     this.maxFrames = this.delayDuration * this.frameRate;
-    this.captureInterval = null;
-    this.renderInterval = null;
+    this.animationFrameId = null;
+    
+    // Reusable temporary canvas for frame capture
+    this.tempCanvas = document.createElement('canvas');
+    this.tempCtx = this.tempCanvas.getContext('2d');
 
     this.initEventListeners();
   }
@@ -60,15 +63,13 @@ class TimeShiftCamera {
       this.delayDurationSelect.disabled = true;
       this.statusText.textContent = `${this.delayDuration}秒遅れの映像を表示中...`;
 
-      // Start capturing frames
-      this.captureInterval = setInterval(() => {
-        this.captureFrame();
-      }, 1000 / this.frameRate);
+      // Set up temporary canvas size
+      this.tempCanvas.width = this.video.videoWidth;
+      this.tempCanvas.height = this.video.videoHeight;
 
-      // Start rendering delayed frames
-      this.renderInterval = setInterval(() => {
-        this.renderDelayedFrame();
-      }, 1000 / this.frameRate);
+      // Start the capture and render loop
+      this.lastCaptureTime = 0;
+      this.captureAndRender();
 
     } catch (error) {
       console.error('Error accessing camera:', error);
@@ -79,10 +80,10 @@ class TimeShiftCamera {
 
   stop() {
     this.running = false;
-    clearInterval(this.captureInterval);
-    clearInterval(this.renderInterval);
-    this.captureInterval = null;
-    this.renderInterval = null;
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
 
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());
@@ -100,19 +101,31 @@ class TimeShiftCamera {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  captureAndRender(timestamp = 0) {
+    if (!this.running) return;
+
+    // Capture frame at the desired frame rate
+    const elapsed = timestamp - this.lastCaptureTime;
+    const frameInterval = 1000 / this.frameRate;
+
+    if (elapsed >= frameInterval) {
+      this.captureFrame();
+      this.renderDelayedFrame();
+      this.lastCaptureTime = timestamp;
+    }
+
+    // Continue the loop
+    this.animationFrameId = requestAnimationFrame((ts) => this.captureAndRender(ts));
+  }
+
   captureFrame() {
     if (!this.running || this.video.readyState !== 4) return;
 
-    // Create a temporary canvas to capture the frame
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = this.video.videoWidth;
-    tempCanvas.height = this.video.videoHeight;
-    const tempCtx = tempCanvas.getContext('2d');
-
-    tempCtx.drawImage(this.video, 0, 0, tempCanvas.width, tempCanvas.height);
+    // Draw video frame to temporary canvas
+    this.tempCtx.drawImage(this.video, 0, 0, this.tempCanvas.width, this.tempCanvas.height);
 
     // Store frame as ImageData for better performance
-    const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+    const imageData = this.tempCtx.getImageData(0, 0, this.tempCanvas.width, this.tempCanvas.height);
 
     this.frameBuffer.push({
       data: imageData,
@@ -129,8 +142,10 @@ class TimeShiftCamera {
     if (!this.running || this.frameBuffer.length === 0) return;
 
     // Calculate which frame to display based on delay
-    // We want to show the frame that is delayDuration seconds ago
-    const targetFrameIndex = Math.max(0, this.frameBuffer.length - this.maxFrames);
+    // Show the frame from delayDuration seconds ago, or the oldest available frame
+    const desiredDelayFrames = this.delayDuration * this.frameRate;
+    const availableDelayFrames = Math.min(this.frameBuffer.length, desiredDelayFrames);
+    const targetFrameIndex = Math.max(0, this.frameBuffer.length - availableDelayFrames);
     
     if (targetFrameIndex < this.frameBuffer.length) {
       const frame = this.frameBuffer[targetFrameIndex];
