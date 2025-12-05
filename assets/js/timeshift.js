@@ -97,7 +97,7 @@ class TimeShiftCamera {
   }
 
   captureFrame() {
-    if (!this.recording || !this.video.readyState === 4) return;
+    if (!this.recording || this.video.readyState !== 4) return;
 
     // Create a temporary canvas to capture the frame
     const tempCanvas = document.createElement('canvas');
