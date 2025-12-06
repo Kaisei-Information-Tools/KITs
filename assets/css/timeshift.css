@@ -134,15 +134,20 @@ main {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  grid-template-columns: 1fr !important;
 }
 
-/* Hide current video in fullscreen */
+/* Hide current video in fullscreen - use visibility and position for stronger hiding */
 .video-displays:fullscreen .video-panel:first-child,
 .video-displays:-webkit-full-screen .video-panel:first-child,
 .video-displays:-moz-full-screen .video-panel:first-child,
 .video-displays:-ms-fullscreen .video-panel:first-child {
   display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
 }
 
 /* Show only delayed video in fullscreen */
