@@ -2,20 +2,25 @@
 class TimeShiftCamera {
   constructor() {
     this.video = document.getElementById('video');
+    this.videoLive = document.getElementById('video-live');
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.startButton = document.getElementById('start-button');
     this.stopButton = document.getElementById('stop-button');
-    this.delayDurationSelect = document.getElementById('delay-duration');
+    this.delayInput = document.getElementById('delay-input');
+    this.delayLabel = document.getElementById('delay-label');
     this.statusText = document.getElementById('status-text');
     this.noCameraMessage = document.getElementById('no-camera-message');
+    this.noCameraMessageLive = document.getElementById('no-camera-message-live');
+    this.fullscreenButton = document.getElementById('fullscreen-button');
+    this.container = document.getElementById('timeshift-container');
 
     this.stream = null;
     this.running = false;
     this.frameBuffer = [];
-    this.delayDuration = 5; // seconds
+    this.delayDuration = 5.0; // seconds
     this.frameRate = 30; // frames per second
-    this.maxFrames = this.delayDuration * this.frameRate;
+    this.maxFrames = Math.ceil(this.delayDuration * this.frameRate);
     this.animationFrameId = null;
     
     // Reusable temporary canvas for frame capture
@@ -28,7 +33,14 @@ class TimeShiftCamera {
   initEventListeners() {
     this.startButton.addEventListener('click', () => this.start());
     this.stopButton.addEventListener('click', () => this.stop());
-    this.delayDurationSelect.addEventListener('change', (e) => this.updateDelayDuration(e.target.value));
+    this.delayInput.addEventListener('change', (e) => this.updateDelayDuration(parseFloat(e.target.value)));
+    this.delayInput.addEventListener('input', (e) => {
+      const value = parseFloat(e.target.value);
+      if (!isNaN(value)) {
+        this.delayLabel.textContent = value.toFixed(1) + '秒前';
+      }
+    });
+    this.fullscreenButton.addEventListener('click', () => this.toggleFullscreen());
   }
 
   async start() {
@@ -43,9 +55,13 @@ class TimeShiftCamera {
         audio: false
       });
 
+      // Set up both video elements
       this.video.srcObject = this.stream;
+      this.videoLive.srcObject = this.stream;
       this.canvas.style.display = 'block';
+      this.videoLive.style.display = 'block';
       this.noCameraMessage.style.display = 'none';
+      this.noCameraMessageLive.style.display = 'none';
 
       // Wait for video to be ready
       await new Promise((resolve) => {
@@ -60,8 +76,8 @@ class TimeShiftCamera {
       this.frameBuffer = [];
       this.startButton.disabled = true;
       this.stopButton.disabled = false;
-      this.delayDurationSelect.disabled = true;
-      this.statusText.textContent = `${this.delayDuration}秒遅れの映像を表示中...`;
+      this.delayInput.disabled = true;
+      this.statusText.textContent = `${this.delayDuration.toFixed(1)}秒遅れの映像を表示中...`;
 
       // Set up temporary canvas size
       this.tempCanvas.width = this.video.videoWidth;
@@ -91,9 +107,10 @@ class TimeShiftCamera {
     }
 
     this.video.srcObject = null;
+    this.videoLive.srcObject = null;
     this.startButton.disabled = false;
     this.stopButton.disabled = true;
-    this.delayDurationSelect.disabled = false;
+    this.delayInput.disabled = false;
     this.frameBuffer = [];
     this.statusText.textContent = 'カメラを開始してください';
     
@@ -156,8 +173,14 @@ class TimeShiftCamera {
   }
 
   updateDelayDuration(duration) {
-    this.delayDuration = parseInt(duration);
-    this.maxFrames = this.delayDuration * this.frameRate;
+    // Validate and clamp duration
+    duration = Math.max(0.1, Math.min(600, duration));
+    this.delayDuration = duration;
+    this.maxFrames = Math.ceil(this.delayDuration * this.frameRate);
+
+    // Update input and label
+    this.delayInput.value = duration.toFixed(1);
+    this.delayLabel.textContent = duration.toFixed(1) + '秒前';
 
     // Trim buffer if it's too long
     if (this.frameBuffer.length > this.maxFrames) {
@@ -166,13 +189,43 @@ class TimeShiftCamera {
 
     // Update status text if running
     if (this.running) {
-      this.statusText.textContent = `${this.delayDuration}秒遅れの映像を表示中...`;
+      this.statusText.textContent = `${this.delayDuration.toFixed(1)}秒遅れの映像を表示中...`;
+    }
+  }
+
+  toggleFullscreen() {
+    const videoDisplays = document.getElementById('video-displays');
+    
+    if (!document.fullscreenElement) {
+      // Enter fullscreen
+      if (videoDisplays.requestFullscreen) {
+        videoDisplays.requestFullscreen();
+      } else if (videoDisplays.webkitRequestFullscreen) {
+        videoDisplays.webkitRequestFullscreen();
+      } else if (videoDisplays.msRequestFullscreen) {
+        videoDisplays.msRequestFullscreen();
+      }
+      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-compress"></i>';
+      this.fullscreenButton.title = 'フルスクリーン終了';
+    } else {
+      // Exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-expand"></i>';
+      this.fullscreenButton.title = 'フルスクリーン';
     }
   }
 
   showNoCameraMessage() {
     this.video.style.display = 'none';
+    this.videoLive.style.display = 'none';
     this.noCameraMessage.style.display = 'flex';
+    this.noCameraMessageLive.style.display = 'flex';
   }
 }
 

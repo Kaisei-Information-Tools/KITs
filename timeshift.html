@@ -8,16 +8,36 @@ old_base_css: true
 
 <h1>タイムシフトカメラ</h1>
 <div class="timeshift-description">
-  <p>カメラの映像を指定した秒数だけ遅らせて表示します。「開始」を押すと遅れ鏡のように過去の映像が表示されます。</p>
+  <p>カメラの映像を指定した秒数だけ遅らせて表示します。「開始」を押すと現在の映像と遅れ鏡の両方が表示されます。</p>
 </div>
 
-<div class="timeshift-container">
-  <div class="video-container">
-    <video id="video" autoplay playsinline style="display: none;"></video>
-    <canvas id="canvas"></canvas>
-    <div id="no-camera-message" class="no-camera" style="display: none;">
-      <i class="fa-solid fa-video-slash"></i>
-      <p>カメラが利用できません</p>
+<div class="timeshift-container" id="timeshift-container">
+  <button id="fullscreen-button" class="button border fullscreen-button" title="フルスクリーン">
+    <i class="fa-solid fa-expand"></i>
+  </button>
+
+  <div class="video-displays" id="video-displays">
+    <div class="video-panel">
+      <div class="video-label">現在の映像</div>
+      <div class="video-container">
+        <video id="video-live" autoplay playsinline></video>
+        <div id="no-camera-message-live" class="no-camera" style="display: none;">
+          <i class="fa-solid fa-video-slash"></i>
+          <p>カメラが利用できません</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-panel">
+      <div class="video-label"><span id="delay-label">5.0秒前</span>の映像</div>
+      <div class="video-container">
+        <video id="video" autoplay playsinline style="display: none;"></video>
+        <canvas id="canvas"></canvas>
+        <div id="no-camera-message" class="no-camera" style="display: none;">
+          <i class="fa-solid fa-video-slash"></i>
+          <p>カメラが利用できません</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -32,16 +52,11 @@ old_base_css: true
 
   <div class="settings">
     <label>
-      遅延時間:
-      <select id="delay-duration" class="buffer-select">
-        <option value="1">1秒</option>
-        <option value="2">2秒</option>
-        <option value="3">3秒</option>
-        <option value="5" selected>5秒</option>
-        <option value="10">10秒</option>
-        <option value="15">15秒</option>
-      </select>
+      遅延時間（秒）:
+      <input type="number" id="delay-input" class="delay-input" 
+             min="0.1" max="600" step="0.1" value="5.0" />
     </label>
+    <span class="delay-hint">0.1〜600秒（10分）まで対応</span>
   </div>
 
   <div class="info" id="info">
