@@ -857,3 +857,7 @@ footer {
   a:not(.nav a):not(.sidebar__menu a):not(.navbar a):not(.black):hover {
   color: var(--accent-purple);
 }
+
+a:not(.nav a):not(.sidebar__menu a):not(.navbar a):not(.black):hover {
+  color: var(--accent-blue);
+}
