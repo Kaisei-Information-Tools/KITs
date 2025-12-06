@@ -37,6 +37,10 @@ body > section:first-of-type {
   box-shadow: 0 8px 30px var(--glass-shadow);
 }
 
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -47,6 +51,11 @@ body > section:first-of-type {
   100% {
     transform: translateY(0px);
   }
+}
+
+.hero-image-container {
+  width: 450px;
+  height: 360px;
 }
 
 .hero-shape {
@@ -347,13 +356,20 @@ body > section:first-of-type {
   }
 }
 
-/* Hover effects */
-a.hover\:bg-opacity-10:hover {
-  background-color: rgba(var(--text-primary), 0.05);
+/* Link styling */
+a.text-center {
+  text-decoration: none;
 }
 
+/* Hover effects - unified for light and dark modes */
+a.hover\:bg-opacity-10:hover,
 a.hover\:bg-slate-800:hover {
-  background-color: rgba(var(--text-primary), 0.05);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="dark"] a.hover\:bg-opacity-10:hover,
+[data-theme="dark"] a.hover\:bg-slate-800:hover {
+  background-color: rgba(139, 92, 246, 0.15);
 }
 
 [data-theme="dark"] .logo img,
