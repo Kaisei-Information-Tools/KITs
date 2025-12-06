@@ -1,3 +1,9 @@
+/* Widen the main content area for timeshift page */
+.page-content {
+  max-width: 1600px !important;
+  margin: 0 auto;
+}
+
 .timeshift-description {
   text-align: center;
   margin-bottom: 20px;
@@ -53,15 +59,26 @@
 
 .video-displays {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 300px 1fr;
   gap: 20px;
   margin-bottom: 20px;
+  align-items: start;
 }
 
 .video-panel {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.video-panel:first-child {
+  /* Current video - smaller by default */
+  max-width: 300px;
+}
+
+.video-panel:last-child {
+  /* Delayed video - takes remaining space */
+  flex: 1;
 }
 
 .video-label {
@@ -103,18 +120,28 @@
 .video-displays:-moz-full-screen,
 .video-displays:-ms-fullscreen {
   background: #000;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
-.video-displays:fullscreen .video-panel,
-.video-displays:-webkit-full-screen .video-panel,
-.video-displays:-moz-full-screen .video-panel,
-.video-displays:-ms-fullscreen .video-panel {
+/* Hide current video in fullscreen */
+.video-displays:fullscreen .video-panel:first-child,
+.video-displays:-webkit-full-screen .video-panel:first-child,
+.video-displays:-moz-full-screen .video-panel:first-child,
+.video-displays:-ms-fullscreen .video-panel:first-child {
+  display: none;
+}
+
+/* Show only delayed video in fullscreen */
+.video-displays:fullscreen .video-panel:last-child,
+.video-displays:-webkit-full-screen .video-panel:last-child,
+.video-displays:-moz-full-screen .video-panel:last-child,
+.video-displays:-ms-fullscreen .video-panel:last-child {
+  width: 100%;
   height: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -124,7 +151,9 @@
 .video-displays:-webkit-full-screen .video-container,
 .video-displays:-moz-full-screen .video-container,
 .video-displays:-ms-fullscreen .video-container {
-  max-height: calc(100vh - 80px);
+  max-height: 100vh;
+  height: 100%;
+  max-width: 100%;
 }
 
 .no-camera {
@@ -145,8 +174,8 @@
 .controls {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 15px;
-  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 
@@ -256,6 +285,16 @@
 }
 
 /* Responsive design */
+@media (max-width: 1024px) {
+  .video-displays {
+    grid-template-columns: 1fr;
+  }
+
+  .video-panel:first-child {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .timeshift-container {
     padding: 20px;
@@ -265,8 +304,8 @@
     grid-template-columns: 1fr;
   }
 
-  .controls {
-    flex-direction: column;
+  .video-panel:first-child {
+    max-width: 100%;
   }
 
   .control-button {
@@ -281,6 +320,9 @@
     font-size: 0.9em;
   }
 
+  .page-content {
+    max-width: 100% !important;
+  }
 }
 
 /* Dark mode specific adjustments */
