@@ -57,9 +57,9 @@
   transform: translateY(-2px);
 }
 
-.video-displays {
-  display: grid;
-  grid-template-columns: 300px 1fr;
+.timeshift-container .video-displays {
+  display: grid !important;
+  grid-template-columns: 300px 1fr !important;
   gap: 20px;
   margin-bottom: 20px;
   align-items: start;
@@ -71,14 +71,16 @@
   gap: 10px;
 }
 
-.video-panel:first-child {
+.timeshift-container .video-panel:first-child {
   /* Current video - smaller by default */
-  max-width: 300px;
+  max-width: 300px !important;
+  width: 300px !important;
 }
 
-.video-panel:last-child {
+.timeshift-container .video-panel:last-child {
   /* Delayed video - takes remaining space */
   flex: 1;
+  min-width: 0;
 }
 
 .video-label {
@@ -119,11 +121,12 @@
 .video-displays:-webkit-full-screen,
 .video-displays:-moz-full-screen,
 .video-displays:-ms-fullscreen {
-  background: #000;
-  display: flex;
+  background: #000 !important;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  grid-template-columns: 1fr !important;
 }
 
 /* Hide current video in fullscreen */
@@ -131,7 +134,7 @@
 .video-displays:-webkit-full-screen .video-panel:first-child,
 .video-displays:-moz-full-screen .video-panel:first-child,
 .video-displays:-ms-fullscreen .video-panel:first-child {
-  display: none;
+  display: none !important;
 }
 
 /* Show only delayed video in fullscreen */
