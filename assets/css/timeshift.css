@@ -208,6 +208,12 @@ main {
   gap: 6px;
   white-space: nowrap;
   flex-shrink: 0;
+  line-height: 1;
+  width: 5rem;
+}
+
+.control-button i {
+  line-height: 0 !important;
 }
 
 .control-button:hover:not(:disabled) {
