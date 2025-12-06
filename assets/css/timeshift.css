@@ -176,6 +176,7 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
+  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 
@@ -298,14 +299,6 @@
 @media (max-width: 768px) {
   .timeshift-container {
     padding: 20px;
-  }
-
-  .video-displays {
-    grid-template-columns: 1fr;
-  }
-
-  .video-panel:first-child {
-    max-width: 100%;
   }
 
   .control-button {
