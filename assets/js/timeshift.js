@@ -1,6 +1,12 @@
 // Time Shift Camera - Delayed Mirror
 class TimeShiftCamera {
   constructor() {
+    // Constants
+    this.MIN_DELAY_DURATION = 0.1;
+    this.MAX_DELAY_DURATION = 600;
+    this.frameRate = 30; // frames per second
+    
+    // DOM elements
     this.video = document.getElementById('video');
     this.videoLive = document.getElementById('video-live');
     this.canvas = document.getElementById('canvas');
@@ -14,12 +20,13 @@ class TimeShiftCamera {
     this.noCameraMessageLive = document.getElementById('no-camera-message-live');
     this.fullscreenButton = document.getElementById('fullscreen-button');
     this.container = document.getElementById('timeshift-container');
+    this.videoDisplays = document.getElementById('video-displays');
 
+    // State
     this.stream = null;
     this.running = false;
     this.frameBuffer = [];
     this.delayDuration = 5.0; // seconds
-    this.frameRate = 30; // frames per second
     this.maxFrames = Math.ceil(this.delayDuration * this.frameRate);
     this.animationFrameId = null;
     
@@ -41,6 +48,25 @@ class TimeShiftCamera {
       }
     });
     this.fullscreenButton.addEventListener('click', () => this.toggleFullscreen());
+    
+    // Handle fullscreen change events (e.g., ESC key)
+    document.addEventListener('fullscreenchange', () => this.handleFullscreenChange());
+    document.addEventListener('webkitfullscreenchange', () => this.handleFullscreenChange());
+    document.addEventListener('mozfullscreenchange', () => this.handleFullscreenChange());
+    document.addEventListener('msfullscreenchange', () => this.handleFullscreenChange());
+  }
+
+  handleFullscreenChange() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+        !document.mozFullScreenElement && !document.msFullscreenElement) {
+      // Exited fullscreen
+      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-expand"></i>';
+      this.fullscreenButton.title = 'フルスクリーン';
+    } else {
+      // Entered fullscreen
+      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-compress"></i>';
+      this.fullscreenButton.title = 'フルスクリーン終了';
+    }
   }
 
   async start() {
@@ -174,7 +200,7 @@ class TimeShiftCamera {
 
   updateDelayDuration(duration) {
     // Validate and clamp duration
-    duration = Math.max(0.1, Math.min(600, duration));
+    duration = Math.max(this.MIN_DELAY_DURATION, Math.min(this.MAX_DELAY_DURATION, duration));
     this.delayDuration = duration;
     this.maxFrames = Math.ceil(this.delayDuration * this.frameRate);
 
@@ -194,31 +220,31 @@ class TimeShiftCamera {
   }
 
   toggleFullscreen() {
-    const videoDisplays = document.getElementById('video-displays');
-    
-    if (!document.fullscreenElement) {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+        !document.mozFullScreenElement && !document.msFullscreenElement) {
       // Enter fullscreen
-      if (videoDisplays.requestFullscreen) {
-        videoDisplays.requestFullscreen();
-      } else if (videoDisplays.webkitRequestFullscreen) {
-        videoDisplays.webkitRequestFullscreen();
-      } else if (videoDisplays.msRequestFullscreen) {
-        videoDisplays.msRequestFullscreen();
+      if (this.videoDisplays.requestFullscreen) {
+        this.videoDisplays.requestFullscreen();
+      } else if (this.videoDisplays.webkitRequestFullscreen) {
+        this.videoDisplays.webkitRequestFullscreen();
+      } else if (this.videoDisplays.mozRequestFullScreen) {
+        this.videoDisplays.mozRequestFullScreen();
+      } else if (this.videoDisplays.msRequestFullscreen) {
+        this.videoDisplays.msRequestFullscreen();
       }
-      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-compress"></i>';
-      this.fullscreenButton.title = 'フルスクリーン終了';
     } else {
       // Exit fullscreen
       if (document.exitFullscreen) {
         document.exitFullscreen();
       } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
       } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
       }
-      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-expand"></i>';
-      this.fullscreenButton.title = 'フルスクリーン';
     }
+    // Button state will be updated by handleFullscreenChange event
   }
 
   showNoCameraMessage() {
