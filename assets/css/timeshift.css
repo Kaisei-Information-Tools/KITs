@@ -179,18 +179,19 @@ main {
 
 .controls-compact {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
-  padding: 10px;
+  flex-wrap: nowrap;
+  padding: 12px;
   background: var(--glass-bg-alt);
   border-radius: 12px;
   border: 1px solid var(--glass-border);
+  overflow-x: auto;
 }
 
 .control-button {
-  padding: 8px 16px;
+  padding: 10px 20px;
   font-size: 0.95em;
   font-weight: 600;
   border-radius: 8px;
@@ -202,9 +203,11 @@ main {
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 2px 10px var(--glass-shadow);
   color: var(--text-primary);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .control-button:hover:not(:disabled) {
@@ -241,6 +244,8 @@ main {
   font-weight: 600;
   color: var(--text-primary);
   font-size: 0.95em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .delay-input-compact {
@@ -267,10 +272,13 @@ main {
 .status-compact {
   font-size: 0.9em;
   color: var(--text-secondary);
-  padding: 4px 12px;
+  padding: 8px 12px;
   background: var(--glass-bg);
   border-radius: 6px;
   border: 1px solid var(--glass-border);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 /* Removed unused styles - controls are now compact */
@@ -288,12 +296,28 @@ main {
 
 @media (max-width: 768px) {
   .timeshift-container {
-    padding: 20px;
+    padding: 15px;
+  }
+
+  .controls-compact {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .control-button {
-    width: 100%;
-    justify-content: center;
+    flex: 0 1 auto;
+    min-width: 100px;
+  }
+
+  .delay-control {
+    flex: 0 1 auto;
+  }
+
+  .status-compact {
+    flex: 1 1 100%;
+    margin-left: 0;
+    text-align: center;
+    margin-top: 8px;
   }
 
   .fullscreen-button {
