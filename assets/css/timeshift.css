@@ -94,9 +94,15 @@ main {
   overflow: hidden;
   background: var(--glass-bg-alt);
   min-height: 400px;
+  max-height: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.timeshift-container .video-panel:first-child .video-container {
+  min-height: 225px;
+  max-height: 400px;
 }
 
 #video,
@@ -187,6 +193,7 @@ main {
   background: var(--glass-bg-alt);
   border-radius: 12px;
   border: 1px solid var(--glass-border);
+  overflow-x: auto;
 }
 
 .control-button {
