@@ -1,9 +1,8 @@
 /* ===== About Page Specific Styles ===== */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 /* About page uses default font family (Noto Sans JP) for consistency */
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -287,9 +286,6 @@ body > section:first-of-type {
 .pt-20 {
   padding-top: 5rem;
 }
-.justify-center {
-  justify-content: center;
-}
 
 .rounded-xl {
   border-radius: 0.75rem;
@@ -360,6 +356,7 @@ a.hover\:bg-slate-800:hover {
   background-color: rgba(var(--text-primary), 0.05);
 }
 
-[data-theme="dark"] img {
+[data-theme="dark"] .logo img,
+[data-theme="dark"] .icon img {
   filter: invert(0.9) brightness(1.05);
 }

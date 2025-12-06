@@ -137,19 +137,22 @@
   <script>
     if (!localStorage.getItem("surveyAnswered3")) {
       var toastEl = document.getElementById("liveToast");
-      var toast = new bootstrap.Toast(toastEl, {autohide: false});
-      toast.show();
+      if (toastEl) {
+        var toast = new bootstrap.Toast(toastEl, {autohide: false});
+        toast.show();
+      }
     }
 
     // チェックボックスの変更を監視
-    document
-      .getElementById("answeredCheck")
-      .addEventListener("change", function () {
+    var answeredCheckEl = document.getElementById("answeredCheck");
+    if (answeredCheckEl) {
+      answeredCheckEl.addEventListener("change", function () {
         if (this.checked) {
           // ローカルストレージにデータを書き込み
           localStorage.setItem("surveyAnswered3", "true");
         }
       });
+    }
   </script>
   {{ content }}
   <!-- トップへ戻るボタン -->
