@@ -94,7 +94,7 @@ js: index
     <div class="square">
       <a href="kundoku.html" class="black">
         <figure>
-          <img src="assets/images/kundoku.svg" alt="" width="100%" />
+          <img src="assets/images/kundoku.png" alt="" width="100%" />
         </figure>
         <div class="text-parts">
           <h4>訓読文エディタ</h4>
@@ -168,7 +168,7 @@ js: index
     <div class="square">
       <a href="https://memo.kits-tools.net/" class="black">
         <figure>
-          <img src="assets/images/memo.svg" alt="" width="100%" />
+          <img src="assets/images/memo.png" alt="" width="100%" />
         </figure>
         <div class="text-parts">
           <h4>メモ帳</h4>
@@ -219,3 +219,98 @@ js: index
         <input type="range" id="clock-size" min="1" max="2" step="0.1" value="1" /> </label><br /><br />
     </div>
   </div>
+
+  {% assign latest_news = site.data.news | first %}
+  {% if latest_news %}
+  <!-- News Notification Popup -->
+  <div id="news-notification" class="news-notification hidden" data-news-id="{{ latest_news.id }}">
+    <div class="news-notification-header">
+      <h3>最新のお知らせ</h3>
+      <button id="news-notification-close" class="news-notification-close">&times;</button>
+    </div>
+    <div class="news-notification-content">
+      <span id="news-notification-tag" class="news-notification-tag tag-{{ latest_news.tag }}">{{ latest_news.tag_label }}</span>
+      <div id="news-notification-title" class="news-notification-title">{{ latest_news.title }}</div>
+      <div id="news-notification-date" class="news-notification-date">{{ latest_news.date }}</div>
+    </div>
+    <a href="news.html" class="news-notification-link">すべてのお知らせを見る →</a>
+  </div>
+  {% endif %}
+
+  <script>
+    // News notification logic
+    (function() {
+      const STORAGE_KEY = 'kits_seen_news';
+      
+      function getLatestNewsId() {
+        const notification = document.getElementById('news-notification');
+        return notification ? notification.dataset.newsId : null;
+      }
+      
+      function getSeenNews() {
+        try {
+          const seen = localStorage.getItem(STORAGE_KEY);
+          return seen ? JSON.parse(seen) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+      
+      function markNewsSeen(newsId) {
+        try {
+          const seen = getSeenNews();
+          if (!seen.includes(newsId)) {
+            seen.push(newsId);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(seen));
+          }
+        } catch (e) {
+          // localStorage not available
+        }
+      }
+      
+      function showNewsNotification() {
+        const notification = document.getElementById('news-notification');
+        if (notification) {
+          notification.classList.remove('hidden');
+        }
+      }
+      
+      function hideNewsNotification() {
+        const notification = document.getElementById('news-notification');
+        if (notification) {
+          notification.classList.add('hidden');
+        }
+        const newsId = getLatestNewsId();
+        if (newsId) {
+          markNewsSeen(newsId);
+        }
+      }
+      
+      // Initialize everything on DOMContentLoaded to avoid race conditions
+      document.addEventListener('DOMContentLoaded', function() {
+        const latestNewsId = getLatestNewsId();
+        if (!latestNewsId) return;
+        
+        // Set up close button handler
+        const closeBtn = document.getElementById('news-notification-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', hideNewsNotification);
+        }
+        
+        // Also mark as seen when clicking the link
+        const newsLink = document.querySelector('.news-notification-link');
+        if (newsLink) {
+          newsLink.addEventListener('click', function() {
+            markNewsSeen(latestNewsId);
+          });
+        }
+        
+        // Check if user has seen the latest news and show notification
+        const seenNews = getSeenNews();
+        if (!seenNews.includes(latestNewsId)) {
+          // Delay showing notification slightly for better UX
+          setTimeout(showNewsNotification, 1000);
+        }
+      });
+    })();
+  </script>

@@ -1,31 +1,59 @@
 main {
   width: 80%;
   max-width: 1000px;
-  background: #fff;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px var(--glass-shadow, rgba(0, 0, 0, 0.15));
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  gap: 20px;
   min-height: 0 !important;
+}
+
+.page-content {
+  display: flex;
 }
 
 .left,
 .right {
   padding: 20px;
-  margin: 8px;
 }
 
 .left {
-  width: 60%;
+  flex: 1 1 65%;
+  min-width: 0;
 }
 
 .right {
-  width: 35%;
-  background: #f9f9f9;
-  border-left: 2px solid #ddd;
+  flex: 0 1 35%;
+  min-width: 0;
+  background: var(--glass-bg-alt, rgba(249, 249, 249, 0.5));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-left: 1px solid var(--glass-border, rgba(221, 221, 221, 0.5));
   overflow-y: auto;
   max-height: 400px;
+}
+
+@media (max-width: 600px) {
+  main {
+    flex-wrap: wrap;
+  }
+
+  .left,
+  .right {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .right {
+    border-left: none;
+    border-top: 1px solid var(--glass-border, rgba(221, 221, 221, 0.5));
+  }
 }
 
 textarea {
@@ -33,9 +61,18 @@ textarea {
   height: 150px;
   font-size: 16px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.6));
+  border: 1px solid var(--glass-border, rgba(204, 204, 204, 0.5));
+  border-radius: 8px;
   resize: none;
+  transition: all 0.3s ease;
+  color: var(--text-primary, #333);
+}
+
+textarea:focus {
+  outline: none;
+  background: var(--glass-bg-hover, rgba(255, 255, 255, 0.8));
+  box-shadow: 0 4px 12px var(--glass-shadow, rgba(0, 0, 0, 0.1));
 }
 
 .result p,
@@ -53,34 +90,12 @@ ul {
 }
 
 ul li {
-  background: #e9ecef;
+  background: var(--glass-bg-alt, rgba(233, 236, 239, 0.6));
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   padding: 5px 10px;
   margin: 3px 0;
-  border-radius: 5px;
-}
-
-nav {
-  background-color: var(--color-primary);
-  color: #fff;
-  padding: 10px;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li {
-  background: none;
-  padding: 0;
-  margin-right: 10px;
-  border-radius: 0;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
+  border-radius: 6px;
 }
 
 footer {

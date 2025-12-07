@@ -1,0 +1,27 @@
+---
+layout: default_new
+title: お知らせ
+css: news
+old_base_css: true
+---
+
+<div class="news-container">
+  <h1>お知らせ</h1>
+  <p class="news-description">KITsからの最新のお知らせや更新情報をお届けします。</p>
+
+  <div class="news-list">
+    {% for news in site.data.news %}
+    <article class="news-item" data-news-id="{{ news.id }}">
+      <div class="news-date">
+        <span class="date-day">{{ news.day }}</span>
+        <span class="date-month">{{ news.month }}</span>
+      </div>
+      <div class="news-content">
+        <span class="news-tag tag-{{ news.tag }}">{{ news.tag_label }}</span>
+        <h2>{{ news.title }}</h2>
+        <p>{{ news.content }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</div>

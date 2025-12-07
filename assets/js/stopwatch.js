@@ -16,30 +16,39 @@ const $FOOTER = document.getElementsByTagName("footer")[0];
 
 const START_BUTTON_NAME = "Start";
 const STOP_BUTTON_NAME = "Stop";
-const START_BUTTON_COLOR = "#60d351";
-const STOP_BUTTON_COLOR = "#d351a1";
+
+// Function to get colors based on current theme
+function getButtonColors() {
+  const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  return {
+    start: isDarkMode ? "#5ce878" : "#60d351",
+    stop: isDarkMode ? "#ec4899" : "#d351a1"
+  };
+}
 
 function toggleStop() {
+  const colors = getButtonColors();
   if (!running) {
     startTime = new Date().getTime() - savedTime;
     timerInterval = setInterval(updateTime, 10);
     $TOGGLE_BUTTON.textContent = STOP_BUTTON_NAME;
-    $TOGGLE_BUTTON.style.backgroundColor = STOP_BUTTON_COLOR;
+    $TOGGLE_BUTTON.style.backgroundColor = colors.stop;
     running = true;
   } else {
     clearInterval(timerInterval);
     savedTime = difference;
     $TOGGLE_BUTTON.textContent = START_BUTTON_NAME;
-    $TOGGLE_BUTTON.style.backgroundColor = START_BUTTON_COLOR;
+    $TOGGLE_BUTTON.style.backgroundColor = colors.start;
     running = false;
   }
 }
 
 function reset() {
+  const colors = getButtonColors();
   clearInterval(timerInterval);
   $DISPLAY.textContent = "00:00:00.00";
   $TOGGLE_BUTTON.textContent = START_BUTTON_NAME;
-  $TOGGLE_BUTTON.style.backgroundColor = START_BUTTON_COLOR;
+  $TOGGLE_BUTTON.style.backgroundColor = colors.start;
   running = false;
   difference = 0;
   savedTime = 0;
@@ -149,6 +158,12 @@ function createLap() {
 //     parseInt(millis, 10) * 10
 //   );
 // }
+
+// Initialize button color based on current theme
+(function initButtonColor() {
+  const colors = getButtonColors();
+  $TOGGLE_BUTTON.style.backgroundColor = colors.start;
+})();
 
 $TOGGLE_BUTTON.addEventListener("click", toggleStop);
 $RESET_BUTTON.addEventListener("click", reset);

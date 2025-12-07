@@ -11,9 +11,6 @@ main {
   border: none;
   height: auto;
 }
-.card-footer {
-  background-color: #fff;
-}
 .ck-reset {
   width: 100%;
 }
@@ -27,13 +24,45 @@ main {
 #editor {
   width: 600px;
   height: auto;
-  border: 1px solid #ddd;
+  border: 1.5px solid var(--glass-inset, rgba(255, 255, 255, 0.6));
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow:
+    0 8px 24px var(--glass-shadow, rgba(0, 0, 0, 0.12)),
+    inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.6));
 }
 #toolbar {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
 }
+
+/* CKEditor dark mode styling */
+[data-theme="dark"] .ck.ck-editor__main > .ck-editor__editable {
+  background: var(--glass-bg, rgba(40, 45, 55, 0.95));
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] .ck.ck-toolbar {
+  background: var(--glass-bg-alt, rgba(50, 55, 70, 0.9));
+  border-color: var(--glass-border, rgba(80, 90, 110, 0.5));
+}
+
+[data-theme="dark"] .ck.ck-button {
+  color: var(--text-primary, #e0e5ec);
+}
+
+[data-theme="dark"] .ck.ck-button:not(.ck-disabled):hover {
+  background: var(--glass-bg-hover, rgba(55, 60, 75, 0.95));
+}
+
+[data-theme="dark"] #editor {
+  background: var(--glass-bg, rgba(40, 45, 55, 0.95));
+  border-color: var(--glass-border, rgba(80, 90, 110, 0.5));
+}
+
 .ck-editor__editable {
   writing-mode: vertical-rl;
   width: 100%;

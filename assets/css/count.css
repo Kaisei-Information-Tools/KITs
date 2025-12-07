@@ -8,14 +8,18 @@ main {
 }
 
 .counter {
-    font-size: 72px; /* 数字を大きく設定 */
-    color: #3c3c6c;
-    background-color: #f9f9f9; /* 背景色を設定 */
-    border: 2px solid #3c3c6c; /* 枠線を追加 */
-    border-radius: 10px; /* 角を丸める */
-    padding: 20px; /* 内側の余白を追加 */
-    margin: 20px 0; /* 上下のマージンを追加 */
-    cursor: text; /* カーソルをテキストに変更 */
+    font-size: 72px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--glass-bg, rgba(255, 255, 255, 0.7));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
+    border-radius: 16px;
+    padding: 30px;
+    margin: 20px 0;
+    cursor: text;
+    box-shadow: 0 8px 24px var(--glass-shadow, rgba(0, 0, 0, 0.12));
 }
 
 .buttons {
@@ -32,11 +36,32 @@ main {
 }
 
 .button.decrease {
-    background-color: #4ca3a0; /* 濃い水色に変更 */
+    background: var(--glass-bg-alt, rgba(255, 255, 255, 0.4));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid var(--glass-inset, rgba(255, 255, 255, 0.6));
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: 
+        0 8px 32px var(--glass-shadow, rgba(0, 0, 0, 0.1)),
+        inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.6));
+    transition: all 0.3s ease;
+}
+
+.button.decrease:hover {
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.6));
+    box-shadow: 
+        0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.15)),
+        inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
+    transform: translateY(-2px);
 }
 
 .button:hover {
-    opacity: 0.8;
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.6));
+    box-shadow: 
+        0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.15)),
+        inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
+    transform: translateY(-2px);
 }
 
 .customs {
@@ -47,22 +72,35 @@ main {
     padding: 10px;
     margin-right: 5px;
     width: 15rem;
+    background: var(--glass-bg, rgba(255, 255, 255, 0.7));
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: var(--text-primary, #333);
+}
+
+.counter-input:focus {
+    outline: none;
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.9));
+    box-shadow: 0 4px 12px var(--glass-shadow, rgba(0, 0, 0, 0.1));
 }
 
 .counter-alert {
-    display: none; /* 初期は非表示 */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background: var(--glass-bg, rgba(255, 255, 255, 0.9));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.2));
     text-align: center;
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
+  width: 100%;
 }

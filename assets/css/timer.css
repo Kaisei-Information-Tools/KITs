@@ -9,8 +9,13 @@ main h1 {
 }
 
 .timer {
-  border-radius: 5px;
-  padding: 5px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 
 .input-container {
@@ -21,6 +26,18 @@ main h1 {
   margin: 0 5px;
   width: 7rem;
   height: 3rem;
+  background: var(--glass-bg-input);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+}
+
+.timer-input:focus {
+  outline: none;
+  background: var(--glass-bg-hover);
+  box-shadow: 0 4px 12px var(--glass-shadow);
 }
 
 .timer-button {
@@ -29,18 +46,61 @@ main h1 {
   margin: 0 5px;
   width: 7rem;
   height: 3rem;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
 }
 
 .add-button {
-  background-color: var(--color-primary);
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 4px 20px var(--glass-shadow);
+  transition: all 0.3s ease;
+}
+
+.add-button:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
+  transform: translateY(-2px);
 }
 
 .start-button {
-  background-color: #60d351;
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 4px 20px var(--glass-shadow);
+  transition: all 0.3s ease;
+}
+
+.start-button:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
+  transform: translateY(-2px);
 }
 
 .stop-button {
-  background-color: #d351a1;
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 4px 20px var(--glass-shadow);
+  transition: all 0.3s ease;
+}
+
+.stop-button:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
+  transform: translateY(-2px);
 }
 
 .sound-setting {
@@ -57,14 +117,14 @@ main h1 {
   width: 3rem;
   height: 1.5rem;
   border-radius: 1.5rem;
-  border: 3px solid #dddddd;
+  border: 3px solid var(--glass-border, #dddddd);
   box-sizing: content-box;
   cursor: pointer;
   transition: border-color .4s;
 }
 
 .toggle-button:has(:checked) {
-  border-color: #4bd865;
+  border-color: var(--toggle-active, #4bd865);
 }
 
 .toggle-button::after {
@@ -75,14 +135,14 @@ main h1 {
   width: 1.3rem;
   height: 1.3rem;
   border-radius: 50%;
-  background-color: #dddddd;
+  background-color: var(--glass-border, #dddddd);
   content: '';
   transition: left .4s;
 }
 
 .toggle-button:has(:checked)::after {
   left: 1.5rem;
-  background-color: #4bd865;
+  background-color: var(--toggle-active, #4bd865);
 }
 
 #toggle-sound {
@@ -104,6 +164,5 @@ main h1 {
 
 footer {
   margin-top: 0;
-  position: fixed;
-  bottom: 0;
+  width: 100%;
 }

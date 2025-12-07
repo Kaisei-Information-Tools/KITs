@@ -6,7 +6,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
+  background: transparent;
 }
 .calculator {
   display: grid;
@@ -14,6 +14,13 @@ body {
   gap: 10px;
   max-width: 400px;
   margin: auto;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--glass-shadow);
 }
 .calculator input,
 button {
@@ -23,18 +30,50 @@ button {
 }
 .calculator input {
   grid-column: span 4;
+  background: var(--glass-bg-input);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  color: var(--text-primary);
 }
 .calculator button {
   cursor: pointer;
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--glass-shadow);
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.calculator button:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
+  transform: translateY(-2px);
 }
 .operator {
-  background-color: var(--color-primary);
-  color: white;
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
+  color: var(--text-primary);
+}
+.operator:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
 }
 .equals {
   grid-column: span 4;
-  background-color: var(--color-primary);
-  color: white;
+  background: var(--glass-bg-alt);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-inset);
+  color: var(--text-primary);
+}
+.equals:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 8px 30px var(--glass-shadow);
 }
 
 main {
@@ -42,9 +81,18 @@ main {
   padding: 0;
   width: auto;
   max-width: unset;
-  margin-top: 0;
+  margin-top: 0 !important;
   margin-left: unset;
   margin-right: unset;
   box-shadow: none;
   border-radius: 0;
+  padding-top: 0 !important;
+}
+
+[data-theme="dark"] footer {
+  border-top-color: transparent;
+}
+
+footer {
+  margin-top: 0 !important;
 }
