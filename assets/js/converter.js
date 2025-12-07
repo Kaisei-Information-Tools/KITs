@@ -75,14 +75,20 @@ convertBtn.addEventListener("click", () => {
   // --- SVGへの簡易変換処理 ---
   // (ラスター画像をSVGファイル内に<image>タグで埋め込む)
   if (format === "svg") {
-    // Validate the Data URL
-    if (typeof imagePreview.src !== "string" || !imagePreview.src.startsWith("data:image/")) {
+    // Validate the Data URL - ensure it's a proper data URL and doesn't contain dangerous characters
+    const dataUrl = imagePreview.src;
+    if (typeof dataUrl !== "string" || !dataUrl.startsWith("data:image/")) {
+      alert("不正な画像データです。");
+      return;
+    }
+    // Additional safety check: ensure no script tags or other dangerous content
+    if (dataUrl.includes("<script") || dataUrl.includes("javascript:") || dataUrl.includes("data:text/html")) {
       alert("不正な画像データです。");
       return;
     }
     const svgContent =
       `<svg xmlns="http://www.w3.org/2000/svg" width="${imagePreview.naturalWidth}" height="${imagePreview.naturalHeight}">
-        <image href="${imagePreview.src}" width="100%" height="100%" />
+        <image href="${dataUrl}" width="100%" height="100%" />
       </svg>`;
     const svgBlob = new Blob([svgContent], {
       type: "image/svg+xml;charset=utf-8",
