@@ -16,6 +16,7 @@ old_base_css: true
   <!-- ステップ1: ファイル選択 -->
   <div class="step">
     <h2>Step 1: 画像を選択</h2>
+    <label for="image-input">画像ファイルを選択:</label>
     <input type="file" id="image-input" accept="image/*,image/svg+xml" />
   </div>
 
@@ -47,7 +48,7 @@ old_base_css: true
   <!-- ステップ3: 変換実行 -->
   <div id="convert-container" class="step hidden">
     <h2>Step 3: 変換してダウンロード</h2>
-    <button id="convert-btn">変換してダウンロード</button>
+    <button id="convert-btn" type="button" aria-label="変換してダウンロード">変換してダウンロード</button>
   </div>
 </div>
-</div>
+

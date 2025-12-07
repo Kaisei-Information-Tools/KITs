@@ -21,6 +21,11 @@ imageInput.addEventListener("change", (event) => {
     file &&
     (file.type.startsWith("image/") || file.type === "image/svg+xml")
   ) {
+    // ファイルサイズが20MBを超えていたら警告を表示して処理を中断
+    if (file.size > 20 * 1024 * 1024) {
+      alert("ファイルサイズが大きすぎます。20MB以下のファイルを選択してください。");
+      return;
+    }
     originalFile = file;
     const reader = new FileReader();
 
@@ -95,7 +100,7 @@ convertBtn.addEventListener("click", () => {
     });
     const svgUrl = URL.createObjectURL(svgBlob);
     downloadFile(svgUrl, fileName);
-    URL.revokeObjectURL(svgUrl); // メモリを解放
+    setTimeout(() => URL.revokeObjectURL(svgUrl), 100); // メモリを解放（ダウンロード開始を待つ）
     return;
   }
 
