@@ -275,5 +275,70 @@ textarea::-webkit-scrollbar-thumb:hover {
 [data-theme="dark"] textarea::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
 }
+/* =========================================
+   ブラウザ標準パーツのダークモード対応
+   ========================================= */
+
+/* ダークモード時はブラウザ標準の部品（スクロールバー、矢印、ラジオボタン等）を
+   自動的に暗い色にする設定 */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* =========================================
+   スクロールバーのカスタマイズ（全体・入力欄共通）
+   ========================================= */
+
+/* すべての要素のスクロールバーに適用 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #666 transparent;
+}
+
+/* Chrome, Edge, Safari用 */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px; /* 横スクロールバーの高さ */
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
+}
+
+/* ダークモード時の微調整 */
+[data-theme="dark"] *::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] *::-webkit-scrollbar-thumb {
+  background-color: #666;
+}
+
+[data-theme="dark"] *::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+
+/* =========================================
+   数値入力欄の矢印（スピンボタン）調整
+   ========================================= */
+
+/* Chrome, Edge, Safari等で矢印の色を強制的に反転させて馴染ませる
+   （color-schemeが効かない古いバージョンや一部ブラウザ向け） */
+[data-theme="dark"] input[type="number"]::-webkit-inner-spin-button,
+[data-theme="dark"] input[type="number"]::-webkit-outer-spin-button {
+  filter: invert(1); /* 色を反転（白→黒っぽく） */
+  cursor: pointer;
+}
 
 
