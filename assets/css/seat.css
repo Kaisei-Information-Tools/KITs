@@ -227,3 +227,53 @@ body > main {
     gap: 4px;
   }
 }
+
+/* =========================================
+   スクロールバーのカスタマイズ
+   ========================================= */
+
+/* Firefox用 */
+textarea {
+  scrollbar-width: thin; /* 細くする */
+  scrollbar-color: #666 transparent; /* つまみ:グレー, 背景:透明 */
+}
+
+/* Chrome, Edge, Safari用 */
+textarea::-webkit-scrollbar {
+  width: 10px; /* バーの太さ */
+}
+
+textarea::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* バーの背景（薄い黒） */
+  border-radius: 5px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: #666; /* つまみの色（ダークグレー） */
+  border-radius: 10px;    /* 丸みを帯びさせる */
+  border: 2px solid transparent; /* つまみの周りに余白を作る */
+  background-clip: content-box;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #333; /* ホバー時はより黒く */
+}
+
+/* ダークモード時はより馴染む色にする */
+[data-theme="dark"] textarea {
+  scrollbar-color: #888 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] textarea::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+[data-theme="dark"] textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+[data-theme="dark"] textarea::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+
