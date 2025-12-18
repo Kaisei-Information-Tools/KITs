@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const generateDummyBtn = document.getElementById('generate-dummy-btn');
   const countDisplay = document.getElementById('count-display');
   const shuffleBtn = document.getElementById('shuffle-btn');
-  const downloadBtn = document.getElementById('download-btn'); // 画像保存ボタン
+  const downloadBtn = document.getElementById('download-btn');
   const seatMap = document.getElementById('seat-map');
 
   let isShuffling = false;
@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isShuffling) startShuffle();
     });
 
-    // ★追加: 画像保存処理
     downloadBtn.addEventListener('click', () => {
       saveAsImage();
     });
@@ -76,47 +75,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ★変更: 名前ではなく番号のみを生成
   function generateDummyMembers() {
     const count = parseInt(dummyCountInput.value) || 0;
     if (count <= 0) return;
     let names = [];
     for(let i = 1; i <= count; i++) {
-      names.push(`${i}`); // "学生"を削除し番号のみに
+      names.push(`${i}`);
     }
     namesInput.value = names.join('\n');
     updateCount();
   }
 
-  // ★追加: 画像として保存する関数
   function saveAsImage() {
-    const target = document.getElementById('capture-target'); // .classroom-container
-    
-    // キャプチャ中は一時的に背景色を明確にする（透過防止）
-    // 現在のテーマを確認
+    const target = document.getElementById('capture-target');
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const originalBg = target.style.backgroundColor;
     target.style.backgroundColor = isDark ? '#1a1d23' : '#e8f0f7';
 
     html2canvas(target, {
-      scale: 2, // 高画質で保存
+      scale: 2,
       useCORS: true
     }).then(canvas => {
-      // リンクを生成してクリックさせる
       const link = document.createElement('a');
       link.download = `seat_chart_${new Date().getTime()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      
-      // スタイルを戻す
       target.style.backgroundColor = originalBg;
     }).catch(err => {
-      console.error('画像保存に失敗しました:', err);
+      console.error('画像保存エラー:', err);
       alert('画像の保存に失敗しました');
     });
   }
 
-  // --- 保存機能 (LocalStorage) ---
   function saveSettings() {
     const disabledIds = Array.from(document.querySelectorAll('.seat.disabled')).map(el => el.dataset.number);
     const settings = {
@@ -303,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let names = getNames();
     const validSeats = Array.from(document.querySelectorAll('.seat:not(.disabled)'));
     
+    // ▼ エラーチェックの追加 ▼
     if (names.length === 0) {
       alert('参加者がいません。');
       return;
@@ -311,6 +302,12 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('有効な座席がありません。');
       return;
     }
+    // 人数が席数より多い場合、アラートを出して中断
+    if (names.length > validSeats.length) {
+      alert(`人数(${names.length}名)が座席数(${validSeats.length}席)を超えています。\n席替えできません。\n\n・座席の「無効化」を解除する\n・参加者を減らす\n・レイアウトを変更する\nいずれかの対応を行ってください。`);
+      return;
+    }
+    // ▲ エラーチェック終了 ▲
 
     isShuffling = true;
     shuffleBtn.disabled = true;
