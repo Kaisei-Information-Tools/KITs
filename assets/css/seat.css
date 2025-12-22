@@ -1,10 +1,12 @@
 /* 席替えツール専用スタイル */
 
+/* コンテンツ幅を最大化 */
 body > main {
   max-width: 1400px !important;
   width: 95% !important;
 }
 
+/* 設定パネル */
 .settings-box {
   background: var(--glass-bg-alt);
   padding: 1.5rem;
@@ -48,6 +50,7 @@ body > main {
   color: #e74c3c !important;
 }
 
+/* 教室コンテナ */
 .classroom-container {
   padding: 2rem 1rem;
   background: var(--glass-bg);
@@ -72,17 +75,17 @@ body > main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
+/* 座席配置エリア */
 .seat-map {
   display: grid;
-  /* ★修正: gapをさらに小さく (0.5rem -> 6px) */
-  gap: 6px; 
+  gap: 6px; /* 隙間を最小限に */
   justify-content: center;
   margin: 0 auto;
   min-width: max-content;
   padding-bottom: 2rem;
 }
 
-/* 通常の机 */
+/* 通常の机グループ */
 .table-group {
   background-color: rgba(255, 255, 255, 0.3);
   border: 4px solid #8899a6;
@@ -106,13 +109,12 @@ body > main {
   box-shadow: none;
 }
 
-/* 縦長連結机 */
+/* 縦長連結机（上下分割） */
 .combined-container {
   display: flex;
   flex-direction: column;
   gap: 0;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
-  /* 横方向の間隔微調整用にマージンは最小に */
   margin: 0 2px;
 }
 
@@ -141,6 +143,7 @@ body > main {
   border-top-width: 2px;
 }
 
+/* 座席共通 */
 .seat {
   width: 100%;
   min-width: 50px;
@@ -228,94 +231,24 @@ body > main {
   }
 }
 
-
-/* =========================================
-   トップへ戻るボタンの修正
-   ========================================= */
-
-/* ダークモードでも色が反転しないように固定する */
-#to-top {
-  background-color: #3c3c6c !important; /* 元の濃い紫 */
-  color: #ffffff !important;            /* 白い矢印 */
-  border: none !important;
-}
-
-/* ホバー時の色も調整（少し明るく） */
-#to-top:hover {
-  background-color: #5c5c8c !important;
-}
-
-/* =========================================
-   スクロールバーのカスタマイズ
-   ========================================= */
-
-/* Firefox用 */
-textarea {
-  scrollbar-width: thin; /* 細くする */
-  scrollbar-color: #666 transparent; /* つまみ:グレー, 背景:透明 */
-}
-
-/* Chrome, Edge, Safari用 */
-textarea::-webkit-scrollbar {
-  width: 10px; /* バーの太さ */
-}
-
-textarea::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1); /* バーの背景（薄い黒） */
-  border-radius: 5px;
-}
-
-textarea::-webkit-scrollbar-thumb {
-  background-color: #666; /* つまみの色（ダークグレー） */
-  border-radius: 10px;    /* 丸みを帯びさせる */
-  border: 2px solid transparent; /* つまみの周りに余白を作る */
-  background-clip: content-box;
-}
-
-textarea::-webkit-scrollbar-thumb:hover {
-  background-color: #333; /* ホバー時はより黒く */
-}
-
-/* ダークモード時はより馴染む色にする */
-[data-theme="dark"] textarea {
-  scrollbar-color: #888 rgba(255, 255, 255, 0.05);
-}
-
-[data-theme="dark"] textarea::-webkit-scrollbar-thumb {
-  background-color: #888;
-}
-
-[data-theme="dark"] textarea::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
-}
-
-[data-theme="dark"] textarea::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
 /* =========================================
    ブラウザ標準パーツのダークモード対応
    ========================================= */
-
-/* ダークモード時はブラウザ標準の部品（スクロールバー、矢印、ラジオボタン等）を
-   自動的に暗い色にする設定 */
 [data-theme="dark"] {
   color-scheme: dark;
 }
 
 /* =========================================
-   スクロールバーのカスタマイズ（全体・入力欄共通）
+   スクロールバーのカスタマイズ
    ========================================= */
-
-/* すべての要素のスクロールバーに適用 */
 * {
   scrollbar-width: thin;
   scrollbar-color: #666 transparent;
 }
 
-/* Chrome, Edge, Safari用 */
 *::-webkit-scrollbar {
   width: 10px;
-  height: 10px; /* 横スクロールバーの高さ */
+  height: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -333,7 +266,6 @@ textarea::-webkit-scrollbar-thumb:hover {
   background-color: #666;
 }
 
-/* ダークモード時の微調整 */
 [data-theme="dark"] *::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
 }
@@ -346,16 +278,22 @@ textarea::-webkit-scrollbar-thumb:hover {
   background-color: #888;
 }
 
-/* =========================================
-   数値入力欄の矢印（スピンボタン）調整
-   ========================================= */
-
-/* Chrome, Edge, Safari等で矢印の色を強制的に反転させて馴染ませる
-   （color-schemeが効かない古いバージョンや一部ブラウザ向け） */
+/* スピンボタン（矢印）の反転 */
 [data-theme="dark"] input[type="number"]::-webkit-inner-spin-button,
 [data-theme="dark"] input[type="number"]::-webkit-outer-spin-button {
-  filter: invert(1); /* 色を反転（白→黒っぽく） */
+  filter: invert(1);
   cursor: pointer;
 }
 
+/* =========================================
+   トップへ戻るボタンの修正
+   ========================================= */
+#to-top {
+  background-color: #3c3c6c !important;
+  color: #ffffff !important;
+  border: none !important;
+}
 
+#to-top:hover {
+  background-color: #5c5c8c !important;
+}
