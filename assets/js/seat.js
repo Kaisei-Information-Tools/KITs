@@ -11,22 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const shuffleBtn = document.getElementById('shuffle-btn');
   const downloadBtn = document.getElementById('download-btn');
   const seatMap = document.getElementById('seat-map');
+  const distModeRadios = document.getElementsByName('dist-mode');
 
   let isShuffling = false;
 
   init();
 
   function init() {
+    // 1. イベントリスナー登録
     generateDummyBtn.addEventListener('click', () => {
       generateDummyMembers();
       saveSettings();
     });
     
+    // レイアウト変更時: 設定は保存するが、namesInputが空になるのを防ぐ
     layoutSelect.addEventListener('change', () => {
       toggleNormalSettings();
       renderLayout();
       updateCount();
-      saveSettings();
+      saveSettings(); 
     });
 
     [rowsInput, colsInput].forEach(el => {
@@ -36,6 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
           updateCount();
           saveSettings();
         }
+      });
+    });
+
+    // 配席モード変更時
+    distModeRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        saveSettings();
       });
     });
 
@@ -64,17 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
           seat.textContent = seat.dataset.number;
         }
         updateCount();
-        saveSettings();
+        saveSettings(); // 座席状態の保存
       }
     });
 
+    // 2. 初期ロード
     if (!loadSettings()) {
+      // 保存データがない場合のデフォルト
       toggleNormalSettings();
       generateDummyMembers();
       renderLayout();
     }
   }
 
+  // 番号のみ生成
   function generateDummyMembers() {
     const count = parseInt(dummyCountInput.value) || 0;
     if (count <= 0) return;
@@ -86,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCount();
   }
 
+  // 画像保存
   function saveAsImage() {
     const target = document.getElementById('capture-target');
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -107,15 +121,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- 設定保存・読み込み ---
   function saveSettings() {
     const disabledIds = Array.from(document.querySelectorAll('.seat.disabled')).map(el => el.dataset.number);
+    
+    // ラジオボタンの値を取得
+    let distMode = 'front';
+    for (const radio of distModeRadios) {
+      if (radio.checked) {
+        distMode = radio.value;
+        break;
+      }
+    }
+
     const settings = {
       layout: layoutSelect.value,
       rows: rowsInput.value,
       cols: colsInput.value,
-      names: namesInput.value,
-      disabled: disabledIds
+      names: namesInput.value, // ここで現在の入力値を保存
+      disabled: disabledIds,
+      distMode: distMode // 配席モード保存
     };
+    
     localStorage.setItem('seatToolSettings', JSON.stringify(settings));
   }
 
@@ -124,15 +151,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!json) return false;
     try {
       const settings = JSON.parse(json);
+      
+      // 各値を復元
       if(settings.layout) layoutSelect.value = settings.layout;
       if(settings.rows) rowsInput.value = settings.rows;
       if(settings.cols) colsInput.value = settings.cols;
-      if(settings.names) namesInput.value = settings.names;
+      
+      // 名前リストは確実に復元する
+      if(settings.names !== undefined) namesInput.value = settings.names;
+
+      // 配席モード復元
+      if(settings.distMode) {
+        for (const radio of distModeRadios) {
+          if (radio.value === settings.distMode) {
+            radio.checked = true;
+          }
+        }
+      }
 
       toggleNormalSettings();
-      renderLayout();
+      renderLayout(); // レイアウト再描画
       updateCount();
 
+      // 無効化席の復元
       if (settings.disabled && Array.isArray(settings.disabled)) {
         settings.disabled.forEach(num => {
           const seat = seatMap.querySelector(`.seat[data-number="${num}"]`);
@@ -158,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- レイアウト描画 ---
   function renderLayout() {
     seatMap.innerHTML = '';
     const mode = layoutSelect.value;
@@ -166,16 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'normal':
         renderNormal();
         break;
-      case 'science1': 
+      case 'science1': // 実験室1,3 (5×2)
         renderTablePattern(5, 2, '2x2');
         break;
-      case 'science2': 
+      case 'science2': // 実験室6 (2×5)
         renderTablePattern(2, 5, '1x4');
         break;
-      case 'combined': 
+      case 'combined': // 実験室2,4 (3×2)
         renderTablePattern(3, 2, 'vertical-combined');
         break;
-      case 'dice5': 
+      case 'dice5': // 実験室5
         renderDice5();
         break;
     }
@@ -289,25 +331,61 @@ document.addEventListener('DOMContentLoaded', () => {
     return namesInput.value.split('\n').map(n => n.trim()).filter(n => n !== '');
   }
 
+  // --- 座席取得ロジック (配席モード対応) ---
+  function getOrderedSeats() {
+    let distMode = 'front';
+    for (const radio of distModeRadios) {
+      if (radio.checked) distMode = radio.value;
+    }
+
+    if (layoutSelect.value === 'normal' || distMode === 'front') {
+      return Array.from(document.querySelectorAll('.seat:not(.disabled)'));
+    }
+
+    // 均等配置
+    let deskUnits = [];
+    const combinedContainers = document.querySelectorAll('.combined-container');
+    if (combinedContainers.length > 0) {
+      deskUnits = Array.from(combinedContainers);
+    } else {
+      deskUnits = Array.from(document.querySelectorAll('.table-group'));
+    }
+
+    const seatsPerDesk = deskUnits.map(desk => {
+      return Array.from(desk.querySelectorAll('.seat:not(.disabled)'));
+    });
+
+    const orderedSeats = [];
+    const maxSeatsInDesk = Math.max(...seatsPerDesk.map(arr => arr.length));
+
+    for (let i = 0; i < maxSeatsInDesk; i++) {
+      for (let d = 0; d < seatsPerDesk.length; d++) {
+        if (seatsPerDesk[d][i]) {
+          orderedSeats.push(seatsPerDesk[d][i]);
+        }
+      }
+    }
+
+    return orderedSeats;
+  }
+
   async function startShuffle() {
     let names = getNames();
-    const validSeats = Array.from(document.querySelectorAll('.seat:not(.disabled)'));
-    
-    // ▼ エラーチェックの追加 ▼
+    const targetSeats = getOrderedSeats();
+    const totalValidSeats = document.querySelectorAll('.seat:not(.disabled)').length;
+
     if (names.length === 0) {
       alert('参加者がいません。');
       return;
     }
-    if (validSeats.length === 0) {
+    if (totalValidSeats === 0) {
       alert('有効な座席がありません。');
       return;
     }
-    // 人数が席数より多い場合、アラートを出して中断
-    if (names.length > validSeats.length) {
-      alert(`人数(${names.length}名)が座席数(${validSeats.length}席)を超えています。\n席替えできません。\n\n・座席の「無効化」を解除する\n・参加者を減らす\n・レイアウトを変更する\nいずれかの対応を行ってください。`);
+    if (names.length > totalValidSeats) {
+      alert(`人数(${names.length}名)が座席数(${totalValidSeats}席)を超えています。\n席替えできません。`);
       return;
     }
-    // ▲ エラーチェック終了 ▲
 
     isShuffling = true;
     shuffleBtn.disabled = true;
@@ -319,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
       [names[i], names[j]] = [names[j], names[i]];
     }
 
-    validSeats.forEach(seat => {
+    targetSeats.forEach(seat => {
       seat.classList.add('shuffling');
       seat.classList.remove('active', 'empty');
     });
@@ -331,14 +409,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       
-      validSeats.forEach(seat => {
+      targetSeats.forEach(seat => {
         const rnd = names[Math.floor(Math.random() * names.length)];
         seat.textContent = rnd;
       });
 
       if (elapsed > duration) {
         clearInterval(timer);
-        finalize(names, validSeats);
+        finalize(names, targetSeats);
         isShuffling = false;
         shuffleBtn.disabled = false;
         shuffleBtn.innerHTML = originalText;
@@ -348,9 +426,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function finalize(finalNames, seats) {
+    const allValidSeats = document.querySelectorAll('.seat:not(.disabled)');
+    allValidSeats.forEach(s => {
+      s.classList.remove('shuffling', 'active');
+      s.classList.add('empty');
+      s.textContent = '空席';
+    });
+
     seats.forEach((seat, index) => {
-      seat.classList.remove('shuffling');
       if (index < finalNames.length) {
+        seat.classList.remove('empty');
         seat.textContent = finalNames[index];
         seat.classList.add('active');
         seat.style.opacity = '0';
@@ -359,9 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
           seat.style.opacity = '1';
           seat.style.transform = 'scale(1)';
         }, index * 20);
-      } else {
-        seat.textContent = '空席';
-        seat.classList.add('empty');
       }
     });
   }
