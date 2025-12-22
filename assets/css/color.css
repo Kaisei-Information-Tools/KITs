@@ -1,12 +1,10 @@
 /* 画像カラーピッカー専用スタイル */
 
-/* --- メインコンテナの幅調整 --- */
 body > main {
   max-width: 1200px !important;
   width: 95% !important;
 }
 
-/* --- コンテンツボックス --- */
 .picker-box {
   background: var(--glass-bg-alt);
   padding: 2rem;
@@ -17,7 +15,6 @@ body > main {
   margin-bottom: 2rem;
 }
 
-/* --- レイアウト（PCは横並び、スマホは縦並び） --- */
 .picker-layout {
   display: flex;
   flex-wrap: wrap;
@@ -39,11 +36,10 @@ body > main {
   border-radius: 1rem;
   padding: 1.5rem;
   height: fit-content;
-  display: none; /* 画像読み込みまで非表示 */
+  display: none;
   transition: opacity 0.3s ease;
 }
 
-/* --- ファイルアップロードボタン --- */
 input[type="file"]#image-loader {
   display: none;
 }
@@ -56,10 +52,15 @@ input[type="file"]#image-loader {
   max-width: 300px;
   align-self: center;
   cursor: pointer;
-  /* base.cssの.submitスタイルを継承しつつ調整 */
+  color: #333 !important;
+  font-weight: bold;
 }
 
-/* --- プレビューエリア --- */
+.file-upload-label:hover {
+  color: #000 !important;
+  transform: translateY(-2px);
+}
+
 #preview-container {
   position: relative;
   border: 2px dashed var(--input-border);
@@ -71,6 +72,8 @@ input[type="file"]#image-loader {
   background-color: rgba(0, 0, 0, 0.03);
   overflow: hidden;
   margin-bottom: 0.5rem;
+  /* 画像外にカーソルが出た時に枠を隠すため */
+  cursor: crosshair;
 }
 
 [data-theme="dark"] #preview-container {
@@ -81,8 +84,9 @@ input[type="file"]#image-loader {
   max-width: 100%;
   max-height: 600px;
   display: none;
-  cursor: crosshair;
   border-radius: 4px;
+  /* 画像自体でのイベント発火を確実にする */
+  pointer-events: auto; 
 }
 
 #placeholder-text {
@@ -97,7 +101,6 @@ input[type="file"]#image-loader {
   margin-top: 0.5rem;
 }
 
-/* --- 情報エリア --- */
 .info-title {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
@@ -128,7 +131,7 @@ input[type="file"]#image-loader {
   border-radius: 50%;
   border: 4px solid #fff;
   box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-  background-color: #ffffff; /* 初期色 */
+  background-color: #ffffff;
 }
 
 .color-codes {
@@ -166,7 +169,7 @@ input[type="file"]#image-loader {
   box-shadow: 0 0 8px var(--glass-shadow);
 }
 
-/* --- ルーペとマーカー --- */
+/* --- ルーペの設定（位置はずらすのでtranslate調整なし） --- */
 #loupe {
   position: absolute;
   width: 150px;
@@ -178,10 +181,23 @@ input[type="file"]#image-loader {
   display: none;
   background-color: #fff;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  /* カーソルの中心ではなく、少しずらすのでtranslateは削除 */
+  /* transform: translate(-50%, -50%); */
   overflow: hidden;
 }
 
+/* --- ★追加: ホバー位置を示す赤い枠 --- */
+#hover-marker {
+  position: absolute;
+  border: 1px solid rgba(255, 0, 0, 0.8);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5); /* 視認性向上のための白い縁取り */
+  pointer-events: none;
+  display: none;
+  z-index: 400;
+  /* 画像の上に重なるように */
+}
+
+/* --- 固定時のマーカー --- */
 #focus-marker {
   position: absolute;
   width: 20px;
@@ -195,23 +211,19 @@ input[type="file"]#image-loader {
   z-index: 500;
 }
 
-/* --- レスポンシブ対応 --- */
 @media (max-width: 768px) {
   .picker-layout {
     flex-direction: column;
   }
-  
   .color-details-grid {
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 1rem;
   }
-  
   .color-codes {
     flex: 1;
   }
-  
   #color-preview {
     width: 80px;
     height: 80px;
