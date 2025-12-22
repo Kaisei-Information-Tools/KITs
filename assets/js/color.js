@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 状態管理 ---
     let isLocked = false; // 色情報を固定するかのフラグ
 
-    // --- Canvasのコンテキスト設定（色の精度を維持） ---
+    // --- Canvas設定 ---
     const contextOptions = { 
         willReadFrequently: true,
         colorSpace: 'srgb' 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 関数定義 ---
 
-    // 指定された座標の色情報をUIに反映させる関数
+    // 色情報の更新
     function updateColorInfo(x, y) {
         if (x < 0 || x >= sourceCanvas.width || y < 0 || y >= sourceCanvas.height) return;
 
@@ -38,22 +38,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
         const rgb = `rgb(${r}, ${g}, ${b})`;
 
+        // UI更新
         colorPreview.style.backgroundColor = hex;
         hexCodeEl.textContent = hex;
         rgbCodeEl.textContent = rgb;
     }
 
-    // ルーペを更新する関数
+    // ルーペの描画
     function updateLoupe(pageX, pageY, imageX, imageY) {
         const loupeSize = 150;
         const zoomFactor = 10;
         
+        // カーソル位置にルーペを追従させる
         loupe.style.left = `${pageX}px`;
         loupe.style.top = `${pageY}px`;
         
-        loupeCtx.imageSmoothingEnabled = false;
+        loupeCtx.imageSmoothingEnabled = false; // ドットをくっきり表示
         loupeCtx.clearRect(0, 0, loupeSize, loupeSize);
         
+        // 元画像の一部を拡大して描画
         loupeCtx.drawImage(
             sourceCanvas,
             imageX - (loupeSize / zoomFactor / 2),
@@ -63,13 +66,23 @@ document.addEventListener('DOMContentLoaded', () => {
             0, 0, loupeSize, loupeSize
         );
         
-        loupeCtx.strokeStyle = '#333';
-        loupeCtx.lineWidth = 2;
+        // 中心線の描画（十字）
+        loupeCtx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+        loupeCtx.lineWidth = 1;
         loupeCtx.beginPath();
         loupeCtx.moveTo(loupeSize / 2, 0);
         loupeCtx.lineTo(loupeSize / 2, loupeSize);
         loupeCtx.moveTo(0, loupeSize / 2);
         loupeCtx.lineTo(loupeSize, loupeSize / 2);
+        loupeCtx.stroke();
+        
+        // 中心線の縁取り（白）で見やすく
+        loupeCtx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+        loupeCtx.beginPath();
+        loupeCtx.moveTo(loupeSize / 2 + 1, 0);
+        loupeCtx.lineTo(loupeSize / 2 + 1, loupeSize);
+        loupeCtx.moveTo(0, loupeSize / 2 + 1);
+        loupeCtx.lineTo(loupeSize, loupeSize / 2 + 1);
         loupeCtx.stroke();
     }
 
@@ -84,8 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             preview.src = URL.createObjectURL(file);
             
+            // リセット処理
             isLocked = false;
             focusMarker.style.display = 'none';
+            hexCodeEl.textContent = '-';
+            rgbCodeEl.textContent = '-';
+            colorPreview.style.backgroundColor = '#ffffff';
         }
     });
 
@@ -93,8 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
     preview.addEventListener('load', () => {
         placeholderText.style.display = 'none';
         preview.style.display = 'block';
-        infoArea.style.display = 'block';
+        infoArea.style.display = 'block'; // 情報エリアを表示
 
+        // Canvasに画像を描画（色取得用）
         sourceCanvas.width = preview.naturalWidth;
         sourceCanvas.height = preview.naturalHeight;
         sourceCtx.drawImage(preview, 0, 0);
@@ -104,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     preview.addEventListener('mousemove', (e) => {
         if (!preview.src || isLocked) return;
 
+        // 画面上の座標を画像のピクセル座標に変換
         const rect = preview.getBoundingClientRect();
         const scaleX = preview.naturalWidth / rect.width;
         const scaleY = preview.naturalHeight / rect.height;
@@ -114,13 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLoupe(e.pageX, e.pageY, imageX, imageY);
     });
 
-    // 4. 画像クリック時
+    // 4. 画像クリック時（ロック/解除）
     preview.addEventListener('click', (e) => {
         if (!preview.src) return;
 
         isLocked = !isLocked;
 
-        // 色情報取得のための画像内座標を計算
         const rect = preview.getBoundingClientRect();
         const scaleX = preview.naturalWidth / rect.width;
         const scaleY = preview.naturalHeight / rect.height;
@@ -130,10 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateColorInfo(imageX, imageY);
 
         if (isLocked) {
-            // --- 固定する処理 ---
+            // ロック時：ルーペを消してマーカーを表示
             loupe.style.display = 'none';
 
-            // マーカーの位置を、画像の親コンテナ(#preview-container)基準で計算
             const containerRect = previewContainer.getBoundingClientRect();
             const markerX = e.clientX - containerRect.left;
             const markerY = e.clientY - containerRect.top;
@@ -143,21 +160,20 @@ document.addEventListener('DOMContentLoaded', () => {
             focusMarker.style.display = 'block';
 
         } else {
-            // --- 固定を解除する処理 ---
+            // 解除時：マーカーを消してルーペを表示
             focusMarker.style.display = 'none';
             loupe.style.display = 'block';
             updateLoupe(e.pageX, e.pageY, imageX, imageY);
         }
     });
 
-    // 5. マウスが画像領域に入った時
+    // 5. マウス操作によるルーペの表示制御
     preview.addEventListener('mouseenter', () => { 
         if (preview.src && !isLocked) {
             loupe.style.display = 'block'; 
         }
     });
 
-    // 6. マウスが画像領域から出た時
     preview.addEventListener('mouseleave', () => { 
         loupe.style.display = 'none'; 
     });
