@@ -1,165 +1,66 @@
-<!doctype html>
-<html lang="ja">
+---
+layout: default_new
+title: 画像カラーピッカー
+css: color
+js: color
+old_base_css: true
+---
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>
-    // テーマ初期化スクリプト
-    (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else if (savedTheme === 'light') {
-        document.documentElement.removeAttribute('data-theme');
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
-  </script>
+<div class="container">
+  <div class="title">画像カラーピッカー</div>
   
-  <!-- Bootstrap & Fonts -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-  <title>画像カラーピッカー - KITs</title>
-  
-  <!-- サイト共通のCSS -->
-  <!-- ※フォルダ構成が assets/css/ であることを前提としています -->
-  <link rel="stylesheet" href="assets/css/reset.css" />
-  <link rel="stylesheet" href="assets/css/base.css" />
-  <link rel="stylesheet" href="assets/css/default.css" />
-  
-  <!-- 今回作成した専用CSS -->
-  <link rel="stylesheet" href="assets/css/color.css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-</head>
-
-<body>
-  <!-- メニュー開閉用 -->
-  <input type="checkbox" id="menu">
-
-  <!-- ヘッダー -->
-  <header class="header">
-    <label for="menu" class="menu">
-      <span></span><span></span><span></span>
-    </label>
-    <div class="logo">
-      <!-- ロゴ画像がない場合はテキスト等が表示されます -->
-      <img src="assets/images/logo.svg" width="32" alt="Logo" onerror="this.style.display='none'">
-    </div>
-    <nav class="nav">
-      <a href="about.html">About</a>
-      <a href="index.html">Tools</a>
-      <a href="https://blog.kits-tools.net/">Blog</a>
-      <a href="news.html">News</a>
-      <a href="links.html">Link</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-      <i class="fa-solid fa-moon"></i>
-      <i class="fa-solid fa-sun"></i>
-    </button>
-  </header>
-
-  <!-- サイドバー -->
-  <aside id="sidebar" class="sidebar hidden">
-    <div class="sidebar__title">Tools</div>
-    <ul class="sidebar__menu">
-      <li><a href="apa">APAスタイル作成</a></li>
-      <li><a href="clock">時計</a></li>
-      <li><a href="timer">タイマー</a></li>
-      <li><a href="stopwatch">ストップウォッチ</a></li>
-      <li><a href="seat.html">席替えツール</a></li>
-      <!-- 必要なリンクを追加してください -->
-    </ul>
-  </aside>
-
-  <!-- メインコンテンツ -->
-  <main class="main">
-    <div class="page-content">
+  <div class="picker-box">
+    <div class="picker-layout">
       
-      <!-- ▼▼▼ 画像カラーピッカー ▼▼▼ -->
-      <div class="container">
-        <div class="title">画像カラーピッカー</div>
+      <!-- 画像エリア -->
+      <div class="image-area">
+        <label for="image-loader" class="file-upload-label submit sapphire">
+          <i class="fa-solid fa-image"></i> 画像を選択
+        </label>
+        <input type="file" id="image-loader" accept="image/*">
         
-        <div class="picker-box">
-          <div class="picker-layout">
-            
-            <!-- 画像エリア -->
-            <div class="image-area">
-              <label for="image-loader" class="file-upload-label submit sapphire">
-                <i class="fa-solid fa-image"></i> 画像を選択
-              </label>
-              <input type="file" id="image-loader" accept="image/*">
-              
-              <div id="preview-container">
-                <img id="preview" alt="Preview">
-                <span id="placeholder-text">
-                  <i class="fa-regular fa-image fa-3x mb-3" style="opacity:0.5;"></i><br>
-                  ここに画像が表示されます
-                </span>
-                <div id="focus-marker"></div>
-              </div>
-              <p class="usage-text">
-                <small><i class="fa-solid fa-circle-info"></i> 画像をクリックすると色を固定できます</small>
-              </p>
-            </div>
+        <div id="preview-container">
+          <img id="preview" alt="Preview">
+          <span id="placeholder-text">
+            <i class="fa-regular fa-image fa-3x mb-3" style="opacity:0.5;"></i><br>
+            ここに画像が表示されます
+          </span>
+          <div id="focus-marker"></div>
+        </div>
+        <p class="usage-text">
+          <small><i class="fa-solid fa-circle-info"></i> 画像をクリックすると色を固定できます</small>
+        </p>
+      </div>
 
-            <!-- 情報エリア -->
-            <div class="info-area" id="info-area">
-              <h2 class="info-title"><i class="fa-solid fa-palette"></i> Color Info</h2>
-              
-              <div class="color-details-grid">
-                <!-- 色プレビュー -->
-                <div class="color-preview-wrapper">
-                  <div id="color-preview"></div>
-                </div>
-                
-                <!-- コード表示 -->
-                <div class="color-codes">
-                  <div class="code-group">
-                    <label>HEX</label>
-                    <div class="code-display" id="hex-code">-</div>
-                  </div>
-                  <div class="code-group">
-                    <label>RGB</label>
-                    <div class="code-display" id="rgb-code">-</div>
-                  </div>
-                </div>
-              </div>
+      <!-- 情報エリア -->
+      <div class="info-area" id="info-area">
+        <h2 class="info-title"><i class="fa-solid fa-palette"></i> Color Info</h2>
+        
+        <div class="color-details-grid">
+          <!-- 色プレビュー -->
+          <div class="color-preview-wrapper">
+            <div id="color-preview"></div>
+          </div>
+          
+          <!-- コード表示 -->
+          <div class="color-codes">
+            <div class="code-group">
+              <label>HEX</label>
+              <div class="code-display" id="hex-code">-</div>
             </div>
-
+            <div class="code-group">
+              <label>RGB</label>
+              <div class="code-display" id="rgb-code">-</div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- ▲▲▲ 画像カラーピッカー ▲▲▲ -->
 
     </div>
-  </main>
-  
-  <button id="to-top" style="z-index: 9999;">↑</button>
+  </div>
+</div>
 
-  <!-- フッター -->
-  <footer>
-    <p>© 2024 - 2025 Kaisei Information Technology for support</p>
-  </footer>
-
-  <!-- ルーペ表示用 -->
-  <canvas id="loupe"></canvas>
-  <!-- 画像データ保持用 -->
-  <canvas id="source-canvas" style="display:none;"></canvas>
-
-  <!-- 外部JS -->
-  <script src="assets/js/base.js" defer></script>
-  
-  <!-- 今回作成した専用JS -->
-  <script src="assets/js/color.js" defer></script>
-</body>
-</html>
+<!-- ルーペ表示用 -->
+<canvas id="loupe"></canvas>
+<!-- 画像データ保持用（非表示） -->
+<canvas id="source-canvas" style="display:none;"></canvas>
