@@ -18,13 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
   function init() {
-    // 1. イベントリスナー登録
     generateDummyBtn.addEventListener('click', () => {
       generateDummyMembers();
       saveSettings();
     });
     
-    // レイアウト変更時: 設定は保存するが、namesInputが空になるのを防ぐ
     layoutSelect.addEventListener('change', () => {
       toggleNormalSettings();
       renderLayout();
@@ -42,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // 配席モード変更時
     distModeRadios.forEach(radio => {
       radio.addEventListener('change', () => {
         saveSettings();
@@ -74,13 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
           seat.textContent = seat.dataset.number;
         }
         updateCount();
-        saveSettings(); // 座席状態の保存
+        saveSettings();
       }
     });
 
-    // 2. 初期ロード
     if (!loadSettings()) {
-      // 保存データがない場合のデフォルト
       toggleNormalSettings();
       generateDummyMembers();
       renderLayout();
@@ -125,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function saveSettings() {
     const disabledIds = Array.from(document.querySelectorAll('.seat.disabled')).map(el => el.dataset.number);
     
-    // ラジオボタンの値を取得
     let distMode = 'front';
     for (const radio of distModeRadios) {
       if (radio.checked) {
@@ -138,9 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
       layout: layoutSelect.value,
       rows: rowsInput.value,
       cols: colsInput.value,
-      names: namesInput.value, // ここで現在の入力値を保存
+      names: namesInput.value,
       disabled: disabledIds,
-      distMode: distMode // 配席モード保存
+      distMode: distMode
     };
     
     localStorage.setItem('seatToolSettings', JSON.stringify(settings));
@@ -152,15 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const settings = JSON.parse(json);
       
-      // 各値を復元
       if(settings.layout) layoutSelect.value = settings.layout;
       if(settings.rows) rowsInput.value = settings.rows;
       if(settings.cols) colsInput.value = settings.cols;
-      
-      // 名前リストは確実に復元する
       if(settings.names !== undefined) namesInput.value = settings.names;
 
-      // 配席モード復元
       if(settings.distMode) {
         for (const radio of distModeRadios) {
           if (radio.value === settings.distMode) {
@@ -170,10 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       toggleNormalSettings();
-      renderLayout(); // レイアウト再描画
+      renderLayout();
       updateCount();
 
-      // 無効化席の復元
       if (settings.disabled && Array.isArray(settings.disabled)) {
         settings.disabled.forEach(num => {
           const seat = seatMap.querySelector(`.seat[data-number="${num}"]`);
@@ -208,16 +197,16 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'normal':
         renderNormal();
         break;
-      case 'science1': // 実験室1,3 (5×2)
+      case 'science1': 
         renderTablePattern(5, 2, '2x2');
         break;
-      case 'science2': // 実験室6 (2×5)
+      case 'science2': 
         renderTablePattern(2, 5, '1x4');
         break;
-      case 'combined': // 実験室2,4 (3×2)
+      case 'combined': 
         renderTablePattern(3, 2, 'vertical-combined');
         break;
-      case 'dice5': // 実験室5
+      case 'dice5': 
         renderDice5();
         break;
     }
@@ -331,30 +320,37 @@ document.addEventListener('DOMContentLoaded', () => {
     return namesInput.value.split('\n').map(n => n.trim()).filter(n => n !== '');
   }
 
-  // --- 座席取得ロジック (配席モード対応) ---
+  // --- 座席取得ロジック (均等配置の修正) ---
   function getOrderedSeats() {
     let distMode = 'front';
     for (const radio of distModeRadios) {
       if (radio.checked) distMode = radio.value;
     }
 
+    // 「前から詰める」または「通常教室」の場合は、順番通りに返す
     if (layoutSelect.value === 'normal' || distMode === 'front') {
       return Array.from(document.querySelectorAll('.seat:not(.disabled)'));
     }
 
-    // 均等配置
+    // --- 「均等に配置」モード ---
     let deskUnits = [];
-    const combinedContainers = document.querySelectorAll('.combined-container');
-    if (combinedContainers.length > 0) {
-      deskUnits = Array.from(combinedContainers);
+    
+    // ★修正: 連結机の場合、8人の塊(.combined-container)ではなく、4人の塊(.combined-half)を1単位とする
+    // これにより、上机と下机が別々のグループとして扱われ、均等に分散される
+    const combinedHalves = document.querySelectorAll('.combined-half');
+    if (combinedHalves.length > 0) {
+      deskUnits = Array.from(combinedHalves);
     } else {
+      // 通常の机グループ (science1など)
       deskUnits = Array.from(document.querySelectorAll('.table-group'));
     }
 
+    // 各ユニット内の有効座席を取得
     const seatsPerDesk = deskUnits.map(desk => {
       return Array.from(desk.querySelectorAll('.seat:not(.disabled)'));
     });
 
+    // ラウンドロビン方式で座席順序を作成
     const orderedSeats = [];
     const maxSeatsInDesk = Math.max(...seatsPerDesk.map(arr => arr.length));
 
