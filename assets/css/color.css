@@ -1,154 +1,209 @@
-/* -------------------------------------- */
-/* color.css (ウェブページ埋め込み対応版) */
-/* -------------------------------------- */
+/* 画像カラーピッカー専用スタイル */
 
-/* --- コンポーネントのルート要素 (.container) --- */
-.container {
-   display: block;
-   background-color: #ffffff;
-   padding: 2rem;
-   width: 100%;
-   max-width: 800px;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 2.5rem;
-   margin-bottom: 2.5rem;
-   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-   border-radius: 0.5rem;
+/* --- メインコンテナ --- */
+body > main {
+  max-width: 1200px !important; /* 画像を扱うため少し広めに */
+  width: 95% !important;
 }
 
-/* --- reset.css によって失われた基本スタイルを復元 --- */
-h1, h2, strong {
-    display: block;
-    font-weight: bold;
-}
-h1 {
-    font-size: 2em;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #1a237e;
-}
-h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #3949ab;
-    padding-bottom: 8px;
-    color: #3949ab;
+.picker-box {
+  background: var(--glass-bg-alt);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px var(--glass-shadow);
+  margin-bottom: 2rem;
 }
 
-/* --- カラーピッカー固有の内部レイアウト --- */
-.main-content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+/* --- レイアウト（PCは横並び、スマホは縦並び） --- */
+.picker-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
+
 .image-area {
-    flex: 2;
-    min-width: 300px;
+  flex: 2;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
 }
+
 .info-area {
-    flex: 1;
-    min-width: 250px;
-    display: none;
+  flex: 1;
+  min-width: 250px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  height: fit-content;
+  display: none; /* 画像読み込みまで非表示 */
 }
 
-/* --- 各パーツのスタイル --- */
+/* --- ファイルアップロードボタン --- */
+input[type="file"]#image-loader {
+  display: none;
+}
+
 .file-upload-label {
-    display: block;
-    background-color: #3949ab;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-bottom: 20px;
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 300px;
+  align-self: center;
 }
-.file-upload-label:hover {
-    background-color: #1a237e;
-}
-#image-loader {
-    display: none;
-}
+
+/* --- プレビューエリア --- */
 #preview-container {
-    position: relative;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    min-height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fafafa;
-    overflow: hidden;
+  position: relative;
+  border: 2px dashed var(--input-border);
+  border-radius: 12px;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
 }
+
+[data-theme="dark"] #preview-container {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 #preview {
-    max-width: 100%;
-    display: none;
-    cursor: crosshair;
+  max-width: 100%;
+  max-height: 600px;
+  display: none;
+  cursor: crosshair;
+  border-radius: 4px;
 }
 
-/* ★ここから変更★ --- 色情報表示エリアのスタイル調整 --- */
-#color-preview {
-    width: 100px;  /* 幅を固定 */
-    height: 100px; /* 高さを固定 */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    flex-shrink: 0; /* Flexコンテナ内で縮まないようにする */
-}
-.code-display {
-    background-color: #f5f5f5;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-family: 'Menlo', 'Monaco', monospace;
-}
-/* ★ここまで変更★ */
-
-.code-display strong {
-    margin-bottom: 5px;
-    font-size: 0.9em;
-    color: #555;
+#placeholder-text {
+  color: var(--text-secondary);
+  text-align: center;
+  font-weight: bold;
 }
 
-/* ★ここから追加★ --- 横並びレイアウトのための新しいスタイル --- */
+.usage-text {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* --- 情報エリア --- */
+.info-title {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--glass-border-strong);
+  padding-bottom: 0.5rem;
+}
+
 .color-details-grid {
-    display: flex;
-    align-items: center; /* 垂直方向中央揃え */
-    gap: 20px;           /* プレビューとコードの間の隙間 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
+
+.color-preview-wrapper {
+  padding: 10px;
+  background: var(--glass-bg-input);
+  border-radius: 50%; /* 丸くする */
+  box-shadow: 0 4px 10px var(--glass-shadow);
+}
+
+#color-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
 .color-codes {
-    flex: 1; /* 残りのスペースをすべて使う */
-    display: flex;
-    flex-direction: column; /* HEXとRGBを縦に並べる */
-    gap: 15px;              /* HEXとRGBの間の隙間 */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-/* ★ここまで追加★ */
 
+.code-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
 
-/* --- ルーペとマーカーのスタイル（変更なし） --- */
+.code-display {
+  background: var(--glass-bg-input);
+  border: 1px solid var(--glass-border-strong);
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-family: 'Menlo', 'Monaco', monospace;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-align: center;
+  user-select: all; /* 選択しやすく */
+  transition: all 0.2s;
+}
+
+.code-display:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--accent-blue);
+}
+
+/* --- ルーペとマーカー --- */
 #loupe {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 4px solid #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    pointer-events: none;
-    display: none;
-    background-color: #fff;
-    z-index: 1000;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  pointer-events: none;
+  display: none;
+  background-color: #fff;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
 }
+
 #focus-marker {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 0 8px rgba(0,0,0,0.7);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    display: none;
-    z-index: 500;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 4px rgba(0,0,0,0.8);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: none;
+  z-index: 500;
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 768px) {
+  .picker-layout {
+    flex-direction: column;
+  }
+  
+  .color-details-grid {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .color-codes {
+    flex: 1;
+  }
+  
+  #color-preview {
+    width: 80px;
+    height: 80px;
+  }
 }
