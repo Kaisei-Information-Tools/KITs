@@ -18,28 +18,36 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
   function init() {
+    // 1. イベントリスナー登録
     generateDummyBtn.addEventListener('click', () => {
       generateDummyMembers();
       saveSettings();
     });
     
+    // レイアウト変更時: 無効化状態を引き継ぐ
     layoutSelect.addEventListener('change', () => {
+      const currentDisabled = getDisabledIds(); // ★現在の無効席を記憶
       toggleNormalSettings();
       renderLayout();
+      restoreDisabledSeats(currentDisabled);    // ★再描画後に復元
       updateCount();
       saveSettings(); 
     });
 
+    // 行列変更時: 無効化状態を引き継ぐ
     [rowsInput, colsInput].forEach(el => {
       el.addEventListener('input', () => {
         if (layoutSelect.value === 'normal') {
+          const currentDisabled = getDisabledIds(); // ★記憶
           renderLayout();
+          restoreDisabledSeats(currentDisabled);    // ★復元
           updateCount();
           saveSettings();
         }
       });
     });
 
+    // 配席モード変更時
     distModeRadios.forEach(radio => {
       radio.addEventListener('change', () => {
         saveSettings();
@@ -71,15 +79,35 @@ document.addEventListener('DOMContentLoaded', () => {
           seat.textContent = seat.dataset.number;
         }
         updateCount();
-        saveSettings();
+        saveSettings(); // 座席状態の保存
       }
     });
 
+    // 2. 初期ロード
     if (!loadSettings()) {
+      // 保存データがない場合のデフォルト
       toggleNormalSettings();
       generateDummyMembers();
       renderLayout();
     }
+  }
+
+  // --- ヘルパー関数: 無効化状態の取得・復元 ---
+  function getDisabledIds() {
+    return Array.from(document.querySelectorAll('.seat.disabled')).map(el => el.dataset.number);
+  }
+
+  function restoreDisabledSeats(ids) {
+    if (!ids || ids.length === 0) return;
+    ids.forEach(id => {
+      // 新しいレイアウト内に同じ番号の席があれば無効化する
+      const seat = seatMap.querySelector(`.seat[data-number="${id}"]`);
+      if (seat) {
+        seat.classList.add('disabled');
+        seat.textContent = '';
+        seat.classList.remove('active', 'empty');
+      }
+    });
   }
 
   // 番号のみ生成
@@ -118,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 設定保存・読み込み ---
   function saveSettings() {
-    const disabledIds = Array.from(document.querySelectorAll('.seat.disabled')).map(el => el.dataset.number);
+    const disabledIds = getDisabledIds();
     
     let distMode = 'front';
     for (const radio of distModeRadios) {
@@ -161,18 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       toggleNormalSettings();
       renderLayout();
+      // ロード時も無効化状態を復元
+      restoreDisabledSeats(settings.disabled);
       updateCount();
 
-      if (settings.disabled && Array.isArray(settings.disabled)) {
-        settings.disabled.forEach(num => {
-          const seat = seatMap.querySelector(`.seat[data-number="${num}"]`);
-          if (seat) {
-            seat.classList.add('disabled');
-            seat.textContent = '';
-          }
-        });
-        updateCount();
-      }
       return true;
     } catch (e) {
       console.error(e);
@@ -327,30 +347,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if (radio.checked) distMode = radio.value;
     }
 
-    // 「前から詰める」または「通常教室」の場合は、順番通りに返す
     if (layoutSelect.value === 'normal' || distMode === 'front') {
       return Array.from(document.querySelectorAll('.seat:not(.disabled)'));
     }
 
-    // --- 「均等に配置」モード ---
+    // 均等配置
     let deskUnits = [];
-    
-    // ★修正: 連結机の場合、8人の塊(.combined-container)ではなく、4人の塊(.combined-half)を1単位とする
-    // これにより、上机と下机が別々のグループとして扱われ、均等に分散される
     const combinedHalves = document.querySelectorAll('.combined-half');
     if (combinedHalves.length > 0) {
       deskUnits = Array.from(combinedHalves);
     } else {
-      // 通常の机グループ (science1など)
       deskUnits = Array.from(document.querySelectorAll('.table-group'));
     }
 
-    // 各ユニット内の有効座席を取得
     const seatsPerDesk = deskUnits.map(desk => {
       return Array.from(desk.querySelectorAll('.seat:not(.disabled)'));
     });
 
-    // ラウンドロビン方式で座席順序を作成
     const orderedSeats = [];
     const maxSeatsInDesk = Math.max(...seatsPerDesk.map(arr => arr.length));
 
