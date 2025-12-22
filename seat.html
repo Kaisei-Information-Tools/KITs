@@ -33,8 +33,25 @@ old_base_css: true
         </div>
         <div class="col-6">
           <label for="cols" class="form-label">列数 (横)</label>
-          <input type="number" id="cols" class="text-input" value="7" min="1" max="20">
+          <input type="number" id="cols" class="text-input" value="6" min="1" max="20">
         </div>
+      </div>
+    </div>
+
+    <hr class="setting-divider">
+
+    <h3 class="setting-title"><i class="fa-solid fa-sliders"></i> 配席モード</h3>
+    <div class="mb-4">
+      <div class="btn-group w-100" role="group" aria-label="Distribution Mode">
+        <input type="radio" class="btn-check" name="dist-mode" id="dist-front" value="front" checked>
+        <label class="btn btn-outline-secondary" for="dist-front" style="border-color: var(--glass-border-strong); color: var(--text-primary);">
+          <i class="fa-solid fa-arrow-down-short-wide"></i> 前から詰める
+        </label>
+      
+        <input type="radio" class="btn-check" name="dist-mode" id="dist-balanced" value="balanced">
+        <label class="btn btn-outline-secondary" for="dist-balanced" style="border-color: var(--glass-border-strong); color: var(--text-primary);">
+          <i class="fa-solid fa-scale-balanced"></i> 机ごとに均等
+        </label>
       </div>
     </div>
 
@@ -45,7 +62,7 @@ old_base_css: true
     <div class="mb-3">
       <div class="d-flex align-items-center gap-2 mb-2">
         <label class="form-label m-0">人数を指定して自動入力:</label>
-        <input type="number" id="dummy-count" class="text-input" value="26" min="1" style="width: 80px; padding: 0.3rem;">
+        <input type="number" id="dummy-count" class="text-input" value="36" min="1" style="width: 80px; padding: 0.3rem;">
         <button id="generate-dummy-btn" class="button" style="width: auto; height: auto; padding: 0.4rem 1rem; font-size: 0.9rem;">
           生成
         </button>
@@ -55,18 +72,16 @@ old_base_css: true
       <textarea id="names" class="text-input" rows="5" placeholder="1&#13;&#10;2&#13;&#10;3..."></textarea>
       
       <div class="d-flex justify-content-between mt-2">
-      <label class="form-label m-0">※座席をクリックすると「使用不可」にできます</label>
+        <small class="text-muted">※座席をクリックすると「使用不可」にできます</small>
         <small id="count-display">人数: 0 / 席: 0</small>
       </div>
     </div>
 
     <div class="d-flex gap-2">
-      <!-- 席替え実行ボタン -->
       <button id="shuffle-btn" class="submit ruby w-100 py-3 fs-5" style="margin-top:0;">
         <i class="fa-solid fa-shuffle"></i> 席替え実行
       </button>
       
-      <!-- 画像保存ボタン -->
       <button id="download-btn" class="submit emerald w-50 py-3 fs-5" style="margin-top:0;">
         <i class="fa-solid fa-camera"></i> 保存
       </button>
@@ -76,8 +91,6 @@ old_base_css: true
   <!-- 結果表示エリア -->
   <div class="classroom-container" id="capture-target">
     <div class="pulpit">教卓 / SCREEN</div>
-    <div id="seat-map" class="seat-map">
-      <!-- JSで座席生成 -->
-    </div>
+    <div id="seat-map" class="seat-map"></div>
   </div>
 </div>
