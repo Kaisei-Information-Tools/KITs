@@ -14,11 +14,13 @@ class TimeShiftCamera {
     this.startButton = document.getElementById('start-button');
     this.stopButton = document.getElementById('stop-button');
     this.delaySelect = document.getElementById('delay-select');
+    this.applyDelayButton = document.getElementById('apply-delay-button');
+    this.qualitySelect = document.getElementById('quality-select');
+    this.applyQualityButton = document.getElementById('apply-quality-button');
     this.noCameraMessage = document.getElementById('no-camera-message');
     this.noCameraMessageLive = document.getElementById('no-camera-message-live');
     this.fullscreenButton = document.getElementById('fullscreen-button');
     this.container = document.getElementById('timeshift-container');
-    this.videoDisplays = document.getElementById('video-displays');
     this.previewSection = document.getElementById('preview-section');
 
     // State
@@ -39,7 +41,13 @@ class TimeShiftCamera {
   initEventListeners() {
     this.startButton.addEventListener('click', () => this.start());
     this.stopButton.addEventListener('click', () => this.stop());
-    this.delaySelect.addEventListener('change', (e) => this.updateDelayDuration(parseFloat(e.target.value)));
+    this.applyDelayButton.addEventListener('click', () => {
+      const newDelay = parseFloat(this.delaySelect.value);
+      this.updateDelayDuration(newDelay);
+    });
+    this.applyQualityButton.addEventListener('click', () => {
+      this.applyQuality();
+    });
     this.fullscreenButton.addEventListener('click', () => this.toggleFullscreen());
     
     // Handle fullscreen change events (e.g., ESC key)
@@ -201,20 +209,31 @@ class TimeShiftCamera {
     if (this.frameBuffer.length > this.maxFrames) {
       this.frameBuffer = this.frameBuffer.slice(-this.maxFrames);
     }
+    
+    console.log(`遅延時間を ${duration} 秒に更新しました`);
+  }
+
+  applyQuality() {
+    const quality = this.qualitySelect.value;
+    console.log(`画質を ${quality} に設定しました`);
+    // Note: Quality changes would require restarting the camera stream
+    // For now, this is a placeholder for future implementation
+    alert(`画質設定: ${quality}。変更を適用するにはカメラを再起動してください。`);
   }
 
   toggleFullscreen() {
+    const videoWrapper = document.querySelector('.video-main-wrapper');
     if (!document.fullscreenElement && !document.webkitFullscreenElement && 
         !document.mozFullScreenElement && !document.msFullscreenElement) {
       // Enter fullscreen
-      if (this.videoDisplays.requestFullscreen) {
-        this.videoDisplays.requestFullscreen();
-      } else if (this.videoDisplays.webkitRequestFullscreen) {
-        this.videoDisplays.webkitRequestFullscreen();
-      } else if (this.videoDisplays.mozRequestFullScreen) {
-        this.videoDisplays.mozRequestFullScreen();
-      } else if (this.videoDisplays.msRequestFullscreen) {
-        this.videoDisplays.msRequestFullscreen();
+      if (videoWrapper.requestFullscreen) {
+        videoWrapper.requestFullscreen();
+      } else if (videoWrapper.webkitRequestFullscreen) {
+        videoWrapper.webkitRequestFullscreen();
+      } else if (videoWrapper.mozRequestFullScreen) {
+        videoWrapper.mozRequestFullScreen();
+      } else if (videoWrapper.msRequestFullscreen) {
+        videoWrapper.msRequestFullscreen();
       }
     } else {
       // Exit fullscreen

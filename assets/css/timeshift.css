@@ -1,4 +1,4 @@
-/* Timeshift Camera - Clean Centered Layout */
+/* Timeshift Camera - Two Column Layout: Video Left, Controls Right */
 .page-content {
   max-width: 1200px !important;
   margin: 0 auto;
@@ -24,6 +24,7 @@ main {
   line-height: 1.6;
 }
 
+/* Two-column container: video left, controls right */
 .timeshift-container {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
@@ -33,38 +34,15 @@ main {
   border-radius: 16px;
   box-shadow: 0 4px 20px var(--glass-shadow);
   margin-bottom: 30px;
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 30px;
+  align-items: start;
 }
 
-.fullscreen-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 8px 16px;
-  font-size: 1em;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 1px solid var(--glass-inset);
-  background: var(--glass-bg-alt);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px var(--glass-shadow);
-  color: var(--text-primary);
-  z-index: 10;
-  transition: all 0.3s ease;
-}
-
-.fullscreen-button:hover {
-  background: var(--glass-bg-hover);
-  transform: translateY(-2px);
-}
-
-/* Main video wrapper - centered, single large video */
+/* Left column: Main video */
 .video-main-wrapper {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .video-main-container {
@@ -78,11 +56,9 @@ main {
   align-items: center;
   justify-content: center;
   min-height: 500px;
-  margin-bottom: 20px;
 }
 
-#video,
-#video-live {
+#video {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -96,40 +72,117 @@ main {
   display: block;
 }
 
-/* Controls row - centered buttons inside video container */
-.controls-row {
+/* Right column: Control panel */
+.control-panel {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 15px;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
 }
 
+.control-group {
+  background: var(--glass-bg-alt);
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px var(--glass-shadow);
+}
+
+.control-group label {
+  display: block;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-group h3 {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Selectors */
+.delay-select,
+.quality-select {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-input);
+  color: var(--text-primary);
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delay-select:hover,
+.quality-select:hover {
+  border-color: var(--accent-blue);
+}
+
+.delay-select:focus,
+.quality-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Apply button */
+.apply-btn {
+  padding: 10px 20px;
+  font-size: 0.9em;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid var(--glass-inset);
+  transition: all 0.3s ease;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px var(--glass-shadow);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.apply-btn:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px var(--glass-shadow);
+}
+
+/* Control buttons */
 .control-btn {
-  padding: 12px 32px;
+  width: 100%;
+  padding: 14px 20px;
   font-size: 1em;
   font-weight: 600;
   border-radius: 10px;
   cursor: pointer;
   border: 1px solid var(--glass-inset);
   transition: all 0.3s ease;
-  background: var(--glass-bg-alt);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 3px 15px var(--glass-shadow);
   color: var(--text-primary);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   white-space: nowrap;
-  min-width: 100px;
-}
-
-.control-btn i {
-  font-size: 1.1em;
 }
 
 .control-btn:hover:not(:disabled) {
@@ -143,12 +196,12 @@ main {
   cursor: not-allowed;
 }
 
-#start-button:not(:disabled) {
+.start-btn:not(:disabled) {
   background: rgba(92, 232, 120, 0.2);
   border-color: rgba(92, 232, 120, 0.4);
 }
 
-#start-button:hover:not(:disabled) {
+.start-btn:hover:not(:disabled) {
   background: rgba(92, 232, 120, 0.3);
 }
 
@@ -161,90 +214,44 @@ main {
   background: rgba(236, 72, 153, 0.3);
 }
 
-/* Delay selector dropdown */
-.delay-selector-wrapper {
+.fullscreen-btn {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.fullscreen-btn:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.control-group:has(#start-button) {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  background: var(--glass-bg-alt);
-  border: 1px solid var(--glass-border);
-  border-radius: 10px;
-  font-weight: 600;
-  color: var(--text-primary);
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
+  gap: 10px;
+  flex-direction: column;
 }
 
-.delay-selector-wrapper label {
-  font-size: 1em;
-  color: var(--text-primary);
-  white-space: nowrap;
-}
-
-.delay-select {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg-input);
-  color: var(--text-primary);
-  font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 100px;
-}
-
-.delay-select:hover {
-  border-color: var(--accent-blue);
-}
-
-.delay-select:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-/* Preview section - smaller preview of current camera */
-.timeshift-preview {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px var(--glass-shadow);
-  margin-bottom: 30px;
-}
-
-.timeshift-preview h2 {
-  font-size: 1.3em;
-  margin-bottom: 15px;
-  text-align: center;
-  color: var(--text-primary);
+/* Preview section in control panel */
+.preview-group {
+  padding: 15px;
 }
 
 .preview-container {
   position: relative;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  background: var(--glass-bg-alt);
-  border-radius: 12px;
+  background: var(--glass-bg);
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 20px var(--glass-shadow);
+  box-shadow: 0 2px 10px var(--glass-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 250px;
+  min-height: 180px;
 }
 
-.preview-container video {
+#video-live {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
 
 .no-camera {
@@ -252,14 +259,14 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 12px;
   color: var(--text-secondary);
-  font-size: 1.2em;
-  padding: 40px;
+  font-size: 1em;
+  padding: 30px;
 }
 
 .no-camera i {
-  font-size: 3em;
+  font-size: 2.5em;
   opacity: 0.5;
 }
 
@@ -293,69 +300,65 @@ main {
 /* Responsive design */
 @media (max-width: 1024px) {
   .timeshift-container {
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
     padding: 20px;
   }
 
   .video-main-container {
     min-height: 400px;
   }
+
+  .preview-container {
+    min-height: 150px;
+  }
 }
 
 @media (max-width: 768px) {
   .timeshift-container {
+    grid-template-columns: 1fr;
     padding: 15px;
   }
 
-  .controls-row {
-    gap: 10px;
-  }
-
-  .control-btn {
-    padding: 10px 18px;
-    font-size: 0.95em;
-  }
-
-  .delay-input-wrapper {
-    padding: 8px 14px;
-  }
-
-  .delay-input-wrapper input {
-    width: 70px;
+  .control-panel {
+    order: -1; /* Move controls above video on mobile */
   }
 
   .video-main-container {
-    min-height: 300px;
+    min-height: 350px;
   }
 
-  .preview-container {
-    min-height: 200px;
+  .control-group {
+    padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
-  .controls-row {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .control-btn,
-  .delay-input-wrapper {
-    width: 100%;
-    justify-content: center;
-  }
-
   .video-main-container {
-    min-height: 250px;
+    min-height: 280px;
+  }
+
+  .control-row {
+    flex-direction: column;
+  }
+
+  .apply-btn {
+    width: 100%;
+  }
+
+  .delay-select,
+  .quality-select {
+    width: 100%;
   }
 }
 
 /* Dark mode specific adjustments */
-[data-theme="dark"] .status-bar {
+[data-theme="dark"] .control-group {
   background: var(--glass-bg-alt);
-  color: var(--text-secondary);
 }
 
-[data-theme="dark"] .delay-input-wrapper input {
+[data-theme="dark"] .delay-select,
+[data-theme="dark"] .quality-select {
   background: var(--glass-bg-input);
   color: var(--text-primary);
 }
