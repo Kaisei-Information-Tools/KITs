@@ -9,46 +9,44 @@ old_base_css: true
 <h1>タイムシフトカメラ</h1>
 
 <div class="timeshift-container" id="timeshift-container">
-  <button id="fullscreen-button" class="button border fullscreen-button" title="フルスクリーン">
-    <i class="fa-solid fa-expand"></i>
-  </button>
-
-  <div class="video-displays" id="video-displays">
-    <div class="video-panel">
-      <div class="video-container">
-        <div class="video-label-overlay">現在の映像</div>
-        <video id="video-live" autoplay playsinline></video>
-        <div id="no-camera-message-live" class="no-camera" style="display: none;">
-          <i class="fa-solid fa-video-slash"></i>
-          <p>カメラが利用できません</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="video-panel">
-      <div class="video-container">
-        <div class="video-label-overlay"><span id="delay-label">5.0秒前</span>の映像</div>
-        <video id="video" autoplay playsinline style="display: none;"></video>
-        <canvas id="canvas"></canvas>
-        <div id="no-camera-message" class="no-camera" style="display: none;">
-          <i class="fa-solid fa-video-slash"></i>
-          <p>カメラが利用できません</p>
-        </div>
+  <div class="video-main-wrapper" id="video-displays">
+    <div class="video-main-container">
+      <video id="video" autoplay playsinline style="display: none;"></video>
+      <canvas id="canvas"></canvas>
+      <div id="no-camera-message" class="no-camera" style="display: none;">
+        <i class="fa-solid fa-video-slash"></i>
+        <p>カメラが利用できません</p>
       </div>
     </div>
   </div>
 
-  <div class="controls-compact">
-    <button id="start-button" class="button border control-button start-button">
+  <div class="controls-row">
+    <button id="start-button" class="button border control-btn">
       <i class="fa-solid fa-play"></i> 開始
     </button>
-    <button id="stop-button" class="button border control-button stop-button" disabled>
+    <button id="stop-button" class="button border control-btn" disabled>
       <i class="fa-solid fa-stop"></i> 停止
     </button>
-    <label class="delay-control">
-      遅延時間: <input type="number" id="delay-input" class="delay-input-compact" 
-             min="0.1" max="600" step="0.1" value="5.0" />秒
-    </label>
-    <span class="status-compact" id="status-text">カメラを開始してください</span>
+    <button id="fullscreen-button" class="button border control-btn" title="フルスクリーン">
+      <i class="fa-solid fa-expand"></i> 全画面
+    </button>
+    <div class="delay-input-wrapper">
+      <label for="delay-input">遅延:</label>
+      <input type="number" id="delay-input" min="0.1" max="600" step="0.1" value="5.0" />
+      <span>秒</span>
+    </div>
+  </div>
+
+  <div class="status-bar" id="status-text">カメラを開始してください</div>
+</div>
+
+<div class="timeshift-preview" id="preview-section" style="display: none;">
+  <h2>現在のプレビュー</h2>
+  <div class="preview-container">
+    <video id="video-live" autoplay playsinline></video>
+    <div id="no-camera-message-live" class="no-camera" style="display: none;">
+      <i class="fa-solid fa-video-slash"></i>
+      <p>カメラが利用できません</p>
+    </div>
   </div>
 </div>
