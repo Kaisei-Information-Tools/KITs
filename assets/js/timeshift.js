@@ -13,8 +13,7 @@ class TimeShiftCamera {
     this.ctx = this.canvas.getContext('2d');
     this.startButton = document.getElementById('start-button');
     this.stopButton = document.getElementById('stop-button');
-    this.delayInput = document.getElementById('delay-input');
-    this.statusText = document.getElementById('status-text');
+    this.delaySelect = document.getElementById('delay-select');
     this.noCameraMessage = document.getElementById('no-camera-message');
     this.noCameraMessageLive = document.getElementById('no-camera-message-live');
     this.fullscreenButton = document.getElementById('fullscreen-button');
@@ -26,7 +25,7 @@ class TimeShiftCamera {
     this.stream = null;
     this.running = false;
     this.frameBuffer = [];
-    this.delayDuration = 5.0; // seconds
+    this.delayDuration = 10.0; // seconds (default)
     this.maxFrames = Math.ceil(this.delayDuration * this.frameRate);
     this.animationFrameId = null;
     
@@ -40,7 +39,7 @@ class TimeShiftCamera {
   initEventListeners() {
     this.startButton.addEventListener('click', () => this.start());
     this.stopButton.addEventListener('click', () => this.stop());
-    this.delayInput.addEventListener('change', (e) => this.updateDelayDuration(parseFloat(e.target.value)));
+    this.delaySelect.addEventListener('change', (e) => this.updateDelayDuration(parseFloat(e.target.value)));
     this.fullscreenButton.addEventListener('click', () => this.toggleFullscreen());
     
     // Handle fullscreen change events (e.g., ESC key)
@@ -54,11 +53,11 @@ class TimeShiftCamera {
     if (!document.fullscreenElement && !document.webkitFullscreenElement && 
         !document.mozFullScreenElement && !document.msFullscreenElement) {
       // Exited fullscreen
-      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-expand"></i> 全画面';
+      this.fullscreenButton.innerHTML = '全画面';
       this.fullscreenButton.title = 'フルスクリーン';
     } else {
       // Entered fullscreen
-      this.fullscreenButton.innerHTML = '<i class="fa-solid fa-compress"></i> 全画面解除';
+      this.fullscreenButton.innerHTML = '全画面解除';
       this.fullscreenButton.title = 'フルスクリーン終了';
     }
   }
@@ -97,8 +96,7 @@ class TimeShiftCamera {
       this.frameBuffer = [];
       this.startButton.disabled = true;
       this.stopButton.disabled = false;
-      this.delayInput.disabled = true;
-      this.statusText.textContent = `${this.delayDuration.toFixed(1)}秒遅れの映像を表示中...`;
+      this.delaySelect.disabled = true;
 
       // Set up temporary canvas size
       this.tempCanvas.width = this.video.videoWidth;
@@ -131,9 +129,8 @@ class TimeShiftCamera {
     this.videoLive.srcObject = null;
     this.startButton.disabled = false;
     this.stopButton.disabled = true;
-    this.delayInput.disabled = false;
+    this.delaySelect.disabled = false;
     this.frameBuffer = [];
-    this.statusText.textContent = 'カメラを開始してください';
     this.previewSection.style.display = 'none';
     
     // Clear canvas
@@ -200,17 +197,9 @@ class TimeShiftCamera {
     this.delayDuration = duration;
     this.maxFrames = Math.ceil(this.delayDuration * this.frameRate);
 
-    // Update input
-    this.delayInput.value = duration.toFixed(1);
-
     // Trim buffer if it's too long
     if (this.frameBuffer.length > this.maxFrames) {
       this.frameBuffer = this.frameBuffer.slice(-this.maxFrames);
-    }
-
-    // Update status text if running
-    if (this.running) {
-      this.statusText.textContent = `${this.delayDuration.toFixed(1)}秒遅れの映像を表示中...`;
     }
   }
 

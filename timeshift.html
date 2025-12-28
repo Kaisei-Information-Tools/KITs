@@ -8,6 +8,10 @@ old_base_css: true
 
 <h1>タイムシフトカメラ</h1>
 
+<div class="description-box">
+  <p>カメラの映像を指定した秒数だけ遅らせて表示します。「開始」を押すと現在の映像と遅れ鏡の両方が表示されます。</p>
+</div>
+
 <div class="timeshift-container" id="timeshift-container">
   <div class="video-main-wrapper" id="video-displays">
     <div class="video-main-container">
@@ -18,30 +22,37 @@ old_base_css: true
         <p>カメラが利用できません</p>
       </div>
     </div>
-  </div>
 
-  <div class="controls-row">
-    <button id="start-button" class="button border control-btn">
-      <i class="fa-solid fa-play"></i> 開始
-    </button>
-    <button id="stop-button" class="button border control-btn" disabled>
-      <i class="fa-solid fa-stop"></i> 停止
-    </button>
-    <button id="fullscreen-button" class="button border control-btn" title="フルスクリーン">
-      <i class="fa-solid fa-expand"></i> 全画面
-    </button>
-    <div class="delay-input-wrapper">
-      <label for="delay-input">遅延:</label>
-      <input type="number" id="delay-input" min="0.1" max="600" step="0.1" value="5.0" />
-      <span>秒</span>
+    <div class="controls-row">
+      <button id="start-button" class="button border control-btn">
+        開始
+      </button>
+      <button id="stop-button" class="button border control-btn" disabled>
+        停止
+      </button>
+      <button id="fullscreen-button" class="button border control-btn" title="フルスクリーン">
+        全画面
+      </button>
+    </div>
+
+    <div class="delay-selector-wrapper">
+      <label for="delay-select">遅延秒数:</label>
+      <select id="delay-select" class="delay-select">
+        <option value="1">1秒</option>
+        <option value="2">2秒</option>
+        <option value="3">3秒</option>
+        <option value="5">5秒</option>
+        <option value="10" selected>10秒</option>
+        <option value="15">15秒</option>
+        <option value="30">30秒</option>
+        <option value="60">60秒</option>
+      </select>
     </div>
   </div>
-
-  <div class="status-bar" id="status-text">カメラを開始してください</div>
 </div>
 
 <div class="timeshift-preview" id="preview-section" style="display: none;">
-  <h2>現在のプレビュー</h2>
+  <h2>現在の映像</h2>
   <div class="preview-container">
     <video id="video-live" autoplay playsinline></video>
     <div id="no-camera-message-live" class="no-camera" style="display: none;">

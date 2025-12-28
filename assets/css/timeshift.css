@@ -8,6 +8,22 @@ main {
   max-width: 1200px !important;
 }
 
+/* Description box */
+.description-box {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--glass-shadow);
+  margin-bottom: 25px;
+  text-align: center;
+  color: var(--text-primary);
+  font-size: 1em;
+  line-height: 1.6;
+}
+
 .timeshift-container {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
@@ -47,14 +63,13 @@ main {
 .video-main-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin-bottom: 25px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .video-main-container {
   position: relative;
   width: 100%;
-  max-width: 900px;
   background: var(--glass-bg-alt);
   border-radius: 16px;
   overflow: hidden;
@@ -63,6 +78,7 @@ main {
   align-items: center;
   justify-content: center;
   min-height: 500px;
+  margin-bottom: 20px;
 }
 
 #video,
@@ -80,18 +96,19 @@ main {
   display: block;
 }
 
-/* Controls row - centered buttons */
+/* Controls row - centered buttons inside video container */
 .controls-row {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .control-btn {
-  padding: 12px 24px;
+  padding: 12px 32px;
   font-size: 1em;
   font-weight: 600;
   border-radius: 10px;
@@ -105,8 +122,10 @@ main {
   color: var(--text-primary);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   white-space: nowrap;
+  min-width: 100px;
 }
 
 .control-btn i {
@@ -142,61 +161,50 @@ main {
   background: rgba(236, 72, 153, 0.3);
 }
 
-.delay-input-wrapper {
-  display: inline-flex;
+/* Delay selector dropdown */
+.delay-selector-wrapper {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: var(--glass-bg-alt);
-  border: 1px solid var(--glass-border);
-  border-radius: 10px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.delay-input-wrapper label {
-  font-size: 0.95em;
-  color: var(--text-primary);
-}
-
-.delay-input-wrapper input {
-  width: 80px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg-input);
-  color: var(--text-primary);
-  font-size: 1em;
-  text-align: center;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.delay-input-wrapper input:hover {
-  border-color: var(--accent-blue);
-}
-
-.delay-input-wrapper input:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.delay-input-wrapper span {
-  font-size: 0.95em;
-  color: var(--text-secondary);
-}
-
-/* Status bar - centered */
-.status-bar {
-  text-align: center;
+  gap: 12px;
   padding: 12px 20px;
   background: var(--glass-bg-alt);
   border: 1px solid var(--glass-border);
   border-radius: 10px;
-  font-size: 0.95em;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--text-primary);
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.delay-selector-wrapper label {
+  font-size: 1em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.delay-select {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-input);
+  color: var(--text-primary);
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.delay-select:hover {
+  border-color: var(--accent-blue);
+}
+
+.delay-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 /* Preview section - smaller preview of current camera */
