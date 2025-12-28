@@ -13,7 +13,7 @@ class TimeShiftCamera {
     this.ctx = this.canvas.getContext('2d');
     this.startButton = document.getElementById('start-button');
     this.stopButton = document.getElementById('stop-button');
-    this.delaySelect = document.getElementById('delay-select');
+    this.delayInput = document.getElementById('delay-input');
     this.applyDelayButton = document.getElementById('apply-delay-button');
     this.qualitySelect = document.getElementById('quality-select');
     this.applyQualityButton = document.getElementById('apply-quality-button');
@@ -42,8 +42,13 @@ class TimeShiftCamera {
     this.startButton.addEventListener('click', () => this.start());
     this.stopButton.addEventListener('click', () => this.stop());
     this.applyDelayButton.addEventListener('click', () => {
-      const newDelay = parseFloat(this.delaySelect.value);
-      this.updateDelayDuration(newDelay);
+      const newDelay = parseFloat(this.delayInput.value);
+      if (!isNaN(newDelay) && newDelay >= this.MIN_DELAY_DURATION && newDelay <= this.MAX_DELAY_DURATION) {
+        this.updateDelayDuration(newDelay);
+      } else {
+        alert(`遅延時間は${this.MIN_DELAY_DURATION}〜${this.MAX_DELAY_DURATION}秒の範囲で入力してください。`);
+        this.delayInput.value = this.delayDuration;
+      }
     });
     this.applyQualityButton.addEventListener('click', () => {
       this.applyQuality();

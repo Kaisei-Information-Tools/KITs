@@ -27,26 +27,17 @@ old_base_css: true
 
   <!-- Right: Control Panel -->
   <div class="control-panel">
-    <!-- Delay Time Selector -->
-    <div class="control-group">
-      <label for="delay-select">遅延秒数</label>
+    <!-- Delay Time Input -->
+    <div class="control-item">
+      <label for="delay-input">遅延秒数</label>
       <div class="control-row">
-        <select id="delay-select" class="delay-select">
-          <option value="1">1秒</option>
-          <option value="2">2秒</option>
-          <option value="3">3秒</option>
-          <option value="5">5秒</option>
-          <option value="10" selected>10秒</option>
-          <option value="15">15秒</option>
-          <option value="30">30秒</option>
-          <option value="60">60秒</option>
-        </select>
+        <input type="number" id="delay-input" class="delay-input" min="0.1" max="600" step="0.1" value="10">
         <button id="apply-delay-button" class="button border apply-btn">決定</button>
       </div>
     </div>
 
     <!-- Quality Selector -->
-    <div class="control-group">
+    <div class="control-item">
       <label for="quality-select">画質</label>
       <div class="control-row">
         <select id="quality-select" class="quality-select">
@@ -59,7 +50,7 @@ old_base_css: true
     </div>
 
     <!-- Action Buttons -->
-    <div class="control-group">
+    <div class="control-item">
       <button id="start-button" class="button border control-btn start-btn">
         開始
       </button>
@@ -69,15 +60,15 @@ old_base_css: true
     </div>
 
     <!-- Fullscreen Button -->
-    <div class="control-group">
+    <div class="control-item">
       <button id="fullscreen-button" class="button border control-btn fullscreen-btn">
         全画面表示
       </button>
     </div>
 
     <!-- Preview Section -->
-    <div class="control-group preview-group" id="preview-section" style="display: none;">
-      <h3>現在の映像</h3>
+    <div class="control-item preview-item" id="preview-section" style="display: none;">
+      <label>現在の映像</label>
       <div class="preview-container">
         <video id="video-live" autoplay playsinline></video>
         <div id="no-camera-message-live" class="no-camera" style="display: none;">
