@@ -109,7 +109,8 @@ class TimeShiftCamera {
       this.frameBuffer = [];
       this.startButton.disabled = true;
       this.stopButton.disabled = false;
-      this.delaySelect.disabled = true;
+      this.delayInput.disabled = true;
+      this.applyDelayButton.disabled = true;
 
       // Set up temporary canvas size
       this.tempCanvas.width = this.video.videoWidth;
@@ -142,7 +143,8 @@ class TimeShiftCamera {
     this.videoLive.srcObject = null;
     this.startButton.disabled = false;
     this.stopButton.disabled = true;
-    this.delaySelect.disabled = false;
+    this.delayInput.disabled = false;
+    this.applyDelayButton.disabled = false;
     this.frameBuffer = [];
     this.previewSection.style.display = 'none';
     
