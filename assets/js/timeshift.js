@@ -15,8 +15,6 @@ class TimeShiftCamera {
     this.stopButton = document.getElementById("stop-button");
     this.delayInput = document.getElementById("delay-input");
     this.applyDelayButton = document.getElementById("apply-delay-button");
-    this.qualitySelect = document.getElementById("quality-select");
-    this.applyQualityButton = document.getElementById("apply-quality-button");
     this.noCameraMessage = document.getElementById("no-camera-message");
     this.noCameraMessageLive = document.getElementById(
       "no-camera-message-live",
@@ -58,9 +56,6 @@ class TimeShiftCamera {
         );
         this.delayInput.value = this.delayDuration;
       }
-    });
-    this.applyQualityButton.addEventListener("click", () => {
-      this.applyQuality();
     });
     this.fullscreenButton.addEventListener(
       "click",
@@ -271,16 +266,6 @@ class TimeShiftCamera {
     }
 
     console.log(`遅延時間を ${duration} 秒に更新しました`);
-  }
-
-  applyQuality() {
-    const quality = this.qualitySelect.value;
-    console.log(`画質を ${quality} に設定しました`);
-    // Note: Quality changes would require restarting the camera stream
-    // For now, this is a placeholder for future implementation
-    alert(
-      `画質設定: ${quality}。変更を適用するにはカメラを再起動してください。`,
-    );
   }
 
   toggleFullscreen() {
