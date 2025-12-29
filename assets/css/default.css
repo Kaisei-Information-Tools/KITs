@@ -327,16 +327,9 @@ footer {
     height: 60px;
   }
   .nav {
-    gap: 3px 0px;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: none;
   }
-  .nav a {
-    font-size: 1.2rem;
-    margin: 0 4px;
-    padding: 6px 3px;
-    white-space: nowrap !important;
-  }
+
   .menu-toggle {
     font-size: 1.2rem;
     padding: 6px 8px;
