@@ -335,6 +335,14 @@ footer {
     display: none;
   }
 
+  .footer-menu {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
   .nav-footer {
     width: 50%;
     display: flex;
@@ -359,6 +367,38 @@ footer {
     display: inline-flex;
     justify-content: left;
     transition: all 0.3s ease;
+  }
+
+  .tools-footer {
+    width: 50%;
+    display: flex;
+    padding: 0.3rem;
+    margin: 1rem 0;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tools-footer a {
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+    background: var(--glass-bg-alt);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: left;
+    transition: all 0.3s ease;
+  }
+
+  .tools-footer li a:hover {
+    background: var(--glass-bg-hover);
+    box-shadow: 0 4px 12px var(--glass-shadow);
+    transform: translateY(-1px);
   }
 
   .menu-toggle {
