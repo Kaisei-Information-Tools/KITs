@@ -166,6 +166,18 @@ js: index
     </div>
 
     <div class="square">
+      <a href="https://memo.kits-tools.net/" class="black">
+        <figure>
+          <img src="assets/images/memo.png" alt="" width="100%" />
+        </figure>
+        <div class="text-parts">
+          <h4>メモ帳</h4>
+          <p>マークダウン対応のメモ帳です。</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="square">
       <a href="count.html" class="black">
         <figure>
           <img src="assets/images/count.svg" alt="" width="100%" />
@@ -217,8 +229,7 @@ js: index
       <button id="news-notification-close" class="news-notification-close">&times;</button>
     </div>
     <div class="news-notification-content">
-      <span id="news-notification-tag" class="news-notification-tag tag-{{ latest_news.tag }}">{{ latest_news.tag_label
-        }}</span>
+      <span id="news-notification-tag" class="news-notification-tag tag-{{ latest_news.tag }}">{{ latest_news.tag_label }}</span>
       <div id="news-notification-title" class="news-notification-title">{{ latest_news.title }}</div>
       <div id="news-notification-date" class="news-notification-date">{{ latest_news.date }}</div>
     </div>
@@ -228,14 +239,14 @@ js: index
 
   <script>
     // News notification logic
-    (function () {
+    (function() {
       const STORAGE_KEY = 'kits_seen_news';
-
+      
       function getLatestNewsId() {
         const notification = document.getElementById('news-notification');
         return notification ? notification.dataset.newsId : null;
       }
-
+      
       function getSeenNews() {
         try {
           const seen = localStorage.getItem(STORAGE_KEY);
@@ -244,7 +255,7 @@ js: index
           return [];
         }
       }
-
+      
       function markNewsSeen(newsId) {
         try {
           const seen = getSeenNews();
@@ -256,14 +267,14 @@ js: index
           // localStorage not available
         }
       }
-
+      
       function showNewsNotification() {
         const notification = document.getElementById('news-notification');
         if (notification) {
           notification.classList.remove('hidden');
         }
       }
-
+      
       function hideNewsNotification() {
         const notification = document.getElementById('news-notification');
         if (notification) {
@@ -274,26 +285,26 @@ js: index
           markNewsSeen(newsId);
         }
       }
-
+      
       // Initialize everything on DOMContentLoaded to avoid race conditions
-      document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', function() {
         const latestNewsId = getLatestNewsId();
         if (!latestNewsId) return;
-
+        
         // Set up close button handler
         const closeBtn = document.getElementById('news-notification-close');
         if (closeBtn) {
           closeBtn.addEventListener('click', hideNewsNotification);
         }
-
+        
         // Also mark as seen when clicking the link
         const newsLink = document.querySelector('.news-notification-link');
         if (newsLink) {
-          newsLink.addEventListener('click', function () {
+          newsLink.addEventListener('click', function() {
             markNewsSeen(latestNewsId);
           });
         }
-
+        
         // Check if user has seen the latest news and show notification
         const seenNews = getSeenNews();
         if (!seenNews.includes(latestNewsId)) {
