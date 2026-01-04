@@ -593,60 +593,38 @@ footer {
   box-shadow: 0 4px 20px var(--accent-glow);
 }
 
-/* --- レスポンシブ対応 (default.css の末尾に追加・修正) --- */
-
-/* タブレット・スマホ共通 (1024px以下) */
-@media (max-width: 1024px) {
-  .sidebar {
-    top: 60px; /* ヘッダーの高さに合わせる */
-    height: calc(100vh - 60px);
-    z-index: 1000; /* コンテンツより前面に */
-    box-shadow: 4px 0 15px rgba(0,0,0,0.2);
-  }
-  
-  /* サイドバーが表示されている時は背景を暗くするなどの処理が必要ですが、
-     簡易的にコンテンツにかぶせる形にします */
-  .sidebar.visible {
-    left: 0;
-  }
-}
-
-/* スマホ向け (768px以下) */
-@media (max-width: 768px) {
+/* --- 450px以下のスマホ対応 --- */
+@media (max-width: 450px) {
   .header {
-    padding: 5px 10px;
-    height: 60px;
+    padding: 5px;
+    height: 56px; /* 少し高さを詰める */
+    gap: 5px;
   }
 
   .logo img {
-    width: 28px;
+    width: 24px; /* ロゴ縮小 */
   }
 
+  /* ナビゲーションリンクをさらに小さく */
   .nav a {
-    font-size: 0.9rem;
-    padding: 4px 8px;
+    font-size: 0.75rem !important;
+    padding: 4px 6px;
+    margin: 0 2px;
+    border-radius: 6px;
   }
 
-  /* メインコンテンツの余白調整 */
+  .theme-toggle {
+    min-width: 32px;
+    padding: 4px;
+    font-size: 1rem;
+  }
+
   .main {
-    padding-top: 70px; /* ヘッダー分空ける */
+    padding-top: 65px; /* ヘッダーとの隙間調整 */
   }
 
+  /* ページ全体の余白を最小限に */
   .page-content {
-    padding: 10px; /* スマホでは余白を狭く */
-  }
-
-  /* フッターがコンテンツにかぶらないようにする */
-  footer {
-    position: static !important; /* 固定を解除 */
-    margin-top: 2rem;
-  }
-  
-  /* トップへ戻るボタンの位置調整 */
-  #to-top {
-    bottom: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
+    padding: 5px;
   }
 }
