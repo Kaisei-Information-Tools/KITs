@@ -370,6 +370,42 @@ footer {
   }
 }
 
+/* --- 450px以下のスマホ対応 --- */
+@media (max-width: 450px) {
+  .header {
+    padding: 5px;
+    height: 56px; /* 少し高さを詰める */
+    gap: 5px;
+  }
+
+  .logo img {
+    width: 24px; /* ロゴ縮小 */
+  }
+
+  /* ナビゲーションリンクをさらに小さく */
+  .nav a {
+    font-size: 0.75rem !important;
+    padding: 4px 6px;
+    margin: 0 2px;
+    border-radius: 6px;
+  }
+
+  .theme-toggle {
+    min-width: 32px;
+    padding: 4px;
+    font-size: 1rem;
+  }
+
+  .main {
+    padding-top: 65px; /* ヘッダーとの隙間調整 */
+  }
+
+  /* ページ全体の余白を最小限に */
+  .page-content {
+    padding: 5px;
+  }
+}
+
 @media (max-width: 600px) {
   .nav a {
     font-size: 0.9rem !important;
@@ -593,38 +629,4 @@ footer {
   box-shadow: 0 4px 20px var(--accent-glow);
 }
 
-/* --- 450px以下のスマホ対応 --- */
-@media (max-width: 450px) {
-  .header {
-    padding: 5px;
-    height: 56px; /* 少し高さを詰める */
-    gap: 5px;
-  }
 
-  .logo img {
-    width: 24px; /* ロゴ縮小 */
-  }
-
-  /* ナビゲーションリンクをさらに小さく */
-  .nav a {
-    font-size: 0.75rem !important;
-    padding: 4px 6px;
-    margin: 0 2px;
-    border-radius: 6px;
-  }
-
-  .theme-toggle {
-    min-width: 32px;
-    padding: 4px;
-    font-size: 1rem;
-  }
-
-  .main {
-    padding-top: 65px; /* ヘッダーとの隙間調整 */
-  }
-
-  /* ページ全体の余白を最小限に */
-  .page-content {
-    padding: 5px;
-  }
-}
