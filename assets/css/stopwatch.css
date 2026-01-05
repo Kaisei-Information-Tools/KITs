@@ -132,3 +132,87 @@
 [data-theme="dark"] #lap-container h3 {
   color: var(--text-primary, #e0e5ec);
 }
+
+
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- メインコンテナ --- */
+  main {
+    width: 100% !important;
+    padding: 15px 10px !important;
+  }
+
+  .stopwatch-container {
+    padding: 20px 5px;
+    margin-bottom: 15px;
+    /* ボタン配置のためにFlexbox化 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* ボタン間の隙間 */
+  }
+
+  /* --- 時間表示 --- */
+  .display {
+    width: 100%;
+    /* vwを使って画面幅に応じた最大サイズで表示 */
+    font-size: 13vw; 
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums; /* 数字の幅を揃えてガタつき防止 */
+    line-height: 1;
+  }
+
+  /* --- 操作ボタン (Start/Stop, Reset, Lap) --- */
+  .stopwatch-buttons {
+    /* 3つのボタンを均等に並べる */
+    flex: 1;
+    min-width: 80px; /* 最小幅 */
+    margin: 0;
+    padding: 12px 0;
+    font-size: 1rem;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  /* --- ラップ表示エリア --- */
+  .lap-container {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .lap-container h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  /* 個別のラップ行 */
+  .lap {
+    padding: 10px 15px;
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .lap .lap-time {
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ラップ削除ボタン */
+  .lap button {
+    width: auto;
+    margin: 0;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    height: auto;
+    min-width: 60px;
+  }
+}
