@@ -157,7 +157,7 @@ p {
 @media (max-width: 500px) {
   /* --- メインコンテナ --- */
   main {
-    width: 100% !important;
+    width: 94% !important;
     padding: 15px 10px !important;
     margin-top: 10px;
   }
