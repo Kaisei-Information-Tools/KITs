@@ -191,35 +191,39 @@ main {
     margin-bottom: 1rem;
   }
 
-  /* --- ソース選択ボタン (コンパクトな横並びに修正) --- */
+  /* --- ソース選択ボタン (グリッドレイアウト) --- */
   .source-selection {
-    display: flex;
-    flex-direction: row; /* 横並び */
-    flex-wrap: nowrap;   /* 折り返しなし */
-    gap: 5px;            /* ボタン間の隙間 */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 左右均等の2列 */
+    gap: 8px;                       /* ボタン間の隙間 */
     padding: 0;
     border: none;
     background: transparent;
     box-shadow: none;
   }
 
+  /* 1つ目の要素（Webサイト）を横幅一杯（2列分）に広げる */
+  .source-selection li:first-child {
+    grid-column: 1 / span 2;
+  }
+
   .source-selection li {
-    flex: 1;             /* 幅を均等に割り振る */
     margin: 0;
+    width: auto;
   }
 
   .source-selection button {
     width: 100%;
     margin: 0;
-    padding: 6px 2px;    /* 高さを抑える */
-    font-size: 0.8rem;   /* 文字サイズを調整 */
-    min-height: 36px;
-    border-radius: 6px;
+    padding: 8px 2px;    /* 高さを抑える */
+    font-size: 0.9rem;
+    min-height: 40px;    /* 押しやすい最低限の高さ */
+    border-radius: 8px;
   }
 
-  /* --- 詳細情報エリア (版・巻・ページ) --- */
+  /* --- 詳細情報エリア --- */
   .detail {
-    flex-direction: column; /* ここは入力欄なので縦積み維持 */
+    flex-direction: column; /* 入力欄は縦積み */
     padding: 10px;
     gap: 10px;
   }
@@ -232,7 +236,7 @@ main {
   .detail-input {
     width: 100% !important;
     margin: 5px 0 0 0;
-    font-size: 16px;
+    font-size: 16px; /* ズーム防止 */
   }
 
   /* --- 日付エリア --- */
@@ -246,11 +250,11 @@ main {
   .date select {
     width: 100% !important;
     margin: 0;
-    font-size: 16px;
+    font-size: 16px; /* ズーム防止 */
   }
 
   .date-label {
-    display: none; /* スマホでは「年」などのラベルを省略してスッキリさせる */
+    display: none; /* ラベル省略 */
   }
 
   /* --- URL自動取得ボタン --- */
@@ -264,7 +268,7 @@ main {
   /* --- 作成ボタン --- */
   #create-button {
     width: 100%;
-    padding: 10px;       /* 高さを抑える */
+    padding: 12px;
     font-size: 1rem;
     margin-top: 15px;
   }
@@ -274,7 +278,7 @@ main {
   }
   
   .reset-button-box .reset {
-    width: auto;         /* 横幅一杯にしない */
+    width: auto;
     padding: 5px 15px;
     font-size: 0.85rem;
   }
@@ -287,8 +291,8 @@ main {
   }
 
   .bottom-buttons button {
-    flex: 1;             /* 均等割り当て */
-    padding: 8px;        /* 高さを抑える */
+    flex: 1;
+    padding: 8px;
     width: auto;
   }
 }
