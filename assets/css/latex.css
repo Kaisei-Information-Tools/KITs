@@ -203,3 +203,99 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 500px) {
+  /* --- メインコンテナ --- */
+  main {
+    width: 100% !important;
+    padding: 10px !important;
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  /* --- カテゴリタブ (横スクロール化) --- */
+  .tabs {
+    display: flex;
+    flex-wrap: nowrap !important; /* 折り返さない */
+    overflow-x: auto; /* 横スクロールを有効に */
+    justify-content: flex-start; /* 左寄せ */
+    gap: 8px;
+    padding-bottom: 8px; /* スクロールバーのスペース */
+    margin-bottom: 10px;
+    -webkit-overflow-scrolling: touch; /* 滑らかなスクロール */
+    
+    /* スクロールバーを目立たなくする */
+    scrollbar-width: thin; 
+  }
+
+  .tab {
+    flex: 0 0 auto; /* 縮小させない */
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+
+  /* --- ツールバー (記号ボタン) --- */
+  .toolbar {
+    gap: 8px;
+    margin-bottom: 15px;
+    justify-content: flex-start; /* 左詰め（またはcenterでも可） */
+  }
+
+  .toolbar button {
+    padding: 10px 15px; /* タップ領域を広げる */
+    font-size: 1.1rem; /* 記号を見やすく */
+    border-radius: 8px;
+    flex-grow: 1; /* 隙間を埋めるように広げる */
+    min-width: 45px;
+  }
+
+  /* --- エディタ・プレビューエリア (縦積みに変更) --- */
+  .container {
+    flex-direction: column !important; /* 縦並び */
+    padding: 10px !important;
+    gap: 15px;
+    box-shadow: none; /* スマホでは影を薄く */
+    background: transparent; /* 背景透過ですっきりさせる */
+    border: none;
+  }
+
+  /* 入力欄 */
+  #editor {
+    width: 100% !important;
+    min-height: 150px; /* 高さを確保 */
+    font-size: 16px; /* iOSズーム防止 */
+    padding: 12px;
+    box-sizing: border-box;
+    /* 背景色をつけて入力エリアを明確に */
+    background: var(--glass-bg, rgba(255, 255, 255, 0.8));
+  }
+
+  /* プレビュー欄 */
+  #preview {
+    width: 100% !important;
+    min-height: 150px;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-x: auto; /* 長い数式はスクロール */
+    background: var(--glass-bg, rgba(255, 255, 255, 0.8));
+    border: 1px solid var(--glass-border);
+  }
+
+  /* --- 下部のボタン --- */
+  #openCHTMLBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+}
