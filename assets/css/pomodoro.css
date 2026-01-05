@@ -153,3 +153,84 @@ footer {
   box-shadow: 0 4px 20px var(--glass-shadow);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- メインコンテナ --- */
+  main {
+    width: 94% !important;
+    padding: 15px 10px !important;
+  }
+
+  /* --- 時間表示 --- */
+  .timer {
+    font-size: 4.5rem; /* 72pxだと大きすぎるので少し縮小 */
+    line-height: 1.1;
+    margin-bottom: 15px;
+  }
+
+  /* --- ステータス表示 --- */
+  #statusDisplay {
+    font-size: 1.2rem;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    width: 100%;
+  }
+
+  /* --- 設定入力エリア --- */
+  .controls {
+    flex-direction: column; /* 縦積みに変更 */
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .controls div {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .controls label {
+    margin-bottom: 0;
+    font-weight: bold;
+    min-width: 3rem; /* ラベル幅を揃える */
+    text-align: right;
+  }
+
+  .controls input {
+    width: 60px;
+    height: 45px;
+    font-size: 16px; /* iOSでの入力時ズーム防止 */
+    padding: 5px;
+    margin: 0;
+  }
+
+  /* --- 操作ボタンエリア --- */
+  .settings-action {
+    flex-wrap: wrap; /* 折り返し許可 */
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* 全てのボタンを均等な大きさで2列に並べる */
+  .settings-action button,
+  .set-button,
+  .pause-button {
+    width: 48%; /* 2つ並べる */
+    margin: 0 !important; /* 既存のマージンを打ち消し */
+    padding: 12px 0;
+    font-size: 1rem;
+    height: auto;
+    flex-grow: 1;
+  }
+
+  /* 設定ボタンだけ上部に独立させたい場合は width: 100% にする手もありますが、
+     ここでは4つボタンがあるので2x2のグリッドにします */
+}
