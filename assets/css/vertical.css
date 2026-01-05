@@ -102,10 +102,10 @@ main {
 /* =========================================
    450px以下 スマホ向けレスポンシブ対応
    ========================================= */
-@media (max-width: 450px) {
+@media (max-width: 520px) {
   /* --- メインコンテナ --- */
   main {
-    max-width: 100% !important;
+    max-width: 94% !important;
     width: 100% !important;
     padding: 10px !important;
     margin-top: 10px !important;
