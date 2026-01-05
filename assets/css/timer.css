@@ -166,3 +166,122 @@ footer {
   margin-top: 0;
   width: 100%;
 }
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- メインコンテナ --- */
+  main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 15px 10px !important;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  /* --- 音設定スイッチ --- */
+  .sound-setting {
+    justify-content: center; /* 中央寄せ */
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+
+  /* --- 上部の全体操作ボタン --- */
+  
+  /* Addボタン：横幅いっぱいに */
+  #add-button {
+    display: block;
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding: 12px;
+    font-size: 1.1rem;
+    height: auto;
+  }
+
+  /* Start All / Stop All ボタン：横並び */
+  #start-button, #stop-button {
+    display: inline-block;
+    width: 48%; /* 隙間を空けて横並び */
+    margin: 0;
+    padding: 12px;
+    font-size: 1rem;
+    height: auto;
+  }
+
+  /* Startボタンの右側に隙間を作る */
+  #start-button {
+    margin-right: 2%;
+  }
+
+  /* --- タイマーリストエリア --- */
+  #timers {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    grid-template-columns: none; /* グリッド解除 */
+  }
+
+  /* --- 個別タイマーカード --- */
+  .timer {
+    width: 100%;
+    padding: 15px;
+    margin: 0;
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+
+  /* --- 時間入力エリア --- */
+  .input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .timer-input {
+    width: 35% !important; /* 入力欄を広く確保 */
+    height: 45px;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 0;
+  }
+
+  .input-container span {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  /* --- 個別タイマーの操作ボタン --- */
+  /* JSで生成されるボタン（Start/Stop, Delete）を横並びに */
+  .timer button {
+    display: inline-block;
+    width: 48%;
+    margin: 0;
+    padding: 10px 0;
+    font-size: 1rem;
+    height: auto;
+  }
+
+  /* Start/StopボタンとDeleteボタンの間に隙間 */
+  .timer button.start-button,
+  .timer button.stop-button {
+    margin-right: 2%;
+  }
+
+  /* --- 時間表示 --- */
+  .timer-display {
+    font-size: 3.5rem; /* 画面に収まるサイズに調整 */
+    font-weight: 700;
+    margin-top: 10px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+  }
+}
