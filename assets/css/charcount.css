@@ -112,7 +112,7 @@ footer {
   main {
     /* フレックスボックスの向きを縦にする */
     flex-direction: column !important;
-    width: 100% !important;
+    width: 94% !important;
     padding: 15px 10px !important;
     gap: 0 !important; /* 隙間は内部のパディングで調整 */
     display: flex !important;
