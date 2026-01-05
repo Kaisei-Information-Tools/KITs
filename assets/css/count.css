@@ -104,3 +104,98 @@ main {
 footer {
   width: 100%;
 }
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 600px) {
+  /* --- メインコンテナ --- */
+  main {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important; /* 画面高さいっぱいの制限を解除 */
+    display: block !important; /* Flexboxの中央寄せを解除 */
+    padding: 10px 10px 60px 10px !important; /* 下部に余白 */
+  }
+
+  /* --- カウンター表示 --- */
+  .counter {
+    font-size: 4rem;
+    padding: 20px;
+    margin: 10px 0 25px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* --- 定型ボタンエリア (+1, +10... リセット) --- */
+  .templates {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  /* ボタンを2列配置にして大きくする */
+  .templates .button {
+    width: 48%; /* 2列 */
+    margin: 0;
+    height: 50px; /* 高さを確保 */
+    font-size: 1rem;
+  }
+
+  /* リセットボタンだけは横幅一杯に */
+  #reset {
+    width: 100%;
+    margin-top: 5px;
+    background-color: rgba(255, 100, 100, 0.2); /* 誤操作防止のため少し色を変える */
+  }
+
+  /* --- カスタム入力エリア (n増やす / n倍にする) --- */
+  .customs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--glass-bg-alt); /* グループ感を出す背景 */
+    border-radius: 12px;
+  }
+
+  /* 入力欄とボタンを横並びにセット */
+  .counter-input {
+    width: 55% !important; /* 入力欄 */
+    height: 45px;
+    margin: 0;
+    font-size: 16px !important; /* iOSズーム防止 */
+  }
+
+  .customs .button {
+    width: 40% !important; /* 実行ボタン */
+    height: 45px;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* --- アラートボックス（リセット確認など） --- */
+  .counter-alert {
+    width: 90%;
+    max-width: 350px;
+    padding: 25px;
+  }
+
+  .counter-alert input {
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+
+  .counter-alert .button {
+    width: 45%;
+    margin: 0 2%;
+    height: 40px;
+  }
+}
