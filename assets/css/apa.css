@@ -178,30 +178,22 @@ main {
 
 
 /* =========================================
-   450px以下 スマホ向けレスポンシブ対応（縦並び・余白あり版）
+   450px以下 スマホ向けレスポンシブ対応
    ========================================= */
 @media (max-width: 450px) {
-  /* --- メインコンテナ --- */
+  /* --- 共通レイアウト --- */
   main {
-    /* 左右に隙間を作るため width を100%未満に設定 */
-    width: 94% !important;
-    margin: 10px auto !important; /* 中央寄せ */
-    padding: 20px 15px !important; /* 内側に適度な余白 */
-    box-sizing: border-box;
-    
-    /* 枠線のスタイルを維持しつつ、モバイル用に調整 */
-    border-radius: 12px !important;
+    padding: 15px !important;
+    width: 100% !important;
   }
 
   .column {
-    margin-bottom: 1.5rem; /* 各項目の間隔を広めに */
+    margin-bottom: 1.5rem;
   }
 
-  /* --- ソース選択ボタン (縦並び) --- */
+  /* --- ソース選択ボタン (Web/論文/書籍) --- */
   .source-selection {
-    display: flex;
-    flex-direction: column; /* 縦に積む */
-    gap: 10px; /* ボタン間の隙間 */
+    flex-direction: column; /* 縦並びにする */
     padding: 0;
     border: none;
     background: transparent;
@@ -210,99 +202,90 @@ main {
 
   .source-selection li {
     width: 100%;
-    margin: 0;
+    margin-bottom: 10px;
   }
 
   .source-selection button {
-    width: 100%; /* 横幅いっぱいに */
+    width: 100%; /* 横幅一杯にする */
     margin: 0;
-    padding: 12px; /* タップしやすい高さ */
+    padding: 12px;
     font-size: 1rem;
-  }
-
-  /* --- 入力欄共通 --- */
-  .text-input {
-    font-size: 16px; /* iOSでのズーム防止 */
-    padding: 10px;
   }
 
   /* --- 詳細情報エリア (版・巻・ページ) --- */
   .detail {
-    flex-direction: column; /* 縦積みに */
+    flex-direction: column; /* 入力欄を縦積みに */
+    padding: 10px;
     height: auto;
-    padding: 15px;
-    gap: 15px; /* 入力欄同士の間隔 */
-    align-items: flex-start;
+    align-items: stretch; /* 横幅いっぱいに */
   }
 
   .detail li {
+    margin-bottom: 15px;
     width: 100%;
-    margin: 0;
   }
 
   .detail-input {
-    width: 100% !important;
+    width: 100% !important; /* 固定幅を解除 */
     margin: 5px 0 0 0;
+    font-size: 16px; /* ズーム防止 */
   }
 
   /* --- 日付エリア (年・月・日) --- */
   .date {
     flex-direction: column; /* 縦積みに */
-    height: auto;
     padding: 15px;
+    height: auto;
     align-items: flex-start;
   }
 
-  /* 入力欄とプルダウンを横幅いっぱいに */
-  .date-input,
+  .date input,
   .date select {
-    width: 100% !important;
-    margin: 0 0 10px 0; /* 下に隙間を作る */
-    font-size: 16px;
+    width: 100% !important; /* 固定幅を解除 */
+    margin-bottom: 15px;
+    margin-right: 0;
+    font-size: 16px; /* ズーム防止 */
   }
 
   .date-label {
-    display: block;
     margin-bottom: 5px;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    margin-left: 2px;
   }
 
-  /* --- 各種ボタン --- */
+  /* --- URL自動取得ボタン --- */
   #auto-get-data {
-    width: 100%;
     margin-top: 10px;
     padding: 12px;
   }
 
+  /* --- 作成ボタン・リセットボタン --- */
   #create-button {
     width: 100%;
-    padding: 14px;
+    padding: 15px;
     font-size: 1.1rem;
     margin-top: 20px;
   }
 
-  /* リセットボタン (右寄せではなく中央配置などに変更) */
   .reset-button-box {
     justify-content: center;
     margin-bottom: 15px;
   }
   
-  .reset {
-    width: 100%; /* これも押しやすく大きく */
+  .reset-button-box .reset {
+    width: 100%;
     padding: 10px;
   }
 
   /* --- 結果表示エリア下のボタン --- */
   .bottom-buttons {
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
   }
 
   .bottom-buttons button {
-    width: 48%; /* 2つ並べる */
+    width: 48%; /* 2つのボタンを並べる */
     padding: 12px;
   }
 }
