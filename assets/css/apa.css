@@ -178,153 +178,131 @@ main {
 
 
 /* =========================================
-   450px以下 スマホ向けレスポンシブ対応（コンパクト版）
+   450px以下 スマホ向けレスポンシブ対応（縦並び・余白あり版）
    ========================================= */
 @media (max-width: 450px) {
-  /* --- 共通レイアウト --- */
+  /* --- メインコンテナ --- */
   main {
-    /* 左右の余白を最小限(5px)にし、画面幅いっぱいを使う */
-    padding: 15px 5px !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
+    /* 左右に隙間を作るため width を100%未満に設定 */
+    width: 94% !important;
+    margin: 10px auto !important; /* 中央寄せ */
+    padding: 20px 15px !important; /* 内側に適度な余白 */
+    box-sizing: border-box;
+    
+    /* 枠線のスタイルを維持しつつ、モバイル用に調整 */
+    border-radius: 12px !important;
   }
 
   .column {
-    margin-bottom: 10px; /* 上下の間隔を詰める */
+    margin-bottom: 1.5rem; /* 各項目の間隔を広めに */
   }
 
-  .default-label {
-    font-size: 0.85rem; /* ラベル文字を少し小さく */
-    margin-bottom: 2px;
-  }
-
-  /* --- ソース選択ボタン (横並びでコンパクトに) --- */
+  /* --- ソース選択ボタン (縦並び) --- */
   .source-selection {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column; /* 縦に積む */
+    gap: 10px; /* ボタン間の隙間 */
     padding: 0;
-    gap: 4px; /* ボタン間の隙間を狭く */
     border: none;
     background: transparent;
     box-shadow: none;
   }
 
   .source-selection li {
-    flex: 1; /* 3等分して幅いっぱい使う */
+    width: 100%;
     margin: 0;
   }
 
   .source-selection button {
-    width: 100%;
+    width: 100%; /* 横幅いっぱいに */
     margin: 0;
-    padding: 8px 2px; /* 内側の余白を減らす */
-    font-size: 0.75rem; /* 文字を小さくして収める */
-    border-radius: 6px;
-    min-height: auto;
+    padding: 12px; /* タップしやすい高さ */
+    font-size: 1rem;
   }
 
-  /* --- 入力欄共通設定 --- */
+  /* --- 入力欄共通 --- */
   .text-input {
-    padding: 8px; /* 高さを少し抑える */
-    font-size: 16px; /* iOSのズーム防止 */
-    border-radius: 6px;
+    font-size: 16px; /* iOSでのズーム防止 */
+    padding: 10px;
   }
 
-  /* --- 詳細情報エリア (グリッドレイアウトで詰める) --- */
+  /* --- 詳細情報エリア (版・巻・ページ) --- */
   .detail {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2列にする */
-    gap: 8px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
+    flex-direction: column; /* 縦積みに */
+    height: auto;
+    padding: 15px;
+    gap: 15px; /* 入力欄同士の間隔 */
+    align-items: flex-start;
   }
 
   .detail li {
-    width: auto;
+    width: 100%;
     margin: 0;
-  }
-  
-  /* 「ページ」入力欄は横幅いっぱい使う */
-  .detail li:last-child {
-    grid-column: 1 / -1;
   }
 
   .detail-input {
     width: 100% !important;
-    margin: 0;
+    margin: 5px 0 0 0;
   }
 
-  /* --- 日付エリア (コンパクト配置) --- */
+  /* --- 日付エリア (年・月・日) --- */
   .date {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 10px;
-    align-items: center;
-  }
-
-  /* 年入力欄とラベル */
-  .date-input[type="number"] {
-    width: 4rem !important; /* 年の幅を固定 */
-    margin-right: 2px;
-    padding: 6px;
-  }
-  
-  .date-label {
-    margin-right: 10px;
-    font-size: 0.85rem;
-  }
-
-  /* 月・日プルダウン (残りの幅を分け合う) */
-  .date select {
-    flex: 1; /* 伸縮して隙間を埋める */
-    min-width: 80px;
-    margin: 0;
-    padding: 6px;
+    flex-direction: column; /* 縦積みに */
     height: auto;
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+  /* 入力欄とプルダウンを横幅いっぱいに */
+  .date-input,
+  .date select {
+    width: 100% !important;
+    margin: 0 0 10px 0; /* 下に隙間を作る */
+    font-size: 16px;
+  }
+
+  .date-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
   }
 
   /* --- 各種ボタン --- */
   #auto-get-data {
-    margin-top: 5px;
-    padding: 10px;
-    height: auto;
-    font-size: 0.9rem;
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
   }
 
   #create-button {
     width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    margin-top: 15px;
+    padding: 14px;
+    font-size: 1.1rem;
+    margin-top: 20px;
   }
 
-  /* リセットボタンボックス */
+  /* リセットボタン (右寄せではなく中央配置などに変更) */
   .reset-button-box {
-    margin-bottom: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
   }
   
   .reset {
-    font-size: 0.8rem;
-    padding: 6px 12px;
-    width: auto;
+    width: 100%; /* これも押しやすく大きく */
+    padding: 10px;
   }
 
   /* --- 結果表示エリア下のボタン --- */
   .bottom-buttons {
     display: flex;
-    gap: 5px;
-    margin-top: 10px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
   }
 
   .bottom-buttons button {
-    flex: 1; /* 均等幅 */
-    padding: 10px;
-    font-size: 0.9rem;
+    width: 48%; /* 2つ並べる */
+    padding: 12px;
   }
 }
