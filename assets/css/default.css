@@ -436,10 +436,6 @@ footer {
     /* 左に余白をつける */
   }
 
-  .sidebar.visible {
-    left: 0;
-  }
-
   .sidebar__menu {
     display: flex;
     flex-direction: column;
@@ -452,7 +448,9 @@ footer {
 
   .sidebar__menu li a {
     font-size: 1rem;
+    margin: 0 0.5rem;
     padding: 4px 6px;
+    width: stretch;
     text-align: left;
     word-break: break-word;
     white-space: normal;
