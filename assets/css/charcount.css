@@ -101,3 +101,73 @@ ul li {
 footer {
   position: fixed;
 }
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- メインコンテナ --- */
+  main {
+    /* フレックスボックスの向きを縦にする */
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 15px 10px !important;
+    gap: 0 !important; /* 隙間は内部のパディングで調整 */
+    display: flex !important;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  /* --- 左側（入力・集計結果） --- */
+  .left {
+    width: 100% !important;
+    padding: 0 !important;
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    font-size: 16px !important; /* iOSでの入力時ズーム防止 */
+    height: 180px; /* 画面を占領しすぎない適切な高さ */
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  /* 集計結果の文字サイズ調整 */
+  .result p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 8px 0;
+    word-break: break-all; /* 長い数字などがはみ出さないように */
+  }
+
+  /* --- 右側（単語出現回数） --- */
+  .right {
+    width: 100% !important;
+    padding: 20px 0 0 0 !important;
+    
+    /* PC用の左線を消して、上に区切り線を入れる */
+    border-left: none !important;
+    border-top: 1px solid var(--glass-border);
+    
+    background: transparent !important; /* 背景の重なりを解消 */
+    
+    /* リストが長くなりすぎないようにスクロールさせる */
+    max-height: 40vh;
+  }
+
+  .right h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .right ul li {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+}
