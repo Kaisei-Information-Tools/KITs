@@ -143,7 +143,7 @@
 @media (max-width: 450px) {
   /* --- メインコンテナ --- */
   main {
-    width: 100% !important;
+    width: % !important;
     padding: 15px 10px !important;
   }
 
@@ -216,3 +216,4 @@
     min-width: 60px;
   }
 }
+
