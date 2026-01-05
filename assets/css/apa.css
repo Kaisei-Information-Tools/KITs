@@ -172,3 +172,96 @@
 main {
   max-width: 1000px !important;
 }
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- 共通レイアウト --- */
+  main {
+    padding: 15px !important;
+    width: 100% !important;
+  }
+
+  .column {
+    margin-bottom: 1.5rem;
+  }
+
+  /* --- ソース選択ボタン (Web/論文/書籍) --- */
+  .source-selection {
+    flex-direction: column; /* 縦並びにする */
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .source-selection li {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .source-selection button {
+    width: 100%; /* 横幅一杯にする */
+    margin: 0;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  /* --- 詳細情報エリア (版・巻・ページ) --- */
+  .detail {
+    flex-direction: column; /* 入力欄を縦積みに */
+    padding: 10px;
+    height: auto;
+    align-items: stretch; /* 横幅いっぱいに */
+  }
+
+  .detail li {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .detail-input {
+    width: 100% !important; /* 固定幅を解除 */
+    margin: 5px 0 0 0;
+    font-size: 16px; /* ズーム防止 */
+  }
+
+  /* --- 日付エリア (年・月・日) --- */
+  .date {
+    flex-direction: column; /* 縦積みに */
+    padding: 15px;
+    height: auto;
+    align-items: flex-start;
+  }
+
+  .date input,
+  .date select {
+    width: 100% !important; /* 固定幅を解除 */
+    margin-bottom: 15px;
+    margin-right: 0;
+    font-size: 16px; /* ズーム防止 */
+  }
+
+  .date-label {
+    margin-bottom: 5px;
+    margin-left: 2px;
+  }
+
+  /* --- URL自動取得ボタン --- */
+  #auto-get-data {
+    margin-top: 10px;
+    padding: 12px;
+  }
+
+  /* --- 作成ボタン・リセットボタン --- */
+  #create-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+
+  .reset-button-box {
+    justify-content: center;
+    margin-bottom: 15px;
