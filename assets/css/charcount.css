@@ -118,7 +118,7 @@ footer {
   /* メインコンテナの調整 */
   main {
     display: block !important;
-    width: 100% !important;
+    width: 94% !important;
     max-width: 100% !important;
     padding: 10px 10px 20px 10px !important; /* 下に余白 */
     height: auto !important;
