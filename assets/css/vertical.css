@@ -109,6 +109,7 @@ main {
     width: 100% !important;
     padding: 10px !important;
     margin-top: 10px !important;
+    padding-top: 100px !important; /* 70px → 100px に変更して被りを防ぐ */
   }
 
   .container {
@@ -172,4 +173,5 @@ main {
     font-size: 1.1rem;
     border-radius: 8px;
   }
+   
 }
