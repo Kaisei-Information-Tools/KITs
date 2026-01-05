@@ -183,17 +183,20 @@ main {
 @media (max-width: 450px) {
   /* --- 共通レイアウト --- */
   main {
-    padding: 15px !important;
+    padding: 15px 10px !important;
     width: 100% !important;
   }
 
   .column {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  /* --- ソース選択ボタン (Web/論文/書籍) --- */
+  /* --- ソース選択ボタン (コンパクトな横並びに修正) --- */
   .source-selection {
-    flex-direction: column; /* 縦並びにする */
+    display: flex;
+    flex-direction: row; /* 横並び */
+    flex-wrap: nowrap;   /* 折り返しなし */
+    gap: 5px;            /* ボタン間の隙間 */
     padding: 0;
     border: none;
     background: transparent;
@@ -201,91 +204,91 @@ main {
   }
 
   .source-selection li {
-    width: 100%;
-    margin-bottom: 10px;
+    flex: 1;             /* 幅を均等に割り振る */
+    margin: 0;
   }
 
   .source-selection button {
-    width: 100%; /* 横幅一杯にする */
+    width: 100%;
     margin: 0;
-    padding: 12px;
-    font-size: 1rem;
+    padding: 6px 2px;    /* 高さを抑える */
+    font-size: 0.8rem;   /* 文字サイズを調整 */
+    min-height: 36px;
+    border-radius: 6px;
   }
 
   /* --- 詳細情報エリア (版・巻・ページ) --- */
   .detail {
-    flex-direction: column; /* 入力欄を縦積みに */
+    flex-direction: column; /* ここは入力欄なので縦積み維持 */
     padding: 10px;
-    height: auto;
-    align-items: stretch; /* 横幅いっぱいに */
+    gap: 10px;
   }
 
   .detail li {
-    margin-bottom: 15px;
+    margin-bottom: 0;
     width: 100%;
   }
 
   .detail-input {
-    width: 100% !important; /* 固定幅を解除 */
+    width: 100% !important;
     margin: 5px 0 0 0;
-    font-size: 16px; /* ズーム防止 */
+    font-size: 16px;
   }
 
-  /* --- 日付エリア (年・月・日) --- */
+  /* --- 日付エリア --- */
   .date {
-    flex-direction: column; /* 縦積みに */
-    padding: 15px;
-    height: auto;
-    align-items: flex-start;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
   }
 
   .date input,
   .date select {
-    width: 100% !important; /* 固定幅を解除 */
-    margin-bottom: 15px;
-    margin-right: 0;
-    font-size: 16px; /* ズーム防止 */
+    width: 100% !important;
+    margin: 0;
+    font-size: 16px;
   }
 
   .date-label {
-    margin-bottom: 5px;
-    margin-left: 2px;
+    display: none; /* スマホでは「年」などのラベルを省略してスッキリさせる */
   }
 
   /* --- URL自動取得ボタン --- */
   #auto-get-data {
-    margin-top: 10px;
-    padding: 12px;
+    margin-top: 8px;
+    padding: 8px;
+    height: auto;
+    font-size: 0.9rem;
   }
 
-  /* --- 作成ボタン・リセットボタン --- */
+  /* --- 作成ボタン --- */
   #create-button {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
-    margin-top: 20px;
+    padding: 10px;       /* 高さを抑える */
+    font-size: 1rem;
+    margin-top: 15px;
   }
 
   .reset-button-box {
-    justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   
   .reset-button-box .reset {
-    width: 100%;
-    padding: 10px;
+    width: auto;         /* 横幅一杯にしない */
+    padding: 5px 15px;
+    font-size: 0.85rem;
   }
 
-  /* --- 結果表示エリア下のボタン --- */
+  /* --- 下部ボタン --- */
   .bottom-buttons {
     flex-direction: row;
-    justify-content: space-between;
     gap: 10px;
     margin-top: 10px;
   }
 
   .bottom-buttons button {
-    width: 48%; /* 2つのボタンを並べる */
-    padding: 12px;
+    flex: 1;             /* 均等割り当て */
+    padding: 8px;        /* 高さを抑える */
+    width: auto;
   }
 }
