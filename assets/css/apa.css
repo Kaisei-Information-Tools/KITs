@@ -173,95 +173,158 @@ main {
   max-width: 1000px !important;
 }
 
+
+
+
+
 /* =========================================
-   450px以下 スマホ向けレスポンシブ対応
+   450px以下 スマホ向けレスポンシブ対応（コンパクト版）
    ========================================= */
 @media (max-width: 450px) {
   /* --- 共通レイアウト --- */
   main {
-    padding: 15px !important;
+    /* 左右の余白を最小限(5px)にし、画面幅いっぱいを使う */
+    padding: 15px 5px !important;
     width: 100% !important;
+    max-width: 100vw !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   .column {
-    margin-bottom: 1.5rem;
+    margin-bottom: 10px; /* 上下の間隔を詰める */
   }
 
-  /* --- ソース選択ボタン (Web/論文/書籍) --- */
+  .default-label {
+    font-size: 0.85rem; /* ラベル文字を少し小さく */
+    margin-bottom: 2px;
+  }
+
+  /* --- ソース選択ボタン (横並びでコンパクトに) --- */
   .source-selection {
-    flex-direction: column; /* 縦並びにする */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 0;
+    gap: 4px; /* ボタン間の隙間を狭く */
     border: none;
     background: transparent;
     box-shadow: none;
   }
 
   .source-selection li {
-    width: 100%;
-    margin-bottom: 10px;
+    flex: 1; /* 3等分して幅いっぱい使う */
+    margin: 0;
   }
 
   .source-selection button {
-    width: 100%; /* 横幅一杯にする */
+    width: 100%;
     margin: 0;
-    padding: 12px;
-    font-size: 1rem;
+    padding: 8px 2px; /* 内側の余白を減らす */
+    font-size: 0.75rem; /* 文字を小さくして収める */
+    border-radius: 6px;
+    min-height: auto;
   }
 
-  /* --- 詳細情報エリア (版・巻・ページ) --- */
+  /* --- 入力欄共通設定 --- */
+  .text-input {
+    padding: 8px; /* 高さを少し抑える */
+    font-size: 16px; /* iOSのズーム防止 */
+    border-radius: 6px;
+  }
+
+  /* --- 詳細情報エリア (グリッドレイアウトで詰める) --- */
   .detail {
-    flex-direction: column; /* 入力欄を縦積みに */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2列にする */
+    gap: 8px;
     padding: 10px;
-    height: auto;
-    align-items: stretch; /* 横幅いっぱいに */
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .detail li {
-    margin-bottom: 15px;
-    width: 100%;
+    width: auto;
+    margin: 0;
+  }
+  
+  /* 「ページ」入力欄は横幅いっぱい使う */
+  .detail li:last-child {
+    grid-column: 1 / -1;
   }
 
   .detail-input {
-    width: 100% !important; /* 固定幅を解除 */
-    margin: 5px 0 0 0;
-    font-size: 16px; /* ズーム防止 */
+    width: 100% !important;
+    margin: 0;
   }
 
-  /* --- 日付エリア (年・月・日) --- */
+  /* --- 日付エリア (コンパクト配置) --- */
   .date {
-    flex-direction: column; /* 縦積みに */
-    padding: 15px;
-    height: auto;
-    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    align-items: center;
   }
 
-  .date input,
-  .date select {
-    width: 100% !important; /* 固定幅を解除 */
-    margin-bottom: 15px;
-    margin-right: 0;
-    font-size: 16px; /* ズーム防止 */
+  /* 年入力欄とラベル */
+  .date-input[type="number"] {
+    width: 4rem !important; /* 年の幅を固定 */
+    margin-right: 2px;
+    padding: 6px;
   }
-
+  
   .date-label {
-    margin-bottom: 5px;
-    margin-left: 2px;
+    margin-right: 10px;
+    font-size: 0.85rem;
   }
 
-  /* --- URL自動取得ボタン --- */
+  /* 月・日プルダウン (残りの幅を分け合う) */
+  .date select {
+    flex: 1; /* 伸縮して隙間を埋める */
+    min-width: 80px;
+    margin: 0;
+    padding: 6px;
+    height: auto;
+  }
+
+  /* --- 各種ボタン --- */
   #auto-get-data {
-    margin-top: 10px;
-    padding: 12px;
+    margin-top: 5px;
+    padding: 10px;
+    height: auto;
+    font-size: 0.9rem;
   }
 
-  /* --- 作成ボタン・リセットボタン --- */
   #create-button {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
-    margin-top: 20px;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 15px;
   }
 
+  /* リセットボタンボックス */
   .reset-button-box {
-    justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .reset {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    width: auto;
+  }
+
+  /* --- 結果表示エリア下のボタン --- */
+  .bottom-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .bottom-buttons button {
+    flex: 1; /* 均等幅 */
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
