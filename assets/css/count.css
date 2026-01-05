@@ -112,8 +112,8 @@ footer {
 @media (max-width: 450px) {
   /* --- メインコンテナ --- */
   main {
-    max-width: 100% !important;
-    width: 100% !important;
+    max-width: 94% !important;
+    width: 94% !important;
     height: auto !important;
     display: block !important;
     padding: 10px 10px 80px 10px !important;
