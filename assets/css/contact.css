@@ -207,3 +207,65 @@
     inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
   transform: translateY(-2px);
 }
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 500px) {
+  /* --- メインコンテナ --- */
+  .content {
+    padding: 10px !important;
+    width: 100% !important;
+    display: block !important; /* 上下中央寄せを解除して上詰めに */
+    min-height: auto !important;
+  }
+
+  /* --- フォーム外枠 --- */
+  .contact-form {
+    padding: 20px 15px; /* 内側の余白を少し減らす */
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: none; /* スマホでは影を控えめに */
+    border: 1px solid var(--glass-border);
+    margin-top: 10px;
+  }
+
+  .contact-form h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  /* --- ラベル --- */
+  .contact-form label {
+    font-size: 1rem;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+  }
+
+  /* --- 入力欄・プルダウン・テキストエリア --- */
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    font-size: 16px !important; /* iOSでのズーム防止 */
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 8px;
+  }
+
+  .contact-form textarea {
+    min-height: 120px; /* 高さを確保 */
+  }
+
+  /* --- 送信ボタン --- */
+  .contact-form .btn-submit {
+    margin-top: 30px;
+    padding: 14px;
+    font-size: 1.1rem;
+    width: 100%;
+    border-radius: 8px;
+  }
+}
