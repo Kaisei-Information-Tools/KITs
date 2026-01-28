@@ -13,6 +13,7 @@ if (toTop) {
 // サイドバー切り替え処理
 const menuCheckbox = document.getElementById("menu");
 const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebar-overlay");
 const content = document.getElementById("content");
 const pageContent = document.querySelector(".page-content");
 
@@ -22,21 +23,15 @@ const handleSidebarToggle = () => {
     if (menuCheckbox.checked) {
       sidebar.classList.add("visible");
       sidebar.classList.remove("hidden");
-      if (content) {
-        content.classList.remove("fullwidth");
-      }
-      if (pageContent) {
-        pageContent.classList.remove("fullwidth");
-      }
+      if (sidebarOverlay) sidebarOverlay.classList.add("visible");
+      if (content) content.classList.remove("fullwidth");
+      if (pageContent) pageContent.classList.remove("fullwidth");
     } else {
       sidebar.classList.remove("visible");
       sidebar.classList.add("hidden");
-      if (content) {
-        content.classList.add("fullwidth");
-      }
-      if (pageContent) {
-        pageContent.classList.add("fullwidth");
-      }
+      if (sidebarOverlay) sidebarOverlay.classList.remove("visible");
+      if (content) content.classList.add("fullwidth");
+      if (pageContent) pageContent.classList.add("fullwidth");
     }
   }
 };
@@ -44,6 +39,16 @@ const handleSidebarToggle = () => {
 // イベント設定
 if (menuCheckbox) {
   menuCheckbox.addEventListener("change", handleSidebarToggle);
+}
+
+// オーバーレイ押下時サイドバーを閉じる
+if (sidebarOverlay) {
+  sidebarOverlay.addEventListener("click", () => {
+    if (menuCheckbox) {
+      menuCheckbox.checked = false;
+      handleSidebarToggle();
+    }
+  });
 }
 
 // 読み込み時にも適用

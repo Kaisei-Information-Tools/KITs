@@ -69,7 +69,6 @@
     <nav class="nav">
       <a href="about.html">About</a>
       <a href="index.html">Tools</a>
-      <a href="https://blog.kits-tools.net/">Blog</a>
       <a href="news.html">News</a>
       <a href="links.html">Link</a>
       <a href="contact.html">Contact</a>
@@ -82,6 +81,20 @@
 
   <!-- サイドバー -->
   <aside id="sidebar" class="sidebar hidden">
+    <!-- モバイルナビゲーションメニュー -->
+    <div class="sidebar__nav mobile-only">
+      <div class="sidebar__title">Menu</div>
+      <ul class="sidebar__menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html">Tools</a></li>
+        <li><a href="https://blog.kits-tools.net/">Blog</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="links.html">Link</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <hr class="sidebar__divider">
+    </div>
+
     <div class="sidebar__title">Tools</div>
     <ul class="sidebar__menu">
       <li><a href="apa">APAスタイル作成</a></li>
@@ -97,12 +110,14 @@
       <li><a href="calculator">電卓</a></li>
       <li><a href="pomodoro">ポモドーロ時計</a></li>
       <li><a href="number">数字読み方変換</a></li>
-      <li><a href="https://memo.kits-tools.net/">メモ帳</a></li>
       <li><a href="count">カウンター</a></li>
       <li><a href="latex">LaTeX</a></li>
       <li><a href="qr">QRコード</a></li>
     </ul>
   </aside>
+
+  <!-- オーバーレイ -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
   <!-- メイン -->
   <main class="main">
@@ -163,6 +178,41 @@
 
   <!-- フッター -->
   <footer>
+
+    <a class="logo footer-logo" href="index.html">
+      <img src="assets/images/logo.svg" width="32" alt="Logo">
+    </a>
+
+    <div class="footer-menu">
+      <div class="nav-footer">
+        <a href="about.html">About</a>
+        <a href="index.html">Tools</a>
+        <a href="https://blog.kits-tools.net/">Blog</a>
+        <a href="news.html">News</a>
+        <a href="links.html">Link</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="tools-footer">
+        <a href="apa">APAスタイル作成</a>
+        <a href="clock">時計</a>
+        <a href="timer">タイマー</a>
+        <a href="stopwatch">ストップウォッチ</a>
+        <a href="group">グループ分け</a>
+        <a href="conversion">単位変換</a>
+        <a href="vertical">縦書きエディタ</a>
+        <a href="kundoku">訓読文エディタ</a>
+        <a href="charcount">文字カウント</a>
+        <a href="todo">todoリスト</a>
+        <a href="calculator">電卓</a>
+        <a href="pomodoro">ポモドーロ時計</a>
+        <a href="number">数字読み方変換</a>
+        <a href="https://memo.kits-tools.net/">メモ帳</a>
+        <a href="count">カウンター</a>
+        <a href="latex">LaTeX</a>
+      </div>
+    </div>
+
     <p>© 2024 - 2025 Kaisei Information Technology for support</p>
   </footer>
 
