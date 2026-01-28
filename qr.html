@@ -1,0 +1,79 @@
+---
+layout: default_new
+title: QRコードツール
+css: qr
+js: qr
+old_base_css: true
+---
+
+<div class="qr-container">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="generate">作成</button>
+    <button class="tab-btn" data-tab="read">読み取り</button>
+    <button class="tab-btn" data-tab="history">履歴</button>
+  </div>
+
+  <div class="tab-content active" id="generate-tab">
+    <div class="qr-input-group">
+      <input type="text" id="qr-text" placeholder="URLやテキストを入力" class="text-input" />
+      <button id="generate-btn" class="button">QRコードを作成</button>
+    </div>
+
+    <div class="batch-group">
+      <h4>一括作成 (CSV)</h4>
+      <div class="file-upload inline">
+        <label for="csv-input" class="button secondary">CSVを選択</label>
+        <input type="file" id="csv-input" accept=".csv" />
+      </div>
+      <button id="batch-generate-btn" class="button hidden">ZIPでダウンロード</button>
+    </div>
+
+    <div id="qrcode" class="qrcode-display"></div>
+
+    <div id="download-actions" class="actions hidden">
+      <button id="download-png" class="button has-icon"><i class="fa-solid fa-download"></i> PNG</button>
+      <button id="download-svg" class="button has-icon"><i class="fa-solid fa-download"></i> SVG</button>
+    </div>
+  </div>
+
+  <div class="tab-content" id="read-tab">
+    <div class="read-options" id="drop-zone">
+      <div class="file-upload">
+        <label for="qr-input-file" class="button">画像ファイルを選択</label>
+        <input type="file" id="qr-input-file" accept="image/*" />
+      </div>
+      <p class="drop-hint">または 画像をドラッグ&ドロップ / Ctrl+V</p>
+
+      <div id="reader" style="width: 100%"></div>
+
+      <div class="camera-controls">
+        <button id="start-camera" class="button">カメラを起動</button>
+        <button id="stop-camera" class="button hidden">カメラを停止</button>
+        <button id="scan-screen" class="button secondary">画面を読み取る</button>
+      </div>
+    </div>
+    <div class="result-container">
+      <h3>読み取り結果:</h3>
+      <div id="qr-results-list">
+        <p id="qr-result" class="result-text">ここに結果が表示されます</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="history-tab">
+    <div class="history-controls">
+      <input type="text" id="history-filter" placeholder="検索..." class="text-input small" />
+      <select id="history-sort" class="text-input small">
+        <option value="date-desc">新しい順</option>
+        <option value="date-asc">古い順</option>
+      </select>
+      <button id="clear-history" class="button danger">履歴を削除</button>
+    </div>
+    <div id="history-list" class="history-list"></div>
+  </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
