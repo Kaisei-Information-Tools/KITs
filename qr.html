@@ -19,6 +19,52 @@ old_base_css: true
       <button id="generate-btn" class="button">QRコードを作成</button>
     </div>
 
+    <div class="customization-panel">
+      <button id="toggle-custom" class="button secondary has-icon">
+        <i class="fa-solid fa-palette"></i> デザインをカスタマイズ
+      </button>
+
+      <div id="custom-options" class="custom-options hidden">
+        <div class="option-grid">
+          <div class="option-item">
+            <label>ドットの色</label>
+            <input type="color" id="qr-dot-color" value="#000000">
+          </div>
+          <div class="option-item">
+            <label>背景色</label>
+            <input type="color" id="qr-bg-color" value="#ffffff">
+          </div>
+          <div class="option-item">
+            <label>ドット形式</label>
+            <select id="qr-dot-type" class="text-input small">
+              <option value="square">正方形</option>
+              <option value="rounded">丸み</option>
+              <option value="dots">点</option>
+              <option value="classy">クラシック</option>
+              <option value="classy-rounded">クラシック丸み</option>
+              <option value="extra-rounded">極丸</option>
+            </select>
+          </div>
+          <div class="option-item">
+            <label>角形式</label>
+            <select id="qr-corner-type" class="text-input small">
+              <option value="square">正方形</option>
+              <option value="dot">丸</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="logo-upload">
+          <label>中央ロゴ挿入</label>
+          <div class="file-upload inline">
+            <label for="logo-input" class="button secondary small">画像を選択</label>
+            <input type="file" id="logo-input" accept="image/*" />
+          </div>
+          <button id="remove-logo" class="button danger small hidden">削除</button>
+        </div>
+      </div>
+    </div>
+
     <div class="batch-group">
       <h4>一括作成 (CSV)</h4>
       <div class="file-upload inline">
@@ -43,6 +89,10 @@ old_base_css: true
         <input type="file" id="qr-input-file" accept="image/*" />
       </div>
       <p class="drop-hint">または 画像をドラッグ&ドロップ / Ctrl+V</p>
+
+      <div id="qr-preview-container" class="qr-preview-container hidden">
+        <img id="qr-preview" src="" alt="Selected QR Code" />
+      </div>
 
       <div id="reader" style="width: 100%"></div>
 
@@ -74,6 +124,7 @@ old_base_css: true
 </div>
 
 <!-- Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>

@@ -16,13 +16,82 @@ document.addEventListener('DOMContentLoaded', () => {
     // === Global Variables ===
     const qrDisplay = document.getElementById('qrcode');
     const qrResultList = document.getElementById('qr-results-list');
-    let generatedQrObject = null; // To hold the QrcodeJS object
     let historyData = JSON.parse(localStorage.getItem('qr_history') || '[]');
+    let currentLogo = null;
+
+    // Initialize QR Styling
+    const qrStyling = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        type: "svg",
+        data: "https://kits-tools.net",
+        image: null,
+        dotsOptions: { color: "#000000", type: "square" },
+        backgroundOptions: { color: "#ffffff" },
+        cornersSquareOptions: { type: "square" },
+        imageOptions: { crossOrigin: "anonymous", margin: 10 }
+    });
+
+    qrStyling.append(qrDisplay);
+
+    // === Customization Logic ===
+    const toggleCustom = document.getElementById('toggle-custom');
+    const customOptions = document.getElementById('custom-options');
+    const dotColorInput = document.getElementById('qr-dot-color');
+    const bgColorInput = document.getElementById('qr-bg-color');
+    const dotTypeSelect = document.getElementById('qr-dot-type');
+    const cornerTypeSelect = document.getElementById('qr-corner-type');
+    const logoInput = document.getElementById('logo-input');
+    const removeLogoBtn = document.getElementById('remove-logo');
+
+    toggleCustom.addEventListener('click', () => {
+        customOptions.classList.toggle('hidden');
+    });
+
+    function updateQR() {
+        const text = document.getElementById('qr-text').value || "https://kits-tools.net";
+        qrStyling.update({
+            data: text,
+            dotsOptions: {
+                color: dotColorInput.value,
+                type: dotTypeSelect.value
+            },
+            backgroundOptions: {
+                color: bgColorInput.value
+            },
+            cornersSquareOptions: {
+                type: cornerTypeSelect.value
+            },
+            image: currentLogo
+        });
+    }
+
+    [dotColorInput, bgColorInput, dotTypeSelect, cornerTypeSelect].forEach(el => {
+        el.addEventListener('change', updateQR);
+    });
+
+    logoInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                currentLogo = event.target.result;
+                removeLogoBtn.classList.remove('hidden');
+                updateQR();
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    removeLogoBtn.addEventListener('click', () => {
+        currentLogo = null;
+        logoInput.value = '';
+        removeLogoBtn.classList.add('hidden');
+        updateQR();
+    });
 
     // === History Management ===
     function saveHistory(text, type = 'scanned') {
-        // Check duplication (ignore if same text exists recently?)
-        // For now, allow duplicates but maybe warn? Or just append.
         const newItem = {
             id: Date.now(),
             text: text,
@@ -37,22 +106,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderHistory() {
         const list = document.getElementById('history-list');
-        const filter = document.getElementById('history-filter').value.toLowerCase();
-        const sort = document.getElementById('history-sort').value;
+        const filterStr = document.getElementById('history-filter').value.toLowerCase();
+        const sortVal = document.getElementById('history-sort').value;
 
         list.innerHTML = '';
 
         let items = historyData.filter(item => 
-            item.text.toLowerCase().includes(filter)
+            item.text.toLowerCase().includes(filterStr)
         );
 
-        if (sort === 'date-asc') {
+        if (sortVal === 'date-asc') {
             items.sort((a, b) => new Date(a.date) - new Date(b.date));
         } else {
             items.sort((a, b) => new Date(b.date) - new Date(a.date));
         }
 
-        // Sort pinned to top?
         items.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
         items.forEach(item => {
@@ -122,82 +190,68 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = qrText.value;
         if (!text) return;
 
-        qrDisplay.innerHTML = '';
-        generatedQrObject = new QRCode(qrDisplay, {
-            text: text,
-            width: 256,
-            height: 256,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-
+        updateQR();
         downloadActions.classList.remove('hidden');
         saveHistory(text, 'generated');
     });
 
     // === Export PNG/SVG ===
     document.getElementById('download-png').addEventListener('click', () => {
-        const img = qrDisplay.querySelector('img');
-        if (img) {
-            const link = document.createElement('a');
-            link.download = 'qrcode.png';
-            link.href = img.src;
-            link.click();
-        }
+        qrStyling.download({ name: "qrcode", extension: "png" });
     });
 
     document.getElementById('download-svg').addEventListener('click', () => {
-        // QRCode.js renders as Canvas or Img. If it's canvas, we can convert.
-        // If it's img (base64 of png), getting SVG is hard without re-generating using an SVG lib.
-        // But QRCode.js is old. For now, let's just alert limitation or try to find an SVG method.
-        // Actually, let's just support PNG since QRCode.js outputs raster mostly.
-        // Wait, the user asked for SVG. existing lib might not support it easily.
-        // Let's check generated DOM. Usually it has a canvas and an img.
-        alert('現在のライブラリではPNG保存のみサポートされています。(SVG実装予定)');
+        qrStyling.download({ name: "qrcode", extension: "svg" });
     });
 
     // === Batch Generate ===
+    const batchGenerateBtn = document.getElementById('batch-generate-btn');
+    let batchLines = [];
+
     document.getElementById('csv-input').addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         const text = await file.text();
-        const lines = text.split(/\r\n|\n/).filter(line => line.trim() !== '');
+        batchLines = text.split(/\r\n|\n/).filter(line => line.trim() !== '');
         
+        if (batchLines.length > 0) {
+            batchGenerateBtn.classList.remove('hidden');
+        }
+    });
+
+    batchGenerateBtn.addEventListener('click', async () => {
         const zip = new JSZip();
         const folder = zip.folder("qrcodes");
         
-        // This is a bit hacky because QRCode.js is DOM based.
-        // We need to generate them off-screen one by one.
-        const hiddenDiv = document.createElement('div');
-        // hiddenDiv.style.display = 'none'; // Need layout for canvas?
-        document.body.appendChild(hiddenDiv);
+        // Use a temporary instance to not disturb UI
+        const tempStyling = new QRCodeStyling({
+            width: 512,
+            height: 512,
+            dotsOptions: {
+                color: dotColorInput.value,
+                type: dotTypeSelect.value
+            },
+            backgroundOptions: {
+                color: bgColorInput.value
+            },
+            cornersSquareOptions: {
+                type: cornerTypeSelect.value
+            },
+            image: currentLogo,
+            imageOptions: { crossOrigin: "anonymous", margin: 10 }
+        });
 
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            const [data, filename] = line.split(','); // Simple CSV: data,filename
+        for (let i = 0; i < batchLines.length; i++) {
+            const line = batchLines[i];
+            const [data, filename] = line.split(',');
             
-            // Clean previous
-            hiddenDiv.innerHTML = '';
+            tempStyling.update({ data: data });
             
-            new QRCode(hiddenDiv, {
-                text: data,
-                width: 256,
-                height: 256
-            });
-
-            // Wait for render? QRCode.js is sync usually but image generation might take a tick?
-            await new Promise(r => setTimeout(r, 50)); 
-            
-            const img = hiddenDiv.querySelector('img');
-            if (img) {
-                const base64 = img.src.split(',')[1];
-                folder.file(`${filename || 'qr_' + i}.png`, base64, {base64: true});
-            }
+            // Get blob
+            const blob = await tempStyling.getRawData("png");
+            folder.file(`${filename || 'qr_' + i}.png`, blob);
         }
-
-        document.body.removeChild(hiddenDiv);
 
         const content = await zip.generateAsync({type:"blob"});
         const link = document.createElement('a');
@@ -231,6 +285,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function scanFile(file) {
+        // Display Preview
+        const previewImg = document.getElementById('qr-preview');
+        const previewContainer = document.getElementById('qr-preview-container');
+        if (file instanceof Blob) {
+            const url = URL.createObjectURL(file);
+            previewImg.src = url;
+            previewContainer.classList.remove('hidden');
+        }
+
         const uniqueHandler = new Set();
         // We already have history check but let's ensure we don't spam UI for this single file scan
         
@@ -277,50 +340,144 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function scanFileFallbackInternal(file, addResultCallback) {
-        // Tiling Logic renamed
+        // Advanced Preprocessing + Tiling Strategy
         
-        // Helper to scan a Blob/File
-        const scanOne = async (blob) => {
+        const scanOne = async (source) => {
+            const results = [];
+            
+            // Helper to try jsQR on a canvas
+            const tryJsQR = (canvas) => {
+                const ctx = canvas.getContext('2d');
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+                return code ? code.data : null;
+            };
+
             try {
-                const f = new File([blob], "temp.png", { type: "image/png" });
-                const res = await html5QrCode.scanFile(f, false);
-                return res;
+                // 1. Try html5-qrcode
+                let f;
+                let canvasForJsQR = null;
+
+                if (source instanceof HTMLCanvasElement) {
+                    canvasForJsQR = source;
+                    const blob = await new Promise(r => source.toBlob(r, 'image/png'));
+                    f = new File([blob], "temp.png", { type: "image/png" });
+                } else if (source instanceof Blob) {
+                    f = new File([source], "temp.png", { type: "image/png" });
+                    // Create canvas for jsQR if needed
+                    const img = await createImageBitmap(source);
+                    canvasForJsQR = document.createElement('canvas');
+                    canvasForJsQR.width = img.width;
+                    canvasForJsQR.height = img.height;
+                    canvasForJsQR.getContext('2d').drawImage(img, 0,0);
+                } else {
+                    f = source;
+                }
+
+                try {
+                    const res = await html5QrCode.scanFile(f, false);
+                    if (res) results.push(res);
+                } catch(e) {}
+
+                // 2. Try jsQR (Secondary Engine)
+                if (canvasForJsQR) {
+                    const res = tryJsQR(canvasForJsQR);
+                    if (res) results.push(res);
+                }
+
+                return results.length > 0 ? results : null;
             } catch (err) {
                 return null;
             }
         };
 
-        // 1. Full Scan with html5-qrcode
-        const fullRes = await scanOne(file);
-        if (fullRes) addResultCallback(fullRes);
-
-        // 2. Tiling
-        try {
-            const img = await createImageBitmap(file);
-            const w = img.width;
-            const h = img.height;
+        // Versatile preprocessing helper
+        const getProcessedCanvas = (img, sx, sy, sw, sh, mode = 'contrast', param = 1.5) => {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
+            canvas.width = sw;
+            canvas.height = sh;
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+            
+            const imageData = ctx.getImageData(0, 0, sw, sh);
+            const data = imageData.data;
 
-            const strips = [
-                {x: 0, y: 0, w: w * 0.4, h: h},
-                {x: w * 0.3, y: 0, w: w * 0.4, h: h},
-                {x: w * 0.6, y: 0, w: w * 0.4, h: h},
-                {x: 0, y: 0, w: w, h: h * 0.5},
-                {x: 0, y: h * 0.5, w: w, h: h * 0.5}
-            ];
-
-            for (const strip of strips) {
-                canvas.width = strip.w;
-                canvas.height = strip.h;
-                ctx.drawImage(img, strip.x, strip.y, strip.w, strip.h, 0, 0, strip.w, strip.h);
+            for (let i = 0; i < data.length; i += 4) {
+                const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+                let val;
                 
-                const blob = await new Promise(r => canvas.toBlob(r));
-                const res = await scanOne(blob);
-                if (res) addResultCallback(res);
+                if (mode === 'binarize') {
+                    // Constant threshold
+                    val = gray > param ? 255 : 0;
+                } else {
+                    // Contrast
+                    const contrast = param;
+                    const intercept = 128 * (1 - contrast);
+                    val = gray * contrast + intercept;
+                    if (val > 255) val = 255;
+                    if (val < 0) val = 0;
+                }
+                data[i] = data[i+1] = data[i+2] = val;
             }
-        } catch (e) {
-            console.error("Tiling error", e);
+            ctx.putImageData(imageData, 0, 0);
+            return canvas;
+        };
+
+        const img = await createImageBitmap(file);
+        const w = img.width;
+        const h = img.height;
+
+        // 1. Full Scan Passes
+        const passes = [
+            { mode: 'original', source: file },
+            { mode: 'binarize', param: 128 },
+            { mode: 'binarize', param: 180 }, // Higher threshold for light/faded
+            { mode: 'contrast', param: 1.8 }
+        ];
+
+        for (const pass of passes) {
+            let res;
+            if (pass.mode === 'original') {
+                res = await scanOne(pass.source);
+            } else {
+                const canvas = getProcessedCanvas(img, 0, 0, w, h, pass.mode, pass.param);
+                res = await scanOne(canvas);
+            }
+            if (res) {
+                if (Array.isArray(res)) res.forEach(r => addResultCallback(r));
+                else addResultCallback(res);
+            }
+        }
+
+        // 2. Tiling Passes
+        const strips = [
+            {x: 0, y: 0, w: w * 0.4, h: h},
+            {x: w * 0.3, y: 0, w: w * 0.4, h: h},
+            {x: w * 0.6, y: 0, w: w * 0.4, h: h},
+            {x: 0, y: 0, w: w, h: h * 0.5},
+            {x: 0, y: h * 0.5, w: w, h: h * 0.5}
+        ];
+
+        for (const s of strips) {
+            // Original strip
+            const cOrig = document.createElement('canvas');
+            cOrig.width = s.w; cOrig.height = s.h;
+            cOrig.getContext('2d').drawImage(img, s.x, s.y, s.w, s.h, 0, 0, s.w, s.h);
+            const resOrig = await scanOne(cOrig);
+            if (resOrig) {
+                if (Array.isArray(resOrig)) resOrig.forEach(r => addResultCallback(r));
+                else addResultCallback(resOrig);
+            }
+
+            // Binarized strip
+            const cBin = getProcessedCanvas(img, s.x, s.y, s.w, s.h, 'binarize', 128);
+            const resBin = await scanOne(cBin);
+            if (resBin) {
+                if (Array.isArray(resBin)) resBin.forEach(r => addResultCallback(r));
+                else addResultCallback(resBin);
+            }
         }
     }
 
