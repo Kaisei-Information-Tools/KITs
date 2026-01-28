@@ -231,50 +231,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function scanFile(file) {
-        // Clear previous manual results (keep history but clear display area if needed? 
-        // No, user wants to see results. Maybe we just append.)
+        const uniqueHandler = new Set();
+        // We already have history check but let's ensure we don't spam UI for this single file scan
         
-        let detected = false;
+        // Helper to add results
+        const addResult = (text) => {
+            if (!uniqueHandler.has(text)) {
+                uniqueHandler.add(text);
+                displayResult(text);
+            }
+        };
 
-        // Try BarcodeDetector first for multi-code support
+        let strategiesRun = [];
+
+        // 1. Native BarcodeDetector
         if ('BarcodeDetector' in window) {
-            try {
-                const formats = await BarcodeDetector.getSupportedFormats();
-                if (formats.includes('qr_code')) {
+            strategiesRun.push((async () => {
+                try {
                     const detector = new BarcodeDetector({formats: ['qr_code']});
                     const bmp = await createImageBitmap(file);
                     const barcodes = await detector.detect(bmp);
-                    
-                    if (barcodes.length > 0) {
-                        barcodes.forEach(code => displayResult(code.rawValue));
-                        detected = true;
-                    }
+                    // Sort by X to be nice
+                    barcodes.sort((a,b) => a.boundingBox.x - b.boundingBox.x);
+                    barcodes.forEach(code => addResult(code.rawValue));
+                } catch (e) {
+                    console.warn("BarcodeDetector error", e);
                 }
-            } catch (err) {
-                console.warn("BarcodeDetector failed:", err);
-            }
+            })());
         }
 
-        // Check if we detected anything. If not, fallback to html5-qrcode
-        if (!detected) {
-            scanFileFallback(file);
+        // 2. Tiling Fallback (html5-qrcode)
+        // We run this ALWAYS now if we want maximum coverage, OR we can run it only if Native found < X?
+        // User says "3 codes, found 2". Native missed one. So we should run tiling too.
+        // To be safe and robust, let's run tiling as well, or at least a "full scan" pass with html5-qrcode.
+        
+        strategiesRun.push((async () => {
+             await scanFileFallbackInternal(file, addResult);
+        })());
+
+        await Promise.all(strategiesRun);
+
+        if (uniqueHandler.size === 0) {
+            alert("QRコードが見つかりませんでした。");
         }
     }
 
-    async function scanFileFallback(file) {
-        // Fallback Strategy: Divide and Conquer
-        // 1. Scan full image.
-        // 2. If 0 found, or just to be safe, split into quadrants and scan.
-        // Note: html5-qrcode is slow, so we do this carefully. 
-        // We'll use a visual check or just sequential scanning.
+    async function scanFileFallbackInternal(file, addResultCallback) {
+        // Tiling Logic renamed
         
-        const results = new Set();
-        const errors = [];
-
         // Helper to scan a Blob/File
         const scanOne = async (blob) => {
             try {
-                // html5-qrcode requires a File object or similar
                 const f = new File([blob], "temp.png", { type: "image/png" });
                 const res = await html5QrCode.scanFile(f, false);
                 return res;
@@ -283,14 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // 1. Full Scan
+        // 1. Full Scan with html5-qrcode
         const fullRes = await scanOne(file);
-        if (fullRes) {
-            results.add(fullRes);
-            displayResult(fullRes);
-        }
+        if (fullRes) addResultCallback(fullRes);
 
-        // 2. Tiling (Horizontal Split) - Good for side-by-side like the user's image
+        // 2. Tiling
         try {
             const img = await createImageBitmap(file);
             const w = img.width;
@@ -298,13 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            // Split into 3 vertical strips (since user had 3 QRs side by side)
-            // Left (0-40%), Center (30-70%), Right (60-100%) - Overlap to catch edges
             const strips = [
                 {x: 0, y: 0, w: w * 0.4, h: h},
                 {x: w * 0.3, y: 0, w: w * 0.4, h: h},
                 {x: w * 0.6, y: 0, w: w * 0.4, h: h},
-                // Also split horizontally just in case
                 {x: 0, y: 0, w: w, h: h * 0.5},
                 {x: 0, y: h * 0.5, w: w, h: h * 0.5}
             ];
@@ -316,17 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const blob = await new Promise(r => canvas.toBlob(r));
                 const res = await scanOne(blob);
-                if (res && !results.has(res)) {
-                    results.add(res);
-                    displayResult(res);
-                }
+                if (res) addResultCallback(res);
             }
         } catch (e) {
             console.error("Tiling error", e);
-        }
-
-        if (results.size === 0) {
-            alert("QRコードが見つかりませんでした。");
         }
     }
 
