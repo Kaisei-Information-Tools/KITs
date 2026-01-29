@@ -9,20 +9,51 @@ old_base_css: true
 
 <div class="left">
   <h2>文字カウントツール</h2>
+  <div class="tool-settings">
+    <div class="settings-group">
+      <label class="setting-item">
+        <input type="checkbox" id="caseInsensitive">
+        <span>大文字・小文字を区別しない</span>
+      </label>
+      <label class="setting-item">
+        <input type="checkbox" id="includeSymbolsInPercent" checked>
+        <span>記号・句読点を割合に含める</span>
+      </label>
+    </div>
+  </div>
+
   <textarea id="textInput" placeholder="ここに文章を入力"></textarea>
   <div class="result">
-    <p>文字数: <span id="charCount">0</span></p>
-    <p>スペースなしの文字数: <span id="charCountNoSpace">0</span></p>
-    <p>単語数: <span id="wordCount">0</span></p>
-    <p>行数: <span id="lineCount">0</span></p>
-    <p>句読点・記号: <span id="symbolCount">0</span></p>
-    <p>
-      ひらがな: <span id="hiraganaPercent">0</span>% / カタカナ:
-      <span id="katakanaPercent">0</span>% / 漢字:
-      <span id="kanjiPercent">0</span>% / アルファベット:
-      <span id="alphabetPercent">0</span>% / その他:
-      <span id="otherPercent">0</span>%
-    </p>
+    <div class="result-item">
+      <span class="label">文字数</span>
+      <span id="charCount" class="value">0</span>
+    </div>
+    <div class="result-item">
+      <span class="label">スペースなし</span>
+      <span id="charCountNoSpace" class="value">0</span>
+    </div>
+    <div class="result-item">
+      <span class="label">単語数</span>
+      <span id="wordCount" class="value">0</span>
+    </div>
+    <div class="result-item">
+      <span class="label">行数</span>
+      <span id="lineCount" class="value">0</span>
+    </div>
+    <div class="result-item">
+      <span class="label">記号・句読点</span>
+      <span id="symbolCount" class="value">0</span>
+    </div>
+
+    <div class="percentage-grid">
+      <div class="percent-pills">
+        <div class="pill">ひらがな: <span id="hiraganaPercent">0</span>%</div>
+        <div class="pill">カタカナ: <span id="katakanaPercent">0</span>%</div>
+        <div class="pill">漢字: <span id="kanjiPercent">0</span>%</div>
+        <div class="pill">英字: <span id="alphabetPercent">0</span>%</div>
+        <div class="pill" id="otherPill">その他: <span id="otherPercent">0</span>%</div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="right">
