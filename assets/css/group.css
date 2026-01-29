@@ -9,11 +9,9 @@ body {
   font-size: 15px;
   line-height: 1.5;
   color: var(--text-primary, #333);
-  background: linear-gradient(
-    135deg,
-    var(--bg-gradient-start) 0%,
-    var(--bg-gradient-end) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--bg-gradient-start) 0%,
+      var(--bg-gradient-end) 100%);
   background-attachment: fixed;
 }
 
@@ -70,54 +68,67 @@ main {
   all: unset;
   display: revert;
 }
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
 html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
 }
+
 a,
 button {
   cursor: revert;
 }
+
 ol,
 ul,
 menu,
 summary {
   list-style: none;
 }
+
 img {
   max-inline-size: 100%;
   max-block-size: 100%;
 }
+
 table {
   border-collapse: collapse;
 }
+
 input,
 textarea {
   -webkit-user-select: auto;
 }
+
 textarea {
   white-space: revert;
 }
+
 meter {
   -webkit-appearance: revert;
   appearance: revert;
 }
+
 :where(pre) {
   all: revert;
   box-sizing: border-box;
 }
+
 ::placeholder {
   color: var(--text-secondary, unset);
 }
+
 :where([hidden]) {
   display: none;
 }
+
 :where([contenteditable]:not([contenteditable="false"])) {
   -moz-user-modify: read-write;
   -webkit-user-modify: read-write;
@@ -125,9 +136,11 @@ meter {
   -webkit-line-break: after-white-space;
   -webkit-user-select: auto;
 }
+
 :where([draggable="true"]) {
   -webkit-user-drag: element;
 }
+
 :where(dialog:modal) {
   all: revert;
   box-sizing: border-box;
@@ -142,10 +155,18 @@ meter {
   min-height: 1rem;
   margin: 1rem;
 }
+
 html,
 body {
   height: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 800px) {
+  footer {
+    position: static;
+    margin-top: 20px;
+  }
 }
