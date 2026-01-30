@@ -18,8 +18,9 @@ class TodoApp {
   constructor() {
     console.log('TodoApp initializing...');
     this.tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    this.currentFilter = { status: 'all', sort: 'custom' };
-    this.currentView = 'list';
+    const savedSettings = JSON.parse(localStorage.getItem('todo_settings')) || {};
+    this.currentFilter = savedSettings.filter || { status: 'all', sort: 'custom' };
+    this.currentView = savedSettings.view || 'list';
     this.currentDate = new Date();
     
     // DOM Elements
@@ -46,6 +47,13 @@ class TodoApp {
 
   init() {
     this.bindEvents();
+    
+    // Set initial view toggle icon
+    const btn = document.getElementById('view-toggle');
+    if (btn) {
+        btn.innerHTML = this.currentView === 'list' ? '<i class="fa-solid fa-calendar-days"></i>' : '<i class="fa-solid fa-list-ul"></i>';
+    }
+
     this.render();
     this.initSortable();
   }
@@ -70,16 +78,24 @@ class TodoApp {
     if (searchInput) searchInput.addEventListener('input', () => this.render());
 
     const statusFilter = document.getElementById('filter-status');
-    if (statusFilter) statusFilter.addEventListener('change', (e) => {
-      this.currentFilter.status = e.target.value;
-      this.render();
-    });
+    if (statusFilter) {
+      statusFilter.value = this.currentFilter.status;
+      statusFilter.addEventListener('change', (e) => {
+        this.currentFilter.status = e.target.value;
+        this.save();
+        this.render();
+      });
+    }
 
     const sortFilter = document.getElementById('filter-sort');
-    if (sortFilter) sortFilter.addEventListener('change', (e) => {
-      this.currentFilter.sort = e.target.value;
-      this.render();
-    });
+    if (sortFilter) {
+      sortFilter.value = this.currentFilter.sort;
+      sortFilter.addEventListener('change', (e) => {
+        this.currentFilter.sort = e.target.value;
+        this.save();
+        this.render();
+      });
+    }
 
     this.form.addEventListener('submit', (e) => this.handleFormSubmit(e));
 
@@ -166,7 +182,7 @@ class TodoApp {
       div.className = 'subtask-row';
       div.innerHTML = `
         <input type="checkbox" class="subtask-check" ${completed ? 'checked' : ''}>
-        <input type="text" class="subtask-text-input" value="${text}" placeholder="サブタスク...">
+        <input type="text" class="subtask-text-input" value="${escapeHTML(text)}" placeholder="サブタスク...">
         <button type="button" class="btn-icon-subtask" title="削除" onclick="this.parentElement.remove()">
             <i class="fa-solid fa-xmark"></i>
         </button>
@@ -316,14 +332,14 @@ class TodoApp {
       <div class="task-content">
         <div class="task-header" style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
             <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
-            <h3 class="task-title">${task.title}</h3>
+            <h3 class="task-title">${escapeHTML(task.title)}</h3>
         </div>
-        <p style="font-size:0.9rem; color:var(--text-light); margin:0; white-space: pre-wrap;">${task.description || ''}</p>
+        <p style="font-size:0.9rem; color:var(--text-light); margin:0; white-space: pre-wrap;">${escapeHTML(task.description)}</p>
         
         <div class="task-meta">
             <span class="priority-tag priority-${task.priority}">${priorityLabels[task.priority]}</span>
             ${dateStr ? `<span class="meta-item ${overdueClass}"><i class="fa-regular fa-clock"></i> ${dateStr}</span>` : ''}
-            ${(task.tags || []).map(t => `<span class="tag-badge">#${t}</span>`).join('')}
+            ${(task.tags || []).map(t => `<span class="tag-badge">#${escapeHTML(t)}</span>`).join('')}
             ${subtaskProgress ? `<span class="meta-item"><i class="fa-solid fa-list-check"></i> ${subtaskProgress}</span>` : ''}
         </div>
 
@@ -332,7 +348,7 @@ class TodoApp {
             ${task.subtasks.map((st, index) => `
                 <div class="subtask-preview-item ${st.completed ? 'done' : ''}" data-index="${index}">
                     <i class="${st.completed ? 'fa-solid' : 'far'} ${st.completed ? 'fa-check-circle' : 'fa-circle'}"></i>
-                    <span class="subtask-preview-text">${st.text}</span>
+                    <span class="subtask-preview-text">${escapeHTML(st.text)}</span>
                 </div>
             `).join('')}
         </div>
@@ -396,8 +412,17 @@ class TodoApp {
     }
   }
 
+  save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
+    localStorage.setItem('todo_settings', JSON.stringify({
+      view: this.currentView,
+      filter: this.currentFilter
+    }));
+  }
+
   toggleView() {
     this.currentView = this.currentView === 'list' ? 'calendar' : 'list';
+    this.save();
     this.render();
     const btn = document.getElementById('view-toggle');
     if (btn) {
@@ -459,9 +484,21 @@ class TodoApp {
   }
 
   changeMonth(delta) {
+      // Set to 1st of month to avoid issues with shorter months (e.g. Jan 31 -> Feb 31 rolls to March)
+      this.currentDate.setDate(1);
       this.currentDate.setMonth(this.currentDate.getMonth() + delta);
       this.render();
   }
+}
+
+function escapeHTML(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
 function startApp() {
