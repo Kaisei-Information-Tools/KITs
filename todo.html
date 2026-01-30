@@ -6,11 +6,116 @@ js: todo
 old_base_css: true
 ---
 
-<h1 class="title">Todoリスト</h1>
-<div class="add-box">
-  <input type="text" class="text-input border" id="add-text" />
-  <button type="submit" class="button plus border" id="add">
-    <img src="assets/images/plus.svg" />
-  </button>
+<div class="todo-app-container">
+  <div class="app-header">
+    <h1 class="title">タスク管理</h1>
+    <div class="header-controls">
+      <button id="view-toggle" class="btn-icon" title="表示切替">
+        <i class="fa-solid fa-calendar-days"></i>
+      </button>
+      <button id="add-task-btn" class="btn-primary">
+        <i class="fa-solid fa-plus"></i> 新しいタスク
+      </button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-input" placeholder="タスクを検索...">
+    </div>
+    <div class="filter-group">
+      <select id="filter-status" class="select-input">
+        <option value="all">すべて</option>
+        <option value="active">進行中</option>
+        <option value="completed">完了済み</option>
+      </select>
+      <select id="filter-sort" class="select-input">
+        <option value="custom">カスタム順</option>
+        <option value="dueDate">期限順</option>
+        <option value="priority">優先度順</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="list-view" class="view-container active">
+    <!-- タスクがここに挿入されます -->
+    <div id="todo-list" class="task-list"></div>
+    <div id="empty-state" class="empty-state hidden">
+      <p>タスクはありません。素晴らしい一日を！</p>
+    </div>
+  </div>
+
+  <div id="calendar-view" class="view-container hidden">
+    <div class="calendar-header">
+      <button id="prev-month" class="btn-icon"><i class="fa-solid fa-chevron-left"></i></button>
+      <h2 id="current-month-display"></h2>
+      <button id="next-month" class="btn-icon"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="calendar-grid-header">
+      <div>日</div>
+      <div>月</div>
+      <div>火</div>
+      <div>水</div>
+      <div>木</div>
+      <div>金</div>
+      <div>土</div>
+    </div>
+    <div class="calendar-grid" id="calendar-grid"></div>
+  </div>
 </div>
-<div class="task-list" id="list"></div>
+
+<!-- タスク編集モーダル -->
+<div id="task-modal" class="todo-modal hidden">
+  <div class="todo-modal-content">
+    <div class="todo-modal-header">
+      <h2 id="modal-title">新しいタスク</h2>
+      <button id="close-modal" type="button" class="btn-icon"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="todo-modal-body">
+      <form id="task-form">
+        <input type="hidden" id="task-id">
+        <div class="form-group">
+          <input type="text" id="task-title" placeholder="何をする？" required autofocus>
+        </div>
+        <div class="form-group">
+          <textarea id="task-desc" placeholder="詳細説明（任意）" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fa-regular fa-calendar"></i> 期限</label>
+            <input type="date" id="task-due">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-flag"></i> 優先度</label>
+            <select id="task-priority">
+              <option value="low">低</option>
+              <option value="medium" selected>中</option>
+              <option value="high">高</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-tags"></i> タグ（カンマ区切り）</label>
+          <input type="text" id="task-tags" placeholder="仕事, プライベート...">
+        </div>
+
+        <div class="subtasks-section">
+          <label>サブタスク</label>
+          <div id="subtask-list"></div>
+          <div class="add-subtask-row">
+            <input type="text" id="new-subtask-input" placeholder="サブタスクを追加...">
+            <button type="button" id="add-subtask-btn" class="btn-sm"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn-primary">保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- SortableJS must load before todo.js initializes -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
