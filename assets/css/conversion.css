@@ -5,13 +5,15 @@ h1 {
 select,
 input,
 button:not(.btn):not(.theme-toggle) {
-  width: 100%; /* 全て同じ幅 */
+  width: 100%;
+  /* 全て同じ幅 */
   padding: 10px;
   margin: 10px 0;
   font-size: 16px;
   border: 1px solid var(--glass-border, rgba(204, 204, 204, 0.5));
   border-radius: 8px;
-  box-sizing: border-box; /* 幅を内側に計算 */
+  box-sizing: border-box;
+  /* 幅を内側に計算 */
 }
 
 select,
@@ -40,6 +42,7 @@ button:not(.btn):not(.theme-toggle) {
   transition: all 0.3s ease;
   font-weight: 500;
 }
+
 p.description {
   font-size: 14px;
   color: var(--text-secondary, #555);
@@ -59,6 +62,5 @@ button:not(.btn):not(.theme-toggle):hover {
 }
 
 main {
-  height: 764px;
-  min-height: 0 !important;
+  min-height: 0;
 }
