@@ -513,6 +513,7 @@ class TodoApp {
       
       const a = document.createElement('a');
       a.href = url;
+      // Format: YYYY-MM-DDTHH-MM-SS (remove milliseconds and 'Z')
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
       a.download = `todo-backup-${timestamp}.json`;
       document.body.appendChild(a);
@@ -547,20 +548,40 @@ class TodoApp {
         if (!data.tasks || !Array.isArray(data.tasks)) {
           throw new Error('Invalid JSON structure: tasks array not found');
         }
+        
+        // Validate version field exists
+        if (!data.version) {
+          console.warn('Import data missing version field, assuming v1.0');
+        }
+        
+        // Validate each task has required fields
+        const validTasks = data.tasks.filter(task => {
+          if (!task || typeof task !== 'object') return false;
+          if (!task.id || !task.title) return false;
+          return true;
+        });
+        
+        if (validTasks.length === 0) {
+          throw new Error('No valid tasks found in import file');
+        }
+        
+        if (validTasks.length < data.tasks.length) {
+          console.warn(`${data.tasks.length - validTasks.length} invalid tasks were skipped`);
+        }
 
         // Confirm before overwriting
-        const confirmMsg = `現在のタスク (${this.tasks.length}個) をインポートしたタスク (${data.tasks.length}個) で上書きしますか？`;
+        const confirmMsg = `現在のタスク (${this.tasks.length}個) をインポートしたタスク (${validTasks.length}個) で上書きしますか？`;
         if (!confirm(confirmMsg)) {
           event.target.value = ''; // Reset file input
           return;
         }
 
-        // Import the tasks
-        this.tasks = data.tasks;
+        // Import the valid tasks
+        this.tasks = validTasks;
         this.save();
         this.render();
         
-        this.showNotification(`${data.tasks.length}個のタスクをインポートしました`, 'success');
+        this.showNotification(`${validTasks.length}個のタスクをインポートしました`, 'success');
         event.target.value = ''; // Reset file input
       } catch (error) {
         console.error('Import error:', error);
@@ -601,7 +622,10 @@ class TodoApp {
     setTimeout(() => {
       notification.style.animation = 'slideOut 0.3s ease-in';
       setTimeout(() => {
-        document.body.removeChild(notification);
+        // Check if notification still exists in DOM before removing
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
       }, 300);
     }, 3000);
   }
