@@ -96,3 +96,82 @@ main {
 .dropdown-menu-theme {
   z-index: 9999;
 }
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 520px) {
+  /* --- メインコンテナ --- */
+  main {
+    max-width: 94% !important;
+    width: 100% !important;
+    padding: 10px !important;
+    margin-top: 10px !important;
+    padding-top: 100px !important; /* 70px → 100px に変更して被りを防ぐ */
+  }
+
+  .container {
+    padding: 0;
+    width: 100%;
+  }
+
+  /* --- タイトル --- */
+  .title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  /* --- エディタ外枠 --- */
+  /* PC用の固定幅(600px)を解除して画面に合わせる */
+  #editor {
+    width: 100% !important;
+    border-radius: 8px;
+    margin: 0 auto;
+    box-shadow: none; /* スマホでは影を控えめに */
+  }
+
+  /* --- CKEditor 編集エリア (縦書き部分) --- */
+  .ck-editor__editable {
+    /* 縦書きなので高さが必要 */
+    min-height: 60vh;
+    max-height: 65vh;
+    padding: 15px 10px;
+    font-size: 16px; /* iOSでの入力時ズーム防止 */
+    
+    /* 横スクロールを許可 */
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  /* --- CKEditor ツールバー --- */
+  /* ボタンが多いので折り返して表示 */
+  .ck.ck-toolbar {
+    border-radius: 8px 8px 0 0 !important;
+  }
+  
+  .ck.ck-toolbar .ck-toolbar__items {
+    flex-wrap: wrap !important;
+    justify-content: center;
+  }
+
+  /* --- 下部の保存ボタンエリア --- */
+  .card-footer {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  #toolbar {
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  #captureBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+  }
+   
+}

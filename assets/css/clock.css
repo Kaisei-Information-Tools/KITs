@@ -39,3 +39,41 @@ main {
   height: 100%;
   border-color: transparent;
 }
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- メインコンテナ --- */
+  main {
+    width: 100% !important;
+    /* ヘッダー(約100px)を除いた高さを確保して中央揃え */
+    height: calc(100vh - 110px) !important; 
+    margin-top: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* --- 時計コンテナ --- */
+  .clock-container {
+    height: auto;
+    width: 100%;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* --- 時計テキスト --- */
+  #clock {
+    /* 画面幅に合わせてサイズ自動調整（最大でも画面幅の10%程度） */
+    /* 日付「YYYY年MM月DD日(曜)」が収まるように調整 */
+    font-size: clamp(2rem, 9vw, 5rem);
+    line-height: 1.4;
+    width: 100%;
+    text-align: center;
+    word-wrap: break-word;
+  }
+}
