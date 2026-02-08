@@ -554,7 +554,8 @@ class TodoApp {
           console.warn('Import data missing version field, assuming v1.0');
         }
         
-        // Validate each task has required fields
+        // Validate each task has required fields (id and title are mandatory)
+        // Other fields (description, dueDate, priority, tags, subtasks) are optional
         const validTasks = data.tasks.filter(task => {
           if (!task || typeof task !== 'object') return false;
           if (!task.id || !task.title) return false;
@@ -624,7 +625,7 @@ class TodoApp {
       setTimeout(() => {
         // Check if notification still exists in DOM before removing
         if (notification.parentNode) {
-          notification.parentNode.removeChild(notification);
+          notification.remove();
         }
       }, 300);
     }, 3000);
