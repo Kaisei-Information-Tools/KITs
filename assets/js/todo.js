@@ -552,6 +552,9 @@ class TodoApp {
         // Validate version field exists
         if (!data.version) {
           console.warn('Import data missing version field, assuming v1.0');
+        } else if (data.version !== '1.0') {
+          console.warn(`Unsupported version ${data.version}, attempting to import as v1.0`);
+          this.showNotification(`バージョン ${data.version} は未対応ですが、インポートを試みます`, 'info');
         }
         
         // Normalize and validate each task.
@@ -568,7 +571,7 @@ class TodoApp {
 
           // Validate and normalize id
           const rawId = task.id;
-          const id = typeof rawId === 'string' ? rawId.trim() : '';
+          const id = typeof rawId === 'string' ? rawId.trim() : String(rawId || '').trim();
           if (!id) return null;
 
           // Validate and normalize title
@@ -624,6 +627,29 @@ class TodoApp {
         
         if (validTasks.length < data.tasks.length) {
           console.warn(`${data.tasks.length - validTasks.length} invalid tasks were skipped`);
+        }
+
+        // Check for duplicate IDs
+        const idSet = new Set();
+        const duplicateIds = [];
+        for (const task of validTasks) {
+          if (idSet.has(task.id)) {
+            duplicateIds.push(task.id);
+          }
+          idSet.add(task.id);
+        }
+
+        if (duplicateIds.length > 0) {
+          console.warn('Duplicate IDs detected, regenerating unique IDs:', duplicateIds);
+          // Regenerate IDs for duplicates
+          const usedIds = new Set();
+          validTasks.forEach(task => {
+            if (usedIds.has(task.id)) {
+              // Generate new unique ID
+              task.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+            }
+            usedIds.add(task.id);
+          });
         }
 
         // Confirm before overwriting
