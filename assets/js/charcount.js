@@ -4,22 +4,53 @@ function analyzeText() {
   let includeSymbolsInPercent = document.getElementById("includeSymbolsInPercent").checked;
   let segmenter = new TinySegmenter();
 
-  let rawWords = text.split(/\r?\n/).flatMap((line) => segmenter.segment(line));
-  
-  // Robust merging of hyphenated words (e.g., [word, "-", word, "-", word] -> [word-word-word])
-  let words = [];
-  for (let i = 0; i < rawWords.length; i++) {
-    let token = rawWords[i];
-    // Keep merging if the next segment is a hyphen followed by another alphanumeric segment
-    while (i + 2 < rawWords.length && 
-           rawWords[i + 1] === "-" && 
-           /[a-zA-Z0-9]/.test(token) && 
-           /[a-zA-Z0-9]/.test(rawWords[i + 2])) {
-      token = token + "-" + rawWords[i + 2];
-      i += 2;
+  // Process line by line to prevent merging across newlines
+  let words = text.split(/\r?\n/).flatMap((line) => {
+    let rawWords = segmenter.segment(line);
+    let mergedWords = [];
+    
+    for (let i = 0; i < rawWords.length; i++) {
+      let token = rawWords[i];
+      let offset = 1;
+      
+      // Greedy merge loop
+      while (i + offset < rawWords.length) {
+        let next = rawWords[i + offset];
+        
+        // Rule 1: Adjacent Alphanumeric (e.g., "1", "9" -> "19")
+        // TinySegmenter might split numbers or alphanumerics unnecessarily
+        if (/[a-zA-Z0-9]/.test(next)) {
+          token += next;
+          offset++;
+          continue;
+        }
+
+        // Rule 2: Connector + Alphanumeric (e.g., "U", ".", "S" or "24", "/", "7" or "don", "'", "t")
+        if (i + offset + 1 < rawWords.length) {
+          let afterNext = rawWords[i + offset + 1];
+          if (/^[-\.\/'’]$/.test(next) && /[a-zA-Z0-9]/.test(afterNext)) {
+             token += next + afterNext;
+             offset += 2;
+             continue;
+          }
+        }
+        
+        // Rule 3: Trailing Dot for Abbreviation (e.g., "U.S", "." -> "U.S.")
+        // Only merge if the current token already looks like an abbreviation (contains a dot)
+        if (next === "." && /[a-zA-Z0-9]\.[a-zA-Z0-9]/.test(token)) {
+          token += ".";
+          offset++;
+          continue;
+        }
+        
+        break; // No merge rule matched
+      }
+      
+      mergedWords.push(token);
+      i += offset - 1; // Advance main loop
     }
-    words.push(token);
-  }
+    return mergedWords;
+  });
   
   // Filter out empty strings and strings that don't contain at least one alphanumeric or East Asian letter character.
   words = words.filter((word) => 
