@@ -554,13 +554,69 @@ class TodoApp {
           console.warn('Import data missing version field, assuming v1.0');
         }
         
-        // Validate each task has required fields (id and title are mandatory)
-        // Other fields (description, dueDate, priority, tags, subtasks) are optional
-        const validTasks = data.tasks.filter(task => {
-          if (!task || typeof task !== 'object') return false;
-          if (!task.id || !task.title) return false;
-          return true;
-        });
+        // Normalize and validate each task.
+        // - id: required non-empty string
+        // - title: required, stringified and trimmed, must be non-empty
+        // - description: optional, stringified
+        // - dueDate: string or empty string
+        // - priority: 'low' | 'medium' | 'high' (defaults to 'medium' for others)
+        // - tags/subtasks: arrays only (default to [])
+        // - completed: boolean (defaults to false)
+        // - createdAt: string (defaults to now if missing)
+        const normalizeImportedTask = (task) => {
+          if (!task || typeof task !== 'object') return null;
+
+          // Validate and normalize id
+          const rawId = task.id;
+          const id = typeof rawId === 'string' ? rawId.trim() : '';
+          if (!id) return null;
+
+          // Validate and normalize title
+          if (task.title === null || task.title === undefined) return null;
+          const title = String(task.title).trim();
+          if (!title) return null;
+
+          // Optional fields with normalization
+          const description = task.description != null ? String(task.description) : '';
+
+          let dueDate = '';
+          if (typeof task.dueDate === 'string') {
+            dueDate = task.dueDate;
+          }
+
+          const allowedPriorities = ['low', 'medium', 'high'];
+          let priority = 'medium';
+          if (typeof task.priority === 'string') {
+            const p = task.priority.toLowerCase();
+            priority = allowedPriorities.includes(p) ? p : 'medium';
+          }
+
+          const tags = Array.isArray(task.tags) ? task.tags : [];
+          const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
+
+          const completed = typeof task.completed === 'boolean' ? task.completed : false;
+
+          const createdAt =
+            typeof task.createdAt === 'string' && task.createdAt
+              ? task.createdAt
+              : new Date().toISOString();
+
+          return {
+            id,
+            title,
+            description,
+            dueDate,
+            priority,
+            tags,
+            subtasks,
+            completed,
+            createdAt,
+          };
+        };
+
+        const validTasks = data.tasks
+          .map(normalizeImportedTask)
+          .filter(task => task !== null);
         
         if (validTasks.length === 0) {
           throw new Error('No valid tasks found in import file');
