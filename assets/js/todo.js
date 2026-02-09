@@ -117,6 +117,15 @@ class TodoApp {
 
     const nextMonth = document.getElementById('next-month');
     if (nextMonth) nextMonth.addEventListener('click', () => this.changeMonth(1));
+
+    const exportBtn = document.getElementById('export-btn');
+    if (exportBtn) exportBtn.addEventListener('click', () => this.exportTasks());
+
+    const importBtn = document.getElementById('import-btn');
+    if (importBtn) importBtn.addEventListener('click', () => this.triggerImport());
+
+    const importFileInput = document.getElementById('import-file-input');
+    if (importFileInput) importFileInput.addEventListener('change', (e) => this.importTasks(e));
   }
 
   initSortable() {
@@ -488,6 +497,220 @@ class TodoApp {
       this.currentDate.setDate(1);
       this.currentDate.setMonth(this.currentDate.getMonth() + delta);
       this.render();
+  }
+
+  exportTasks() {
+    try {
+      const data = {
+        version: '1.0',
+        exportDate: new Date().toISOString(),
+        tasks: this.tasks
+      };
+      
+      const jsonStr = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      // Format: YYYY-MM-DDTHH-MM-SS (remove milliseconds and 'Z')
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+      a.download = `todo-backup-${timestamp}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      this.showNotification('タスクをエクスポートしました', 'success');
+    } catch (error) {
+      console.error('Export error:', error);
+      this.showNotification('エクスポートに失敗しました', 'error');
+    }
+  }
+
+  triggerImport() {
+    const fileInput = document.getElementById('import-file-input');
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  importTasks(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        
+        // Validate the JSON structure
+        if (!data.tasks || !Array.isArray(data.tasks)) {
+          throw new Error('Invalid JSON structure: tasks array not found');
+        }
+        
+        // Validate version field exists
+        if (!data.version) {
+          console.warn('Import data missing version field, assuming v1.0');
+        } else if (data.version !== '1.0') {
+          console.warn(`Unsupported version ${data.version}, attempting to import as v1.0`);
+          this.showNotification(`バージョン ${data.version} は未対応ですが、インポートを試みます`, 'info');
+        }
+        
+        // Normalize and validate each task.
+        // - id: required non-empty string
+        // - title: required, stringified and trimmed, must be non-empty
+        // - description: optional, stringified
+        // - dueDate: string or empty string
+        // - priority: 'low' | 'medium' | 'high' (defaults to 'medium' for others)
+        // - tags/subtasks: arrays only (default to [])
+        // - completed: boolean (defaults to false)
+        // - createdAt: string (defaults to now if missing)
+        const normalizeImportedTask = (task) => {
+          if (!task || typeof task !== 'object') return null;
+
+          // Validate and normalize id
+          const rawId = task.id;
+          const id = typeof rawId === 'string' ? rawId.trim() : String(rawId || '').trim();
+          if (!id) return null;
+
+          // Validate and normalize title
+          if (task.title === null || task.title === undefined) return null;
+          const title = String(task.title).trim();
+          if (!title) return null;
+
+          // Optional fields with normalization
+          const description = task.description != null ? String(task.description) : '';
+
+          let dueDate = '';
+          if (typeof task.dueDate === 'string') {
+            dueDate = task.dueDate;
+          }
+
+          const allowedPriorities = ['low', 'medium', 'high'];
+          let priority = 'medium';
+          if (typeof task.priority === 'string') {
+            const p = task.priority.toLowerCase();
+            priority = allowedPriorities.includes(p) ? p : 'medium';
+          }
+
+          const tags = Array.isArray(task.tags) ? task.tags : [];
+          const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
+
+          const completed = typeof task.completed === 'boolean' ? task.completed : false;
+
+          const createdAt =
+            typeof task.createdAt === 'string' && task.createdAt
+              ? task.createdAt
+              : new Date().toISOString();
+
+          return {
+            id,
+            title,
+            description,
+            dueDate,
+            priority,
+            tags,
+            subtasks,
+            completed,
+            createdAt,
+          };
+        };
+
+        const validTasks = data.tasks
+          .map(normalizeImportedTask)
+          .filter(task => task !== null);
+        
+        if (validTasks.length === 0) {
+          throw new Error('No valid tasks found in import file');
+        }
+        
+        if (validTasks.length < data.tasks.length) {
+          console.warn(`${data.tasks.length - validTasks.length} invalid tasks were skipped`);
+        }
+
+        // Check for duplicate IDs
+        const idSet = new Set();
+        const duplicateIds = [];
+        for (const task of validTasks) {
+          if (idSet.has(task.id)) {
+            duplicateIds.push(task.id);
+          }
+          idSet.add(task.id);
+        }
+
+        if (duplicateIds.length > 0) {
+          console.warn('Duplicate IDs detected, regenerating unique IDs:', duplicateIds);
+          // Regenerate IDs for duplicates
+          const usedIds = new Set();
+          validTasks.forEach(task => {
+            if (usedIds.has(task.id)) {
+              // Generate new unique ID
+              task.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+            }
+            usedIds.add(task.id);
+          });
+        }
+
+        // Confirm before overwriting
+        const confirmMsg = `現在のタスク (${this.tasks.length}個) をインポートしたタスク (${validTasks.length}個) で上書きしますか？`;
+        if (!confirm(confirmMsg)) {
+          event.target.value = ''; // Reset file input
+          return;
+        }
+
+        // Import the valid tasks
+        this.tasks = validTasks;
+        this.save();
+        this.render();
+        
+        this.showNotification(`${validTasks.length}個のタスクをインポートしました`, 'success');
+        event.target.value = ''; // Reset file input
+      } catch (error) {
+        console.error('Import error:', error);
+        this.showNotification('インポートに失敗しました。ファイルの形式や内容を確認してください。', 'error');
+        event.target.value = ''; // Reset file input
+      }
+    };
+
+    reader.onerror = () => {
+      this.showNotification('ファイルの読み込みに失敗しました', 'error');
+      event.target.value = ''; // Reset file input
+    };
+
+    reader.readAsText(file);
+  }
+
+  showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+      color: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10000;
+      animation: slideIn 0.3s ease-out;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease-in';
+      setTimeout(() => {
+        // Check if notification still exists in DOM before removing
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 300);
+    }, 3000);
   }
 }
 

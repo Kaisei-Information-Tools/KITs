@@ -687,3 +687,33 @@ footer {
     font-size: 0.8rem;
   }
 }
+
+/* Import/Export Controls */
+.import-export-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Notification Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
