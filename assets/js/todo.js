@@ -586,7 +586,7 @@ class TodoApp {
         event.target.value = ''; // Reset file input
       } catch (error) {
         console.error('Import error:', error);
-        this.showNotification('インポートに失敗しました: ' + error.message, 'error');
+        this.showNotification('インポートに失敗しました。ファイルの形式や内容を確認してください。', 'error');
         event.target.value = ''; // Reset file input
       }
     };
