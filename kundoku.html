@@ -12,11 +12,15 @@ old_base_css: true
     <br />
     <button onclick="renderPreview()">プレビュー更新</button>
     <button onclick="rearrangeByKaeriten()">返り点に従って並べ替え</button>
+    <button onclick="restoreOriginal()">元に戻す</button>
     <p>返り点や送り仮名をつけたい文字をクリックすることで入力できます</p>
   </div>
   <div class="preview-area" id="preview"></div>
 </div>
 <script>
+  // 元の状態を保存する変数
+  let originalPreviewState = null;
+  
   // プレビュー生成関数
   function renderPreview() {
     const inputText = document.getElementById("kanbunInput").value;
@@ -102,6 +106,11 @@ old_base_css: true
     const preview = document.getElementById("preview");
     const paragraphs = preview.querySelectorAll("p");
     
+    // 元の状態を保存
+    if (!originalPreviewState) {
+      originalPreviewState = preview.cloneNode(true);
+    }
+    
     paragraphs.forEach((p) => {
       const containers = Array.from(p.querySelectorAll(".char-container"));
       if (containers.length === 0) return;
@@ -137,6 +146,23 @@ old_base_css: true
         }
       });
     });
+  }
+  
+  // 元に戻す関数
+  function restoreOriginal() {
+    if (originalPreviewState) {
+      const preview = document.getElementById("preview");
+      preview.innerHTML = originalPreviewState.innerHTML;
+      
+      // イベントリスナーを再設定
+      const containers = preview.querySelectorAll(".char-container");
+      containers.forEach((container) => {
+        container.addEventListener("click", function (e) {
+          annotateCharacter(container);
+          e.stopPropagation();
+        });
+      });
+    }
   }
   
   // 返り点を解析する関数
@@ -502,47 +528,53 @@ old_base_css: true
         idx: idx,
         value: parsedChars[idx].parsed.type === 'compound' 
           ? parseKaeriten(parsedChars[idx].parsed.main).value 
-          : parsedChars[idx].parsed.value
-      })).sort((a, b) => b.value - a.value);  // 降順
+          : parsedChars[idx].parsed.value,
+        hasRe: parsedChars[idx].parsed.type === 'compound'
+      })).sort((a, b) => b.value - a.value);  // 降順（上→中→下）
       
-      for (const item of sorted) {
-        if (!processed.has(item.idx)) {
-          order.push(item.idx);
-          processed.add(item.idx);
+      // 上→中→下の順で処理
+      for (let k = 0; k < sorted.length; k++) {
+        const currentMark = sorted[k];
+        const nextMark = k + 1 < sorted.length ? sorted[k + 1] : null;
+        
+        // このマークの前（次のマークの後）から、このマークの直前までの範囲を処理
+        const rangeStart = nextMark ? nextMark.idx + 1 : group[0] + 1;
+        const rangeEnd = currentMark.idx;
+        
+        if (rangeStart < rangeEnd) {
+          processRange(rangeStart, rangeEnd);
         }
-      }
-      
-      // 間の文字を処理
-      const firstIdx = group[0];
-      const lastIdx = group[group.length - 1];
-      for (let j = firstIdx; j <= lastIdx; j++) {
-        if (!processed.has(j)) {
-          order.push(j);
-          processed.add(j);
+        
+        // このマークの直後の範囲を処理（最後のマークの場合のみ）
+        if (!nextMark) {
+          const afterStart = currentMark.idx + 1;
+          if (afterStart < endIdx) {
+            // レ効果: 直後の1文字を先に読む
+            if (currentMark.hasRe && !processed.has(afterStart)) {
+              order.push(afterStart);
+              processed.add(afterStart);
+              // 残りを処理
+              if (afterStart + 1 < endIdx) {
+                processRange(afterStart + 1, endIdx);
+              }
+            } else {
+              processRange(afterStart, endIdx);
+            }
+          }
+        }
+        
+        // マーク自体を処理
+        if (!processed.has(currentMark.idx)) {
+          order.push(currentMark.idx);
+          processed.add(currentMark.idx);
         }
       }
     }
     
-    // 上中下グループをレ付きで処理
+    // 上中下グループをレ付きで処理（複合パターン用）
     function processPositionGroupWithRe(group, endIdx) {
-      const sorted = group.map(idx => ({
-        idx: idx,
-        value: parsedChars[idx].parsed.type === 'compound' 
-          ? parseKaeriten(parsedChars[idx].parsed.main).value 
-          : parsedChars[idx].parsed.value,
-        hasRe: parsedChars[idx].parsed.type === 'compound'
-      })).sort((a, b) => b.value - a.value);
-      
-      for (const item of sorted) {
-        if (item.hasRe && item.idx + 1 < endIdx && !processed.has(item.idx + 1)) {
-          order.push(item.idx + 1);
-          processed.add(item.idx + 1);
-        }
-        if (!processed.has(item.idx)) {
-          order.push(item.idx);
-          processed.add(item.idx);
-        }
-      }
+      // processPositionGroup と同じロジックを使用（レ処理は既に含まれている）
+      processPositionGroup(group, endIdx);
     }
     
     // 天地人グループを処理
