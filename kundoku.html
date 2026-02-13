@@ -139,127 +139,427 @@ old_base_css: true
     });
   }
   
+  // 返り点を解析する関数
+  function parseKaeriten(kaeritenStr) {
+    if (!kaeritenStr) return null;
+    
+    // 複合パターンの解析: 一レ、二レ、上レなど
+    const compoundMatch = kaeritenStr.match(/^([一二三四五六七八九十上中下天地人甲乙丙丁])(レ|㆑)$/);
+    if (compoundMatch) {
+      return { type: 'compound', main: compoundMatch[1], hasRe: true };
+    }
+    
+    // レ点
+    if (kaeritenStr === 'レ' || kaeritenStr === '㆑') {
+      return { type: 're' };
+    }
+    
+    // 一二三点
+    const numMap = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10 };
+    if (numMap[kaeritenStr]) {
+      return { type: 'number', value: numMap[kaeritenStr], str: kaeritenStr };
+    }
+    
+    // 上中下点
+    const posMap = { '上': 3, '中': 2, '下': 1 };
+    if (posMap[kaeritenStr]) {
+      return { type: 'position', value: posMap[kaeritenStr], str: kaeritenStr };
+    }
+    
+    // 天地人点
+    const skyMap = { '天': 3, '地': 2, '人': 1 };
+    if (skyMap[kaeritenStr]) {
+      return { type: 'sky', value: skyMap[kaeritenStr], str: kaeritenStr };
+    }
+    
+    // 甲乙丙丁点
+    const kanMap = { '甲': 1, '乙': 2, '丙': 3, '丁': 4 };
+    if (kanMap[kaeritenStr]) {
+      return { type: 'kan', value: kanMap[kaeritenStr], str: kaeritenStr };
+    }
+    
+    return null;
+  }
+  
   // 返り点から読み順を計算する関数
   function calculateReadingOrder(chars) {
     const order = [];
     const processed = new Set();
-    let i = 0;
     
-    while (i < chars.length) {
-      if (processed.has(i)) {
-        i++;
-        continue;
-      }
+    // 各文字の返り点を解析
+    const parsedChars = chars.map((char, index) => ({
+      ...char,
+      index: index,
+      parsed: parseKaeriten(char.kaeriten)
+    }));
+    
+    function processRange(start, end) {
+      let i = start;
       
-      const char = chars[i];
-      const kaeriten = char.kaeriten;
-      
-      // レ点の処理
-      if (kaeriten === "レ" || kaeriten === "㆑") {
-        // 次の文字を先に読む
-        if (i + 1 < chars.length && !processed.has(i + 1)) {
-          order.push(i + 1);
-          processed.add(i + 1);
+      while (i < end) {
+        if (processed.has(i)) {
+          i++;
+          continue;
         }
-        order.push(i);
-        processed.add(i);
-        i++;
-        continue;
-      }
-      // 一二点の処理
-      else if (kaeriten === "二") {
-        let twoIndex = i;
-        let oneIndex = -1;
         
-        // 二の後ろで一を探す
-        for (let j = i + 1; j < chars.length; j++) {
-          if (chars[j].kaeriten === "一") {
-            oneIndex = j;
-            break;
+        const char = parsedChars[i];
+        const parsed = char.parsed;
+        
+        // 返り点がない場合
+        if (!parsed) {
+          order.push(i);
+          processed.add(i);
+          i++;
+          continue;
+        }
+        
+        // レ点: 次の1文字を先に読む
+        if (parsed.type === 're') {
+          if (i + 1 < end && !processed.has(i + 1)) {
+            order.push(i + 1);
+            processed.add(i + 1);
           }
+          order.push(i);
+          processed.add(i);
+          i++;
+          continue;
         }
         
-        if (oneIndex !== -1) {
-          // 一の後ろの文字を先に読む
-          for (let j = oneIndex + 1; j < chars.length; j++) {
-            if (!processed.has(j) && chars[j].kaeriten !== "二" && 
-                chars[j].kaeriten !== "一") {
-              order.push(j);
-              processed.add(j);
-            } else {
-              break;
+        // 数字点の処理
+        if (parsed.type === 'number') {
+          const group = collectNumberGroup(i, end);
+          if (group.length > 1) {
+            processNumberGroup(group);
+            i = group[group.length - 1] + 1;
+          } else {
+            order.push(i);
+            processed.add(i);
+            i++;
+          }
+          continue;
+        }
+        
+        // 上中下点の処理
+        if (parsed.type === 'position') {
+          const group = collectPositionGroup(i, end);
+          if (group.length > 1) {
+            processPositionGroup(group);
+            i = group[group.length - 1] + 1;
+          } else {
+            order.push(i);
+            processed.add(i);
+            i++;
+          }
+          continue;
+        }
+        
+        // 天地人点の処理
+        if (parsed.type === 'sky') {
+          const group = collectSkyGroup(i, end);
+          if (group.length > 1) {
+            processSkyGroup(group);
+            i = group[group.length - 1] + 1;
+          } else {
+            order.push(i);
+            processed.add(i);
+            i++;
+          }
+          continue;
+        }
+        
+        // 甲乙丙丁点の処理
+        if (parsed.type === 'kan') {
+          const group = collectKanGroup(i, end);
+          if (group.length > 1) {
+            processKanGroup(group);
+            i = group[group.length - 1] + 1;
+          } else {
+            order.push(i);
+            processed.add(i);
+            i++;
+          }
+          continue;
+        }
+        
+        // 複合パターンの処理
+        if (parsed.type === 'compound') {
+          const mainParsed = parseKaeriten(parsed.main);
+          if (mainParsed) {
+            if (mainParsed.type === 'number') {
+              const group = collectNumberGroup(i, end);
+              if (group.length > 1) {
+                processNumberGroupWithRe(group);
+                i = group[group.length - 1] + 1;
+              } else {
+                // レとして処理
+                if (i + 1 < end && !processed.has(i + 1)) {
+                  order.push(i + 1);
+                  processed.add(i + 1);
+                }
+                order.push(i);
+                processed.add(i);
+                i++;
+              }
+            } else if (mainParsed.type === 'position') {
+              const group = collectPositionGroup(i, end);
+              if (group.length > 1) {
+                processPositionGroupWithRe(group);
+                i = group[group.length - 1] + 1;
+              } else {
+                // レとして処理
+                if (i + 1 < end && !processed.has(i + 1)) {
+                  order.push(i + 1);
+                  processed.add(i + 1);
+                }
+                order.push(i);
+                processed.add(i);
+                i++;
+              }
             }
           }
-          // 一を読む
-          order.push(oneIndex);
-          processed.add(oneIndex);
-          // 二を読む
-          order.push(twoIndex);
-          processed.add(twoIndex);
-          i = Math.max(twoIndex, oneIndex) + 1;
-        } else {
-          order.push(i);
-          processed.add(i);
-          i++;
-        }
-      }
-      // 上中下点の処理
-      else if (kaeriten === "下") {
-        let kaIndex = i;
-        let chuIndex = -1;
-        let joIndex = -1;
-        
-        // 中と上を探す
-        for (let j = i + 1; j < chars.length; j++) {
-          if (chars[j].kaeriten === "中" && chuIndex === -1) {
-            chuIndex = j;
-          } else if (chars[j].kaeriten === "上") {
-            joIndex = j;
-            break;
-          }
+          continue;
         }
         
-        if (joIndex !== -1) {
-          // 上を先に読む
-          order.push(joIndex);
-          processed.add(joIndex);
-          // 中があれば読む
-          if (chuIndex !== -1) {
-            order.push(chuIndex);
-            processed.add(chuIndex);
-          }
-          // 下を読む
-          order.push(kaIndex);
-          processed.add(kaIndex);
-          i = Math.max(kaIndex, chuIndex !== -1 ? chuIndex : kaIndex, joIndex) + 1;
-        } else {
-          order.push(i);
-          processed.add(i);
-          i++;
-        }
-      }
-      // 一レ、上レなどの複合パターン
-      else if (kaeriten.includes("レ")) {
-        // 基本的にはレと同じ処理
-        if (i + 1 < chars.length && !processed.has(i + 1)) {
-          order.push(i + 1);
-          processed.add(i + 1);
-        }
         order.push(i);
         processed.add(i);
-        i++;
-        continue;
-      }
-      // 返り点がない、または一、中、上（すでに処理済みのはず）
-      else if (kaeriten !== "一" && kaeriten !== "中" && kaeriten !== "上") {
-        order.push(i);
-        processed.add(i);
-        i++;
-      } else {
-        // 一、中、上が単独で現れた場合（既に処理されているはず）
         i++;
       }
     }
+    
+    // 数字グループを収集
+    function collectNumberGroup(startIdx, endIdx) {
+      const group = [startIdx];
+      const startValue = parsedChars[startIdx].parsed.value;
+      
+      for (let j = startIdx + 1; j < endIdx; j++) {
+        const p = parsedChars[j].parsed;
+        if (!p) continue;
+        
+        let checkValue = 0;
+        if (p.type === 'number') {
+          checkValue = p.value;
+        } else if (p.type === 'compound') {
+          const mainP = parseKaeriten(p.main);
+          if (mainP && mainP.type === 'number') {
+            checkValue = mainP.value;
+          }
+        }
+        
+        if (checkValue > 0 && checkValue < startValue) {
+          group.push(j);
+          if (checkValue === 1) break;
+        }
+      }
+      
+      return group;
+    }
+    
+    // 上中下グループを収集
+    function collectPositionGroup(startIdx, endIdx) {
+      const group = [startIdx];
+      const startValue = parsedChars[startIdx].parsed.value;
+      
+      for (let j = startIdx + 1; j < endIdx; j++) {
+        const p = parsedChars[j].parsed;
+        if (!p) continue;
+        
+        let checkValue = 0;
+        if (p.type === 'position') {
+          checkValue = p.value;
+        } else if (p.type === 'compound') {
+          const mainP = parseKaeriten(p.main);
+          if (mainP && mainP.type === 'position') {
+            checkValue = mainP.value;
+          }
+        }
+        
+        if (checkValue > startValue) {
+          group.push(j);
+          if (checkValue === 3) break;  // 上
+        }
+      }
+      
+      return group;
+    }
+    
+    // 天地人グループを収集
+    function collectSkyGroup(startIdx, endIdx) {
+      const group = [startIdx];
+      const startValue = parsedChars[startIdx].parsed.value;
+      
+      for (let j = startIdx + 1; j < endIdx; j++) {
+        const p = parsedChars[j].parsed;
+        if (p && p.type === 'sky' && p.value > startValue) {
+          group.push(j);
+          if (p.value === 3) break;  // 天
+        }
+      }
+      
+      return group;
+    }
+    
+    // 甲乙丙丁グループを収集
+    function collectKanGroup(startIdx, endIdx) {
+      const group = [startIdx];
+      const startValue = parsedChars[startIdx].parsed.value;
+      
+      for (let j = startIdx + 1; j < endIdx; j++) {
+        const p = parsedChars[j].parsed;
+        if (p && p.type === 'kan' && p.value > startValue) {
+          group.push(j);
+        }
+      }
+      
+      return group;
+    }
+    
+    // 数字グループを処理（一二三の順で読む）
+    function processNumberGroup(group) {
+      // 値でソート（小さい順 = 一、二、三）
+      const sorted = group.map(idx => ({
+        idx: idx,
+        value: parsedChars[idx].parsed.type === 'compound' 
+          ? parseKaeriten(parsedChars[idx].parsed.main).value 
+          : parsedChars[idx].parsed.value
+      })).sort((a, b) => a.value - b.value);
+      
+      // 最初の返り点の後ろから処理開始
+      const firstIdx = group[0];
+      const lastReturnIdx = sorted[sorted.length - 1].idx;
+      
+      // 最後の返り点より後ろの文字を先に読む
+      for (let j = lastReturnIdx + 1; j < parsedChars.length; j++) {
+        if (!processed.has(j) && !group.includes(j)) {
+          const p = parsedChars[j].parsed;
+          if (!p || p.type === 're') {
+            order.push(j);
+            processed.add(j);
+          } else {
+            break;
+          }
+        }
+      }
+      
+      // 返り点を順に処理
+      for (const item of sorted) {
+        if (!processed.has(item.idx)) {
+          order.push(item.idx);
+          processed.add(item.idx);
+        }
+      }
+      
+      // 間の文字を処理
+      for (let j = firstIdx; j <= lastReturnIdx; j++) {
+        if (!processed.has(j)) {
+          order.push(j);
+          processed.add(j);
+        }
+      }
+    }
+    
+    // 数字グループをレ付きで処理
+    function processNumberGroupWithRe(group) {
+      const sorted = group.map(idx => ({
+        idx: idx,
+        value: parsedChars[idx].parsed.type === 'compound' 
+          ? parseKaeriten(parsedChars[idx].parsed.main).value 
+          : parsedChars[idx].parsed.value,
+        hasRe: parsedChars[idx].parsed.type === 'compound'
+      })).sort((a, b) => a.value - b.value);
+      
+      for (const item of sorted) {
+        if (item.hasRe && item.idx + 1 < parsedChars.length && !processed.has(item.idx + 1)) {
+          order.push(item.idx + 1);
+          processed.add(item.idx + 1);
+        }
+        if (!processed.has(item.idx)) {
+          order.push(item.idx);
+          processed.add(item.idx);
+        }
+      }
+    }
+    
+    // 上中下グループを処理（上→中→下の順で読む）
+    function processPositionGroup(group) {
+      const sorted = group.map(idx => ({
+        idx: idx,
+        value: parsedChars[idx].parsed.type === 'compound' 
+          ? parseKaeriten(parsedChars[idx].parsed.main).value 
+          : parsedChars[idx].parsed.value
+      })).sort((a, b) => b.value - a.value);  // 降順
+      
+      for (const item of sorted) {
+        if (!processed.has(item.idx)) {
+          order.push(item.idx);
+          processed.add(item.idx);
+        }
+      }
+      
+      // 間の文字を処理
+      const firstIdx = group[0];
+      const lastIdx = group[group.length - 1];
+      for (let j = firstIdx; j <= lastIdx; j++) {
+        if (!processed.has(j)) {
+          order.push(j);
+          processed.add(j);
+        }
+      }
+    }
+    
+    // 上中下グループをレ付きで処理
+    function processPositionGroupWithRe(group) {
+      const sorted = group.map(idx => ({
+        idx: idx,
+        value: parsedChars[idx].parsed.type === 'compound' 
+          ? parseKaeriten(parsedChars[idx].parsed.main).value 
+          : parsedChars[idx].parsed.value,
+        hasRe: parsedChars[idx].parsed.type === 'compound'
+      })).sort((a, b) => b.value - a.value);
+      
+      for (const item of sorted) {
+        if (item.hasRe && item.idx + 1 < parsedChars.length && !processed.has(item.idx + 1)) {
+          order.push(item.idx + 1);
+          processed.add(item.idx + 1);
+        }
+        if (!processed.has(item.idx)) {
+          order.push(item.idx);
+          processed.add(item.idx);
+        }
+      }
+    }
+    
+    // 天地人グループを処理
+    function processSkyGroup(group) {
+      const sorted = group.map(idx => ({
+        idx: idx,
+        value: parsedChars[idx].parsed.value
+      })).sort((a, b) => b.value - a.value);
+      
+      for (const item of sorted) {
+        if (!processed.has(item.idx)) {
+          order.push(item.idx);
+          processed.add(item.idx);
+        }
+      }
+    }
+    
+    // 甲乙丙丁グループを処理
+    function processKanGroup(group) {
+      const sorted = group.map(idx => ({
+        idx: idx,
+        value: parsedChars[idx].parsed.value
+      })).sort((a, b) => a.value - b.value);
+      
+      for (const item of sorted) {
+        if (!processed.has(item.idx)) {
+          order.push(item.idx);
+          processed.add(item.idx);
+        }
+      }
+    }
+    
+    // メイン処理開始
+    processRange(0, parsedChars.length);
     
     return order;
   }
