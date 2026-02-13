@@ -464,26 +464,19 @@ old_base_css: true
           : parsedChars[idx].parsed.value
       })).sort((a, b) => a.value - b.value);
       
-      // 最初の返り点の後ろから処理開始
-      const firstIdx = group[0];
-      const lastReturnIdx = sorted[sorted.length - 1].idx;
+      // テキスト内の最初と最後の位置
+      const firstIdx = Math.min(...group);
+      const lastIdx = Math.max(...group);
       
-      // 最後の返り点より後ろの文字を先に読む
-      // 返り点がない文字、またはレ点のみを読み進める
-      for (let j = lastReturnIdx + 1; j < endIdx; j++) {
+      // 1. まず間の文字を処理（返り点の間にある文字）
+      for (let j = firstIdx; j <= lastIdx; j++) {
         if (!processed.has(j) && !group.includes(j)) {
-          const p = parsedChars[j].parsed;
-          // 返り点がない文字、またはレ点のみ処理（他の返り点グループは別途処理）
-          if (!p || p.type === 're') {
-            order.push(j);
-            processed.add(j);
-          } else {
-            break;
-          }
+          order.push(j);
+          processed.add(j);
         }
       }
       
-      // 返り点を順に処理
+      // 2. 返り点を順に処理（一、二、三...）
       for (const item of sorted) {
         if (!processed.has(item.idx)) {
           order.push(item.idx);
@@ -491,11 +484,17 @@ old_base_css: true
         }
       }
       
-      // 間の文字を処理
-      for (let j = firstIdx; j <= lastReturnIdx; j++) {
-        if (!processed.has(j)) {
-          order.push(j);
-          processed.add(j);
+      // 3. 最後の返り点より後ろの文字を処理
+      for (let j = lastIdx + 1; j < endIdx; j++) {
+        if (!processed.has(j) && !group.includes(j)) {
+          const p = parsedChars[j].parsed;
+          // 返り点がない文字、またはレ点のみ処理
+          if (!p || p.type === 're') {
+            order.push(j);
+            processed.add(j);
+          } else {
+            break;
+          }
         }
       }
     }
@@ -537,7 +536,7 @@ old_base_css: true
         const currentMark = sorted[k];
         const nextMark = k + 1 < sorted.length ? sorted[k + 1] : null;
         
-        // このマークの前（次のマークの後）から、このマークの直前までの範囲を処理
+        // 1. まず、次のマークの直後から現在のマークの直前までの範囲を処理
         const rangeStart = nextMark ? nextMark.idx + 1 : group[0] + 1;
         const rangeEnd = currentMark.idx;
         
@@ -545,15 +544,15 @@ old_base_css: true
           processRange(rangeStart, rangeEnd);
         }
         
-        // このマークの直後の範囲を処理（最後のマークの場合のみ）
-        if (!nextMark) {
+        // 2. 現在のマークが最後（最も優先度が高い＝上）の場合、その後ろを処理
+        if (k === 0) {
           const afterStart = currentMark.idx + 1;
           if (afterStart < endIdx) {
             // レ効果: 直後の1文字を先に読む
             if (currentMark.hasRe && !processed.has(afterStart)) {
               order.push(afterStart);
               processed.add(afterStart);
-              // 残りを処理
+              // 残りがあれば処理
               if (afterStart + 1 < endIdx) {
                 processRange(afterStart + 1, endIdx);
               }
@@ -563,7 +562,7 @@ old_base_css: true
           }
         }
         
-        // マーク自体を処理
+        // 3. マーク自体を処理
         if (!processed.has(currentMark.idx)) {
           order.push(currentMark.idx);
           processed.add(currentMark.idx);
