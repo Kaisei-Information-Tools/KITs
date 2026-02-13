@@ -11,6 +11,7 @@ old_base_css: true
     <textarea id="kanbunInput" rows="10" cols="30" placeholder="ここに漢文を入力"></textarea>
     <br />
     <button onclick="renderPreview()">プレビュー更新</button>
+    <button onclick="rearrangeByKaeriten()">返り点に従って並べ替え</button>
     <p>返り点や送り仮名ををつけたい文字をクリックすることで入力できます</p>
   </div>
   <div class="preview-area" id="preview"></div>
@@ -94,5 +95,150 @@ old_base_css: true
       Kaeriten.style.transform = "translate(-45%, 50%)";
     }
     container.querySelector(".okurigana").textContent = newOkurigana || "";
+  }
+
+  // 返り点に従って並べ替える関数
+  function rearrangeByKaeriten() {
+    const preview = document.getElementById("preview");
+    const paragraphs = preview.querySelectorAll("p");
+    
+    paragraphs.forEach((p) => {
+      const containers = Array.from(p.querySelectorAll(".char-container"));
+      if (containers.length === 0) return;
+      
+      // 各文字の情報を抽出
+      const chars = containers.map((container, index) => ({
+        index: index,
+        char: container.querySelector(".char").textContent,
+        kaeriten: container.querySelector(".kaeriten").textContent,
+        okurigana: container.querySelector(".okurigana").textContent,
+        container: container
+      }));
+      
+      // 返り点に基づいて読み順を計算
+      const readingOrder = calculateReadingOrder(chars);
+      
+      // 並べ替えた結果を表示
+      p.innerHTML = "";
+      readingOrder.forEach(index => {
+        const char = chars[index];
+        // 文字を追加
+        const span = document.createElement("span");
+        span.textContent = char.char;
+        span.className = "rearranged-char";
+        p.appendChild(span);
+        
+        // 送り仮名を追加
+        if (char.okurigana) {
+          const okuriganaSpan = document.createElement("span");
+          okuriganaSpan.textContent = char.okurigana;
+          okuriganaSpan.className = "rearranged-okurigana";
+          p.appendChild(okuriganaSpan);
+        }
+      });
+    });
+  }
+  
+  // 返り点から読み順を計算する関数
+  function calculateReadingOrder(chars) {
+    const order = [];
+    let i = 0;
+    
+    while (i < chars.length) {
+      const char = chars[i];
+      const kaeriten = char.kaeriten;
+      
+      // レ点の処理
+      if (kaeriten === "レ" || kaeriten === "㆑") {
+        // 次の文字を先に読む
+        if (i + 1 < chars.length) {
+          order.push(i + 1);
+          order.push(i);
+          i += 2;
+        } else {
+          order.push(i);
+          i++;
+        }
+      }
+      // 一二点の処理
+      else if (kaeriten === "二") {
+        // 二の位置を記録して、次の一を探す
+        let twoIndex = i;
+        let oneIndex = -1;
+        for (let j = i + 1; j < chars.length; j++) {
+          if (chars[j].kaeriten === "一") {
+            oneIndex = j;
+            break;
+          }
+        }
+        if (oneIndex !== -1) {
+          // 一の後ろから二の前まで
+          for (let j = oneIndex + 1; j < twoIndex; j++) {
+            order.push(j);
+          }
+          // 一
+          order.push(oneIndex);
+          // 二
+          order.push(twoIndex);
+          i = Math.max(twoIndex, oneIndex) + 1;
+        } else {
+          order.push(i);
+          i++;
+        }
+      }
+      // 上中下点の処理
+      else if (kaeriten === "下") {
+        let kaIndex = i;
+        let chuIndex = -1;
+        let joIndex = -1;
+        
+        // 中と上を探す
+        for (let j = i + 1; j < chars.length; j++) {
+          if (chars[j].kaeriten === "中" && chuIndex === -1) {
+            chuIndex = j;
+          } else if (chars[j].kaeriten === "上") {
+            joIndex = j;
+            break;
+          }
+        }
+        
+        if (joIndex !== -1) {
+          // 上を先に読む
+          order.push(joIndex);
+          // 中があれば読む
+          if (chuIndex !== -1) {
+            order.push(chuIndex);
+          }
+          // 下を読む
+          order.push(kaIndex);
+          i = Math.max(kaIndex, chuIndex !== -1 ? chuIndex : kaIndex, joIndex) + 1;
+        } else {
+          order.push(i);
+          i++;
+        }
+      }
+      // 一レ、上レなどの複合パターン
+      else if (kaeriten.includes("レ")) {
+        // 基本的にはレと同じ処理
+        if (i + 1 < chars.length) {
+          order.push(i + 1);
+          order.push(i);
+          i += 2;
+        } else {
+          order.push(i);
+          i++;
+        }
+      }
+      // 返り点がない、または処理済みの文字
+      else if (kaeriten !== "一" && kaeriten !== "中" && kaeriten !== "上") {
+        order.push(i);
+        i++;
+      } else {
+        // 一、中、上が単独で現れた場合（既に処理されているはず）
+        i++;
+      }
+    }
+    
+    return order;
   }
 </script>
