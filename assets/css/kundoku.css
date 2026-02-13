@@ -246,4 +246,15 @@ p {
     font-size: 1rem;
     transform: translate(50%, 60%);
   }
+
+  /* --- 並べ替え後のスタイル --- */
+  .rearranged-char {
+    font-size: 2rem;
+    margin: 10px 5px;
+  }
+
+  .rearranged-okurigana {
+    font-size: 1.2rem;
+    margin: 10px 5px;
+  }
 }
