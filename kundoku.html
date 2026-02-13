@@ -19,13 +19,16 @@ old_base_css: true
 </div>
 <script>
   // 元の状態を保存する変数
-  let originalPreviewState = null;
+  let savedPreviewSnapshot = null;
   
   // プレビュー生成関数
   function renderPreview() {
     const inputText = document.getElementById("kanbunInput").value;
     const preview = document.getElementById("preview");
     preview.innerHTML = "";
+    
+    // プレビュー更新時に保存状態をリセット
+    savedPreviewSnapshot = null;
 
     const lines = inputText.split("\n");
     lines.forEach((line) => {
@@ -106,9 +109,9 @@ old_base_css: true
     const preview = document.getElementById("preview");
     const paragraphs = preview.querySelectorAll("p");
     
-    // 元の状態を保存
-    if (!originalPreviewState) {
-      originalPreviewState = preview.cloneNode(true);
+    // 元の状態を保存（最初の並べ替え時のみ）
+    if (!savedPreviewSnapshot) {
+      savedPreviewSnapshot = preview.cloneNode(true);
     }
     
     paragraphs.forEach((p) => {
@@ -150,9 +153,9 @@ old_base_css: true
   
   // 元に戻す関数
   function restoreOriginal() {
-    if (originalPreviewState) {
+    if (savedPreviewSnapshot) {
       const preview = document.getElementById("preview");
-      preview.innerHTML = originalPreviewState.innerHTML;
+      preview.innerHTML = savedPreviewSnapshot.innerHTML;
       
       // イベントリスナーを再設定
       const containers = preview.querySelectorAll(".char-container");
@@ -314,7 +317,7 @@ old_base_css: true
             if (mainParsed.type === 'number') {
               const group = collectNumberGroup(i, end);
               if (group.length > 1) {
-                processNumberGroupWithRe(group, end);
+                processNumberGroup(group, end);
                 i = group[group.length - 1] + 1;
               } else {
                 // レとして処理
@@ -329,7 +332,7 @@ old_base_css: true
             } else if (mainParsed.type === 'position') {
               const group = collectPositionGroup(i, end);
               if (group.length > 1) {
-                processPositionGroupWithRe(group, end);
+                processPositionGroup(group, end);
                 i = group[group.length - 1] + 1;
               } else {
                 // レとして処理
@@ -499,28 +502,6 @@ old_base_css: true
       }
     }
     
-    // 数字グループをレ付きで処理
-    function processNumberGroupWithRe(group, endIdx) {
-      const sorted = group.map(idx => ({
-        idx: idx,
-        value: parsedChars[idx].parsed.type === 'compound' 
-          ? parseKaeriten(parsedChars[idx].parsed.main).value 
-          : parsedChars[idx].parsed.value,
-        hasRe: parsedChars[idx].parsed.type === 'compound'
-      })).sort((a, b) => a.value - b.value);
-      
-      for (const item of sorted) {
-        if (item.hasRe && item.idx + 1 < endIdx && !processed.has(item.idx + 1)) {
-          order.push(item.idx + 1);
-          processed.add(item.idx + 1);
-        }
-        if (!processed.has(item.idx)) {
-          order.push(item.idx);
-          processed.add(item.idx);
-        }
-      }
-    }
-    
     // 上中下グループを処理（上→中→下の順で読む）
     function processPositionGroup(group, endIdx) {
       const sorted = group.map(idx => ({
@@ -568,12 +549,6 @@ old_base_css: true
           processed.add(currentMark.idx);
         }
       }
-    }
-    
-    // 上中下グループをレ付きで処理（複合パターン用）
-    function processPositionGroupWithRe(group, endIdx) {
-      // processPositionGroup と同じロジックを使用（レ処理は既に含まれている）
-      processPositionGroup(group, endIdx);
     }
     
     // 天地人グループを処理
