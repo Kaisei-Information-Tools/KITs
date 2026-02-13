@@ -142,47 +142,63 @@ old_base_css: true
   // 返り点から読み順を計算する関数
   function calculateReadingOrder(chars) {
     const order = [];
+    const processed = new Set();
     let i = 0;
     
     while (i < chars.length) {
+      if (processed.has(i)) {
+        i++;
+        continue;
+      }
+      
       const char = chars[i];
       const kaeriten = char.kaeriten;
       
       // レ点の処理
       if (kaeriten === "レ" || kaeriten === "㆑") {
         // 次の文字を先に読む
-        if (i + 1 < chars.length) {
+        if (i + 1 < chars.length && !processed.has(i + 1)) {
           order.push(i + 1);
-          order.push(i);
-          i += 2;
-        } else {
-          order.push(i);
-          i++;
+          processed.add(i + 1);
         }
+        order.push(i);
+        processed.add(i);
+        i += 2;
       }
       // 一二点の処理
       else if (kaeriten === "二") {
-        // 二の位置を記録して、次の一を探す
         let twoIndex = i;
         let oneIndex = -1;
+        
+        // 二の後ろで一を探す
         for (let j = i + 1; j < chars.length; j++) {
           if (chars[j].kaeriten === "一") {
             oneIndex = j;
             break;
           }
         }
+        
         if (oneIndex !== -1) {
-          // 一の後ろから二の前まで
-          for (let j = oneIndex + 1; j < twoIndex; j++) {
-            order.push(j);
+          // 一の後ろの文字を先に読む
+          for (let j = oneIndex + 1; j < chars.length; j++) {
+            if (!processed.has(j) && !chars[j].kaeriten.includes("二") && 
+                chars[j].kaeriten !== "一") {
+              order.push(j);
+              processed.add(j);
+            } else {
+              break;
+            }
           }
-          // 一
+          // 一を読む
           order.push(oneIndex);
-          // 二
+          processed.add(oneIndex);
+          // 二を読む
           order.push(twoIndex);
+          processed.add(twoIndex);
           i = Math.max(twoIndex, oneIndex) + 1;
         } else {
           order.push(i);
+          processed.add(i);
           i++;
         }
       }
@@ -205,33 +221,37 @@ old_base_css: true
         if (joIndex !== -1) {
           // 上を先に読む
           order.push(joIndex);
+          processed.add(joIndex);
           // 中があれば読む
           if (chuIndex !== -1) {
             order.push(chuIndex);
+            processed.add(chuIndex);
           }
           // 下を読む
           order.push(kaIndex);
+          processed.add(kaIndex);
           i = Math.max(kaIndex, chuIndex !== -1 ? chuIndex : kaIndex, joIndex) + 1;
         } else {
           order.push(i);
+          processed.add(i);
           i++;
         }
       }
       // 一レ、上レなどの複合パターン
       else if (kaeriten.includes("レ")) {
         // 基本的にはレと同じ処理
-        if (i + 1 < chars.length) {
+        if (i + 1 < chars.length && !processed.has(i + 1)) {
           order.push(i + 1);
-          order.push(i);
-          i += 2;
-        } else {
-          order.push(i);
-          i++;
+          processed.add(i + 1);
         }
+        order.push(i);
+        processed.add(i);
+        i += 2;
       }
-      // 返り点がない、または処理済みの文字
+      // 返り点がない、または一、中、上（すでに処理済みのはず）
       else if (kaeriten !== "一" && kaeriten !== "中" && kaeriten !== "上") {
         order.push(i);
+        processed.add(i);
         i++;
       } else {
         // 一、中、上が単独で現れた場合（既に処理されているはず）
