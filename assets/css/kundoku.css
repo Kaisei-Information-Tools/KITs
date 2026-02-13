@@ -162,7 +162,6 @@ p {
   font-size: 1em;
   display: inline-block;
   margin: 5px 2px;
-  writing-mode: vertical-rl;
   letter-spacing: -3px;
 }
 

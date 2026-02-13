@@ -12,7 +12,7 @@ old_base_css: true
     <br />
     <button onclick="renderPreview()">プレビュー更新</button>
     <button onclick="rearrangeByKaeriten()">返り点に従って並べ替え</button>
-    <p>返り点や送り仮名ををつけたい文字をクリックすることで入力できます</p>
+    <p>返り点や送り仮名をつけたい文字をクリックすることで入力できます</p>
   </div>
   <div class="preview-area" id="preview"></div>
 </div>
@@ -163,7 +163,8 @@ old_base_css: true
         }
         order.push(i);
         processed.add(i);
-        i += 2;
+        i++;
+        continue;
       }
       // 一二点の処理
       else if (kaeriten === "二") {
@@ -181,7 +182,7 @@ old_base_css: true
         if (oneIndex !== -1) {
           // 一の後ろの文字を先に読む
           for (let j = oneIndex + 1; j < chars.length; j++) {
-            if (!processed.has(j) && !chars[j].kaeriten.includes("二") && 
+            if (!processed.has(j) && chars[j].kaeriten !== "二" && 
                 chars[j].kaeriten !== "一") {
               order.push(j);
               processed.add(j);
@@ -246,7 +247,8 @@ old_base_css: true
         }
         order.push(i);
         processed.add(i);
-        i += 2;
+        i++;
+        continue;
       }
       // 返り点がない、または一、中、上（すでに処理済みのはず）
       else if (kaeriten !== "一" && kaeriten !== "中" && kaeriten !== "上") {
