@@ -17,6 +17,14 @@ old_base_css: true
   </div>
   <div class="preview-area" id="preview"></div>
 </div>
+
+<details id="log-details">
+  <summary>処理ログ</summary>
+  <div id="log-content">
+    <p style="color: #666; font-size: 0.9em;">ここに処理の履歴が表示されます。</p>
+  </div>
+</details>
+
 <script>
   // プレビュー生成関数
   function renderPreview() {
@@ -30,18 +38,6 @@ old_base_css: true
       const p = document.createElement("p");
 
       // 正規表現で 漢字[返り点](送り仮名) を解析
-      // 漢字: [^\[\(\)\n]+ ([], () 改行 以外の文字)
-      // 返り点: \[[^\]]*\] (任意、[]で囲まれた中身)
-      // 送り仮名: \([^\)]*\) (任意、()で囲まれた中身)
-      // 注意: 漢字が一文字とは限らないが、通常は一文字ずつ処理したい要望が多いかも知れない
-      // しかし「勿[下](レ)」のように書くので、漢字+注釈のセットで解析する
-
-      // 改善版正規表現: 
-      // 文字単位で処理するために、入力を1文字ずつなめるか、あるいはもっと細かくマッチさせる
-      // ユーザーの例: 勿[下](レ) -> 勿, 下, レ
-      // ただし、注釈がない文字もある: 善(ノ) -> 善, なし, ノ
-      // 文字 + (Option:[...]) + (Option:(...)) の繰り返しとして捉える
-
       const charRegex = /([^\[\(\)\s])(?:\[([^\]]*)\])?(?:\(([^)]*)\))?/g;
       let match;
 
@@ -107,12 +103,16 @@ old_base_css: true
   function rearrangeByKaeriten() {
     const preview = document.getElementById("preview");
     const paragraphs = preview.querySelectorAll("p");
+    const logContent = document.getElementById("log-content");
+    const logDetails = document.getElementById("log-details");
 
-    // 現在のプレビュー内容から情報を抽出して並べ替えを行う
-    // Markup方式になったので「元の状態を保存」して「元に戻す」必要性は薄れたが、
-    // 機能としては「入力欄のテキスト」と「並べ替え後の表示」が乖離するため、
-    // 並べ替え表示中は入力欄と同期しない（あるいはRead-only的な）扱いになる。
-    // ここでは、プレビューエリアだけ書き換える既存の挙動を踏襲する。
+    // ログコンテナをリセット
+    logContent.innerHTML = "";
+    const logList = document.createElement("ul");
+    logContent.appendChild(logList);
+
+    // 処理が走ったら自動で開く
+    logDetails.open = true;
 
     paragraphs.forEach((p) => {
       const containers = Array.from(p.querySelectorAll(".char-container"));
@@ -128,7 +128,16 @@ old_base_css: true
       }));
 
       // 返り点に基づいて読み順を計算
-      const readingOrder = calculateReadingOrder(chars);
+      const result = calculateReadingOrder(chars);
+      const readingOrder = result.order;
+      const logs = result.logs;
+
+      // ログ表示（追加）
+      logs.forEach(l => {
+        const li = document.createElement("li");
+        li.textContent = l;
+        logList.appendChild(li);
+      });
 
       // 並べ替えた結果を表示
       p.innerHTML = "";
@@ -200,378 +209,165 @@ old_base_css: true
 
   // 返り点から読み順を計算する関数
   function calculateReadingOrder(chars) {
-    const order = [];
-    const processed = new Set();
+    const logs = [];
 
-    // 各文字の返り点を解析
-    const parsedChars = chars.map((char, index) => ({
-      ...char,
-      index: index,
-      parsed: parseKaeriten(char.kaeriten)
-    }));
+    function addLog(msg) {
+      logs.push(msg);
+    }
 
-    function processRange(start, end) {
-      let i = start;
+    // Pass 0: パースと初期化
+    let nodes = chars.map((char, index) => {
+      const parsed = parseKaeriten(char.kaeriten);
+      return {
+        indices: [index],
+        marks: parsed ? [parsed] : [],
+        text: char.char + (char.okurigana ? `(${char.okurigana})` : ''),
+        isHyphen: char.char === '―' || char.char === '-'
+      };
+    });
 
-      while (i < end) {
-        if (processed.has(i)) {
-          i++;
-          continue;
+    // Pass 0.5: ハイフンによる熟語結合処理
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].isHyphen) {
+        // 前後のノードが存在する場合のみ結合
+        if (i > 0 && i < nodes.length - 1) {
+          const prev = nodes[i - 1];
+          const next = nodes[i + 1];
+
+          addLog(`ハイフンにより「${prev.text}」と「${next.text}」を結合しました。`);
+
+          // ハイフン自体のインデックスとテキストは含めない（消去）
+          const mergedIndices = [...prev.indices, ...next.indices];
+          const mergedMarks = [...prev.marks, ...next.marks];
+          const mergedText = prev.text + next.text;
+
+          const newNode = {
+            indices: mergedIndices,
+            marks: mergedMarks,
+            text: mergedText,
+            isHyphen: false
+          };
+
+          // 前・中(ハイフン)・後を削除して新ノードを挿入
+          nodes.splice(i - 1, 3, newNode);
+
+          // インデックス調整:
+          // 配列が2つ短くなったので、インデックスを戻す
+          i -= 1;
         }
+      }
+    }
 
-        const char = parsedChars[i];
-        const parsed = char.parsed;
+    // Pass 1: レ点の処理（後ろから結合）
+    for (let i = nodes.length - 2; i >= 0; i--) {
+      const currentNode = nodes[i];
+      const hasRe = currentNode.marks.some(m => m.type === 're' || (m.type === 'compound' && m.hasRe));
 
-        // 返り点がない場合
-        if (!parsed) {
-          order.push(i);
-          processed.add(i);
-          i++;
-          continue;
+      if (hasRe) {
+        const nextNode = nodes[i + 1];
+        if (nextNode) {
+          addLog(`レ点により「${currentNode.text}」と「${nextNode.text}」を結合しました。`);
+
+          const mergedIndices = [...nextNode.indices, ...currentNode.indices];
+          const mergedMarks = [...nextNode.marks, ...currentNode.marks];
+          const mergedText = nextNode.text + currentNode.text;
+
+          const newNode = {
+            indices: mergedIndices,
+            marks: mergedMarks,
+            text: mergedText
+          };
+          nodes.splice(i, 2, newNode);
         }
+      }
+    }
 
-        // レ点: 次の1文字を先に読む
-        if (parsed.type === 're') {
-          if (i + 1 < end && !processed.has(i + 1)) {
-            order.push(i + 1);
-            processed.add(i + 1);
-          }
-          order.push(i);
-          processed.add(i);
-          i++;
-          continue;
+    // Pass 2: スタックベースの構造処理
+    const finalOrder = [];
+    const stacks = {
+      number: [],   // 一二三 (昇順)
+      position: [], // 上中下 (降順)
+      sky: [],      // 天地人 (降順)
+      kan: []       // 甲乙丙丁 (昇順)
+    };
+
+    function getMarkValue(node, type) {
+      for (const mark of node.marks) {
+        if (mark.type === type) return mark.value;
+        if (mark.type === 'compound') {
+          const inner = parseKaeriten(mark.main);
+          if (inner && inner.type === type) return inner.value;
         }
+      }
+      return null;
+    }
 
-        // 数字点の処理
-        if (parsed.type === 'number') {
-          const group = collectNumberGroup(i, end);
-          if (group.length > 1) {
-            processNumberGroup(group, end);
-            i = group[group.length - 1] + 1;
+    // スタック解決
+    function resolveStack(type, targetVal, isAscending) {
+      const stack = stacks[type];
+      const index = stack.findIndex(node => getMarkValue(node, type) === targetVal);
+
+      if (index !== -1) {
+        const [node] = stack.splice(index, 1);
+        finalOrder.push(...node.indices);
+        addLog(`保留から「${node.text}」を取り出しました（次の処理へ）。`);
+
+        // 次の値を解決
+        const nextTarget = isAscending ? targetVal + 1 : targetVal - 1;
+        if (isAscending || nextTarget >= 1) {
+          resolveStack(type, nextTarget, isAscending);
+        }
+      }
+    }
+
+    nodes.forEach(node => {
+      let structureParams = null;
+
+      if (getMarkValue(node, 'number') !== null) structureParams = { type: 'number', value: getMarkValue(node, 'number'), isAscending: true, max: 99, label: '一二点' };
+      else if (getMarkValue(node, 'position') !== null) structureParams = { type: 'position', value: getMarkValue(node, 'position'), isAscending: false, max: 3, label: '上下点' };
+      else if (getMarkValue(node, 'sky') !== null) structureParams = { type: 'sky', value: getMarkValue(node, 'sky'), isAscending: false, max: 3, label: '天地人点' };
+      else if (getMarkValue(node, 'kan') !== null) structureParams = { type: 'kan', value: getMarkValue(node, 'kan'), isAscending: true, max: 4, label: '甲乙点' };
+
+      if (structureParams) {
+        const { type, value, isAscending, max, label } = structureParams;
+
+        if (isAscending) {
+          // 昇順 (一二三)
+          if (value > 1) {
+            stacks[type].push(node);
+            addLog(`「${node.text}」を保留しました（${label}のため）。`);
           } else {
-            order.push(i);
-            processed.add(i);
-            i++;
+            // value === 1
+            finalOrder.push(...node.indices);
+            addLog(`「${node.text}」を読み上げました（${label}開始）。`);
+            resolveStack(type, 2, true);
           }
-          continue;
-        }
-
-        // 上中下点の処理
-        if (parsed.type === 'position') {
-          const group = collectPositionGroup(i, end);
-          if (group.length > 1) {
-            processPositionGroup(group, end);
-            i = group[group.length - 1] + 1;
+        } else {
+          // 降順 (上中下)
+          if (value < max) {
+            stacks[type].push(node);
+            addLog(`「${node.text}」を保留しました（${label}のため）。`);
           } else {
-            order.push(i);
-            processed.add(i);
-            i++;
-          }
-          continue;
-        }
-
-        // 天地人点の処理
-        if (parsed.type === 'sky') {
-          const group = collectSkyGroup(i, end);
-          if (group.length > 1) {
-            processSkyGroup(group, end);
-            i = group[group.length - 1] + 1;
-          } else {
-            order.push(i);
-            processed.add(i);
-            i++;
-          }
-          continue;
-        }
-
-        // 甲乙丙丁点の処理
-        if (parsed.type === 'kan') {
-          const group = collectKanGroup(i, end);
-          if (group.length > 1) {
-            processKanGroup(group, end);
-            i = group[group.length - 1] + 1;
-          } else {
-            order.push(i);
-            processed.add(i);
-            i++;
-          }
-          continue;
-        }
-
-        // 複合パターンの処理
-        if (parsed.type === 'compound') {
-          const mainParsed = parseKaeriten(parsed.main);
-          if (mainParsed) {
-            if (mainParsed.type === 'number') {
-              const group = collectNumberGroup(i, end);
-              if (group.length > 1) {
-                processNumberGroup(group, end);
-                i = group[group.length - 1] + 1;
-              } else {
-                // レとして処理
-                if (i + 1 < end && !processed.has(i + 1)) {
-                  order.push(i + 1);
-                  processed.add(i + 1);
-                }
-                order.push(i);
-                processed.add(i);
-                i++;
-              }
-            } else if (mainParsed.type === 'position') {
-              const group = collectPositionGroup(i, end);
-              if (group.length > 1) {
-                processPositionGroup(group, end);
-                i = group[group.length - 1] + 1;
-              } else {
-                // レとして処理
-                if (i + 1 < end && !processed.has(i + 1)) {
-                  order.push(i + 1);
-                  processed.add(i + 1);
-                }
-                order.push(i);
-                processed.add(i);
-                i++;
-              }
-            }
-          }
-          continue;
-        }
-
-        order.push(i);
-        processed.add(i);
-        i++;
-      }
-    }
-
-    // 数字グループを収集
-    function collectNumberGroup(startIdx, endIdx) {
-      const group = [startIdx];
-      const startValue = parsedChars[startIdx].parsed.value;
-
-      for (let j = startIdx + 1; j < endIdx; j++) {
-        const p = parsedChars[j].parsed;
-        if (!p) continue;
-
-        let checkValue = 0;
-        if (p.type === 'number') {
-          checkValue = p.value;
-        } else if (p.type === 'compound') {
-          const mainP = parseKaeriten(p.main);
-          if (mainP && mainP.type === 'number') {
-            checkValue = mainP.value;
+            // value === max (3)
+            finalOrder.push(...node.indices);
+            addLog(`「${node.text}」を読み上げました（${label}開始）。`);
+            resolveStack(type, max - 1, false);
           }
         }
-
-        if (checkValue > 0 && checkValue < startValue) {
-          group.push(j);
-          if (checkValue === 1) break;
-        }
+      } else {
+        // 構造マークなし
+        finalOrder.push(...node.indices);
+        addLog(`「${node.text}」を読み上げました。`);
       }
+    });
 
-      return group;
-    }
+    Object.values(stacks).forEach(stack => {
+      stack.forEach(node => {
+        finalOrder.push(...node.indices);
+        addLog(`「${node.text}」が最後まで残ったため読み上げました。`);
+      });
+    });
 
-    // 上中下グループを収集
-    function collectPositionGroup(startIdx, endIdx) {
-      const group = [startIdx];
-      const startValue = parsedChars[startIdx].parsed.value;
-      let maxFound = startValue;
-
-      for (let j = startIdx + 1; j < endIdx; j++) {
-        const p = parsedChars[j].parsed;
-        if (!p) continue;
-
-        let checkValue = 0;
-        if (p.type === 'position') {
-          checkValue = p.value;
-        } else if (p.type === 'compound') {
-          const mainP = parseKaeriten(p.main);
-          if (mainP && mainP.type === 'position') {
-            checkValue = mainP.value;
-          }
-        }
-
-        if (checkValue > startValue) {
-          group.push(j);
-          maxFound = Math.max(maxFound, checkValue);
-          if (checkValue === 3) break;  // 上（最大値）
-        }
-      }
-
-      return group;
-    }
-
-    // 天地人グループを収集
-    function collectSkyGroup(startIdx, endIdx) {
-      const group = [startIdx];
-      const startValue = parsedChars[startIdx].parsed.value;
-
-      for (let j = startIdx + 1; j < endIdx; j++) {
-        const p = parsedChars[j].parsed;
-        if (!p) continue;
-
-        let checkValue = 0;
-        if (p.type === 'sky') {
-          checkValue = p.value;
-        } else if (p.type === 'compound') {
-          const mainP = parseKaeriten(p.main);
-          if (mainP && mainP.type === 'sky') {
-            checkValue = mainP.value;
-          }
-        }
-
-        if (checkValue > startValue) {
-          group.push(j);
-          if (checkValue === 3) break;  // 天（最大値）
-        }
-      }
-
-      return group;
-    }
-
-    // 甲乙丙丁グループを収集
-    function collectKanGroup(startIdx, endIdx) {
-      const group = [startIdx];
-      const startValue = parsedChars[startIdx].parsed.value;
-
-      for (let j = startIdx + 1; j < endIdx; j++) {
-        const p = parsedChars[j].parsed;
-        if (p && p.type === 'kan' && p.value > startValue) {
-          group.push(j);
-          if (p.value === 4) break;  // 丁（最大値）
-        }
-      }
-
-      return group;
-    }
-
-    // 数字グループを処理（一二三の順で読む）
-    function processNumberGroup(group, endIdx) {
-      // 値でソート（小さい順 = 一、二、三）
-      const sorted = group.map(idx => ({
-        idx: idx,
-        value: parsedChars[idx].parsed.type === 'compound'
-          ? parseKaeriten(parsedChars[idx].parsed.main).value
-          : parsedChars[idx].parsed.value
-      })).sort((a, b) => a.value - b.value);
-
-      // テキスト内の最初と最後の位置
-      const firstIdx = Math.min(...group);
-      const lastIdx = Math.max(...group);
-
-      // 1. まず間の文字を処理（返り点の間にある文字）
-      for (let j = firstIdx; j <= lastIdx; j++) {
-        if (!processed.has(j) && !group.includes(j)) {
-          order.push(j);
-          processed.add(j);
-        }
-      }
-
-      // 2. 返り点を順に処理（一、二、三...）
-      for (const item of sorted) {
-        if (!processed.has(item.idx)) {
-          order.push(item.idx);
-          processed.add(item.idx);
-        }
-      }
-
-      // 3. 最後の返り点より後ろの文字を処理
-      for (let j = lastIdx + 1; j < endIdx; j++) {
-        if (!processed.has(j) && !group.includes(j)) {
-          const p = parsedChars[j].parsed;
-          // 返り点がない文字、またはレ点のみ処理
-          if (!p || p.type === 're') {
-            order.push(j);
-            processed.add(j);
-          } else {
-            break;
-          }
-        }
-      }
-    }
-
-    // 上中下グループを処理（上→中→下の順で読む）
-    function processPositionGroup(group, endIdx) {
-      const sorted = group.map(idx => ({
-        idx: idx,
-        value: parsedChars[idx].parsed.type === 'compound'
-          ? parseKaeriten(parsedChars[idx].parsed.main).value
-          : parsedChars[idx].parsed.value,
-        hasRe: parsedChars[idx].parsed.type === 'compound'
-      })).sort((a, b) => b.value - a.value);  // 降順（上→中→下）
-
-      // 上→中→下の順で処理
-      for (let k = 0; k < sorted.length; k++) {
-        const currentMark = sorted[k];
-        const nextMark = k + 1 < sorted.length ? sorted[k + 1] : null;
-
-        // 1. まず、次のマークの直後から現在のマークの直前までの範囲を処理
-        const rangeStart = nextMark ? nextMark.idx + 1 : group[0] + 1;
-        const rangeEnd = currentMark.idx;
-
-        if (rangeStart < rangeEnd) {
-          processRange(rangeStart, rangeEnd);
-        }
-
-        // 2. 現在のマークが最後（最も優先度が高い＝上）の場合、その後ろを処理
-        if (k === 0) {
-          const afterStart = currentMark.idx + 1;
-          if (afterStart < endIdx) {
-            // レ効果: 直後の1文字を先に読む
-            if (currentMark.hasRe && !processed.has(afterStart)) {
-              order.push(afterStart);
-              processed.add(afterStart);
-              // 残りがあれば処理
-              if (afterStart + 1 < endIdx) {
-                processRange(afterStart + 1, endIdx);
-              }
-            } else {
-              processRange(afterStart, endIdx);
-            }
-          }
-        }
-
-        // 3. マーク自体を処理
-        if (!processed.has(currentMark.idx)) {
-          order.push(currentMark.idx);
-          processed.add(currentMark.idx);
-        }
-      }
-    }
-
-    // 天地人グループを処理
-    function processSkyGroup(group, endIdx) {
-      const sorted = group.map(idx => ({
-        idx: idx,
-        value: parsedChars[idx].parsed.value
-      })).sort((a, b) => b.value - a.value);
-
-      for (const item of sorted) {
-        if (!processed.has(item.idx)) {
-          order.push(item.idx);
-          processed.add(item.idx);
-        }
-      }
-    }
-
-    // 甲乙丙丁グループを処理
-    function processKanGroup(group, endIdx) {
-      const sorted = group.map(idx => ({
-        idx: idx,
-        value: parsedChars[idx].parsed.value
-      })).sort((a, b) => a.value - b.value);
-
-      for (const item of sorted) {
-        if (!processed.has(item.idx)) {
-          order.push(item.idx);
-          processed.add(item.idx);
-        }
-      }
-    }
-
-    // メイン処理開始
-    processRange(0, parsedChars.length);
-
-    return order;
+    return { order: finalOrder, logs: logs };
   }
 </script>
