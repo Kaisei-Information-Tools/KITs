@@ -42,32 +42,54 @@ body > main {
   font-size: 0.95rem;
 }
 
-/* --- ★変更: 影付き白い角丸ボックス（プルダウン・入力欄） --- */
+/* 
+   =========================================
+   入力フォーム（テキスト、プルダウン、数値）
+   =========================================
+*/
 .text-input {
-  background-color: #fff !important; /* 白背景 */
-  border: 1px solid #e0e0e0 !important; /* 薄い枠線 */
-  border-radius: 12px !important;    /* しっかり角丸 */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important; /* ふんわりした影 */
-  color: #333 !important;
-  padding: 0.6rem 1rem !important;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  color: #333;
+  padding: 0.6rem 1rem;
   transition: all 0.3s ease;
+  /* !important を削除し、ダークモードで上書きできるように変更 */
 }
 
 .text-input:focus {
-  border-color: #3c3c6c !important;
-  box-shadow: 0 6px 15px rgba(60, 60, 108, 0.15) !important;
+  border-color: #3c3c6c;
+  box-shadow: 0 6px 15px rgba(60, 60, 108, 0.15);
   transform: translateY(-1px);
 }
 
-/* --- ★変更: 影付き白い丸角ボタン（生成ボタン） --- */
+/* ★ダークモード対応★ */
+[data-theme="dark"] .text-input {
+  background-color: rgba(30, 30, 40, 0.6); /* 半透明の暗い色 */
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f0f0f0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .text-input:focus {
+  border-color: var(--accent-purple, #8b5cf6);
+  box-shadow: 0 0 10px var(--accent-glow, rgba(139, 92, 246, 0.3));
+}
+
+/* 
+   =========================================
+   生成ボタン (.simple-btn)
+   =========================================
+*/
 .simple-btn {
-  background-color: #fff !important; /* 白背景 */
-  color: #555 !important;
-  border: 1px solid #e0e0e0 !important;
-  border-radius: 20px !important;    /* 丸みを強く */
-  padding: 0.4rem 1.5rem;            /* 横幅を少し広めに */
+  background-color: #fff;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 0.4rem 1.5rem;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.08); /* 影 */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.08);
   cursor: pointer;
   transition: all 0.2s ease;
   width: auto !important;
@@ -78,11 +100,11 @@ body > main {
 }
 
 .simple-btn:hover {
-  background-color: #fff !important;
-  color: #3c3c6c !important; /* ホバーで色を変える */
-  transform: translateY(-2px); /* 浮き上がる */
-  box-shadow: 0 6px 12px rgba(0,0,0,0.12); /* 影を濃く */
-  border-color: #3c3c6c !important;
+  background-color: #fff;
+  color: #3c3c6c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+  border-color: #3c3c6c;
 }
 
 .simple-btn:active {
@@ -90,7 +112,24 @@ body > main {
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
-/* --- ラジオボタン（席の決め方） --- */
+/* ★ダークモード対応★ */
+[data-theme="dark"] .simple-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .simple-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-color: var(--accent-purple, #8b5cf6);
+}
+
+/* 
+   =========================================
+   ラジオボタン（席の決め方）
+   =========================================
+*/
 .btn-outline-custom {
   background-color: #fff;
   color: #555;
@@ -103,6 +142,7 @@ body > main {
   font-weight: bold;
 }
 
+/* 選択された状態（ライト） */
 .btn-check:checked + .btn-outline-custom {
   background-color: #3c3c6c;
   color: #fff !important;
@@ -117,18 +157,37 @@ body > main {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* --- シンプルなボタン（実行・保存） --- */
+/* ★ダークモード対応★ */
+[data-theme="dark"] .btn-outline-custom {
+  background-color: rgba(255, 255, 255, 0.05); /* 非選択時：薄暗い */
+  color: #aaa;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .btn-check:checked + .btn-outline-custom {
+  background-color: var(--accent-purple, #8b5cf6); /* 選択時：アクセントカラー */
+  color: #fff !important;
+  border-color: var(--accent-purple, #8b5cf6);
+  box-shadow: 0 0 15px var(--accent-glow, rgba(139, 92, 246, 0.4));
+}
+
+/* 
+   =========================================
+   実行・保存ボタン (.simple-submit)
+   =========================================
+*/
 .simple-submit {
-  background-color: #fff !important; /* ここも白ベースに合わせました */
-  color: #333 !important;
-  border: 1px solid #ddd !important;
-  border-radius: 12px !important; /* 角丸合わせ */
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   font-weight: bold;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
 }
 
 .simple-submit:hover {
+  background-color: #f8f9fa;
   transform: translateY(-2px);
   box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
@@ -138,7 +197,19 @@ body > main {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* --- 以下、既存のスタイル --- */
+/* ★ダークモード対応★ */
+[data-theme="dark"] .simple-submit {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .simple-submit:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--accent-purple, #8b5cf6);
+}
+
+/* --- 以下、既存のレイアウト等のスタイル --- */
 #count-display {
   font-weight: bold;
   color: var(--text-primary);
