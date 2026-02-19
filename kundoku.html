@@ -317,6 +317,12 @@ old_base_css: true
         if (isAscending || nextTarget >= 1) {
           resolveStack(type, nextTarget, isAscending);
         }
+      } else {
+        // 見つからない場合、降順（上中下など）なら飛ばされている可能性を考慮して
+        // 次の値を探索する（例: 「上」の次に「中」がなく「下」がある場合）
+        if (!isAscending && targetVal > 1) {
+          resolveStack(type, targetVal - 1, isAscending);
+        }
       }
     }
 
