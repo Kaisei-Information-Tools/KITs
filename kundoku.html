@@ -8,13 +8,23 @@ old_base_css: true
 <h1>訓読文エディタ</h1>
 <div class="editor">
   <div class="input-area">
-    <textarea id="kanbunInput" rows="10" cols="30" placeholder="ここに漢文を入力"></textarea>
+    <textarea id="kanbunInput" rows="10" cols="30" placeholder="入力例: 温[レ](ネテ)故(キヲ)而知[レ](ル)新(シキヲ)"></textarea>
     <br />
     <button onclick="renderPreview()">プレビュー更新</button>
-    <p>返り点や送り仮名ををつけたい文字をクリックすることで入力できます</p>
+    <button onclick="rearrangeByKaeriten()">返り点に従って並べ替え(β)</button>
+    <button onclick="restoreOriginal()">元に戻す</button>
+    <p>漢字[返り点](送り仮名) の形式で入力してください。<br>例: <code>温[レ](ネテ)故(キヲ)而知[レ](ル)新(シキヲ)</code></p>
   </div>
   <div class="preview-area" id="preview"></div>
 </div>
+
+<details id="log-details">
+  <summary>処理ログ</summary>
+  <div id="log-content">
+    <p style="color: #666; font-size: 0.9em;">ここに処理の履歴が表示されます。</p>
+  </div>
+</details>
+
 <script>
   // プレビュー生成関数
   function renderPreview() {
@@ -24,16 +34,26 @@ old_base_css: true
 
     const lines = inputText.split("\n");
     lines.forEach((line) => {
+      if (!line) return; // 空行は無視（または適宜処理）
       const p = document.createElement("p");
-      for (let i = 0; i < line.length; i++) {
+
+      // 正規表現で 漢字[返り点](送り仮名) を解析
+      const charRegex = /([^\[\(\)\s])(?:\[([^\]]*)\])?(?:\(([^)]*)\))?/g;
+      let match;
+
+      while ((match = charRegex.exec(line)) !== null) {
+        const charText = match[1];
+        const kaeritenText = match[2] || "";
+        const okuriganaText = match[3] || "";
+
         const container = document.createElement("span");
         container.className = "char-container";
 
-        // メインの漢字表示用
+        // メインの漢字
         const charSpan = document.createElement("span");
         charSpan.className = "char";
-        charSpan.textContent = line[i];
-        if (line[i] === "-") {
+        charSpan.textContent = charText;
+        if (charText === "-") {
           charSpan.textContent = "―";
           charSpan.style.transform = "scaleY(0.3)";
           charSpan.style.display = "inline-block";
@@ -41,23 +61,18 @@ old_base_css: true
         }
         container.appendChild(charSpan);
 
-        // 返り点用スパン（初期は空）
+        // 返り点
         const kaeritenSpan = document.createElement("span");
         kaeritenSpan.className = "kaeriten";
-        kaeritenSpan.textContent = "";
+        kaeritenSpan.textContent = kaeritenText;
+        applyKaeritenStyle(kaeritenSpan, kaeritenText, charText);
         container.appendChild(kaeritenSpan);
 
-        // 送り仮名用スパン（初期は空）
+        // 送り仮名
         const okuriganaSpan = document.createElement("span");
         okuriganaSpan.className = "okurigana";
-        okuriganaSpan.textContent = "";
+        okuriganaSpan.textContent = okuriganaText;
         container.appendChild(okuriganaSpan);
-
-        // クリックで注釈編集
-        container.addEventListener("click", function (e) {
-          annotateCharacter(container);
-          e.stopPropagation();
-        });
 
         p.appendChild(container);
       }
@@ -65,34 +80,300 @@ old_base_css: true
     });
   }
 
-  // 注釈編集関数
-  function annotateCharacter(container) {
-    const Kaeriten = container.querySelector(".kaeriten");
-    const currentKaeriten = Kaeriten.textContent;
-    const currentOkurigana = container.querySelector(".okurigana").textContent;
+  // 返り点のスタイル適用（位置調整など）
+  function applyKaeritenStyle(element, text, charText) {
+    if (!text) return;
 
-    const newKaeriten = prompt(
-      "返り点を入力してください（現在: " + currentKaeriten + "）",
-      currentKaeriten,
-    );
-    const newOkurigana = prompt(
-      "送り仮名を入力してください（現在: " + currentOkurigana + "）",
-      currentOkurigana,
-    );
-
-    Kaeriten.textContent = newKaeriten || "";
-    if (newKaeriten === "一レ") {
-      Kaeriten.style.letterSpacing = "-11px";
-      Kaeriten.style.transform = "translate(-45%, 30%)";
-    } else if (newKaeriten === "上レ") {
-      Kaeriten.style.letterSpacing = "-5px";
-      Kaeriten.style.transform = "translate(-45%, 70%) scaleY(0.8)";
+    if (text === "一レ") {
+      element.style.letterSpacing = "-11px";
+      element.style.transform = "translate(-45%, 30%)";
+    } else if (text === "上レ") {
+      element.style.letterSpacing = "-5px";
+      element.style.transform = "translate(-45%, 70%) scaleY(0.8)";
     } else {
-      Kaeriten.style.transform = "translate(-45%, 50%)";
+      element.style.transform = "translate(-45%, 50%)";
     }
-    if (container.querySelector(".char").textContent === "―") {
-      Kaeriten.style.transform = "translate(-45%, 50%)";
+
+    if (charText === "―" || charText === "-") {
+      element.style.transform = "translate(-45%, 50%)";
     }
-    container.querySelector(".okurigana").textContent = newOkurigana || "";
+  }
+
+  // 返り点に従って並べ替える関数
+  function rearrangeByKaeriten() {
+    const preview = document.getElementById("preview");
+    const paragraphs = preview.querySelectorAll("p");
+    const logContent = document.getElementById("log-content");
+    const logDetails = document.getElementById("log-details");
+
+    // ログコンテナをリセット
+    logContent.innerHTML = "";
+    const logList = document.createElement("ul");
+    logContent.appendChild(logList);
+
+    // 処理が走ったら自動で開く
+    logDetails.open = true;
+
+    paragraphs.forEach((p) => {
+      const containers = Array.from(p.querySelectorAll(".char-container"));
+      if (containers.length === 0) return;
+
+      // 各文字の情報を抽出
+      const chars = containers.map((container, index) => ({
+        index: index,
+        char: container.querySelector(".char").textContent,
+        kaeriten: container.querySelector(".kaeriten").textContent,
+        okurigana: container.querySelector(".okurigana").textContent,
+        container: container
+      }));
+
+      // 返り点に基づいて読み順を計算
+      const result = calculateReadingOrder(chars);
+      const readingOrder = result.order;
+      const logs = result.logs;
+
+      // ログ表示（追加）
+      logs.forEach(l => {
+        const li = document.createElement("li");
+        li.textContent = l;
+        logList.appendChild(li);
+      });
+
+      // 並べ替えた結果を表示
+      p.innerHTML = "";
+      readingOrder.forEach(index => {
+        const char = chars[index];
+        // 文字を追加
+        const span = document.createElement("span");
+        span.textContent = char.char;
+        span.className = "rearranged-char";
+        p.appendChild(span);
+
+        // 送り仮名を追加
+        if (char.okurigana) {
+          const okuriganaSpan = document.createElement("span");
+          okuriganaSpan.textContent = char.okurigana;
+          okuriganaSpan.className = "rearranged-okurigana";
+          p.appendChild(okuriganaSpan);
+        }
+      });
+    });
+  }
+
+  // 元に戻す関数（プレビューを入力欄の内容で再描画）
+  function restoreOriginal() {
+    renderPreview();
+  }
+
+  // 返り点を解析する関数
+  function parseKaeriten(kaeritenStr) {
+    if (!kaeritenStr) return null;
+
+    // 複合パターンの解析: 一レ、二レ、上レなど
+    const compoundMatch = kaeritenStr.match(/^([一二三四五六七八九十上中下天地人甲乙丙丁])(レ|㆑)$/);
+    if (compoundMatch) {
+      return { type: 'compound', main: compoundMatch[1], hasRe: true };
+    }
+
+    // レ点
+    if (kaeritenStr === 'レ' || kaeritenStr === '㆑') {
+      return { type: 're' };
+    }
+
+    // 一二三点
+    const numMap = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10 };
+    if (numMap[kaeritenStr]) {
+      return { type: 'number', value: numMap[kaeritenStr], str: kaeritenStr };
+    }
+
+    // 上中下点
+    const posMap = { '上': 3, '中': 2, '下': 1 };
+    if (posMap[kaeritenStr]) {
+      return { type: 'position', value: posMap[kaeritenStr], str: kaeritenStr };
+    }
+
+    // 天地人点
+    const skyMap = { '天': 3, '地': 2, '人': 1 };
+    if (skyMap[kaeritenStr]) {
+      return { type: 'sky', value: skyMap[kaeritenStr], str: kaeritenStr };
+    }
+
+    // 甲乙丙丁点
+    const kanMap = { '甲': 1, '乙': 2, '丙': 3, '丁': 4 };
+    if (kanMap[kaeritenStr]) {
+      return { type: 'kan', value: kanMap[kaeritenStr], str: kaeritenStr };
+    }
+
+    return null;
+  }
+
+  // 返り点から読み順を計算する関数
+  function calculateReadingOrder(chars) {
+    const logs = [];
+
+    function addLog(msg) {
+      logs.push(msg);
+    }
+
+    // Pass 0: パースと初期化
+    let nodes = chars.map((char, index) => {
+      const parsed = parseKaeriten(char.kaeriten);
+      return {
+        indices: [index],
+        marks: parsed ? [parsed] : [],
+        text: char.char + (char.okurigana ? `(${char.okurigana})` : ''),
+        isHyphen: char.char === '―' || char.char === '-'
+      };
+    });
+
+    // Pass 0.5: ハイフンによる熟語結合処理
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].isHyphen) {
+        // 前後のノードが存在する場合のみ結合
+        if (i > 0 && i < nodes.length - 1) {
+          const prev = nodes[i - 1];
+          const next = nodes[i + 1];
+
+          addLog(`ハイフンにより「${prev.text}」と「${next.text}」を結合しました。`);
+
+          // ハイフン自体のインデックスとテキストは含めない（消去）
+          const mergedIndices = [...prev.indices, ...next.indices];
+          const mergedMarks = [...prev.marks, ...next.marks];
+          const mergedText = prev.text + next.text;
+
+          const newNode = {
+            indices: mergedIndices,
+            marks: mergedMarks,
+            text: mergedText,
+            isHyphen: false
+          };
+
+          // 前・中(ハイフン)・後を削除して新ノードを挿入
+          nodes.splice(i - 1, 3, newNode);
+
+          // インデックス調整:
+          // 配列が2つ短くなったので、インデックスを戻す
+          i -= 1;
+        }
+      }
+    }
+
+    // Pass 1: レ点の処理（後ろから結合）
+    for (let i = nodes.length - 2; i >= 0; i--) {
+      const currentNode = nodes[i];
+      const hasRe = currentNode.marks.some(m => m.type === 're' || (m.type === 'compound' && m.hasRe));
+
+      if (hasRe) {
+        const nextNode = nodes[i + 1];
+        if (nextNode) {
+          addLog(`レ点により「${currentNode.text}」と「${nextNode.text}」を結合しました。`);
+
+          const mergedIndices = [...nextNode.indices, ...currentNode.indices];
+          const mergedMarks = [...nextNode.marks, ...currentNode.marks];
+          const mergedText = nextNode.text + currentNode.text;
+
+          const newNode = {
+            indices: mergedIndices,
+            marks: mergedMarks,
+            text: mergedText
+          };
+          nodes.splice(i, 2, newNode);
+        }
+      }
+    }
+
+    // Pass 2: スタックベースの構造処理
+    const finalOrder = [];
+    const stacks = {
+      number: [],   // 一二三 (昇順)
+      position: [], // 上中下 (降順)
+      sky: [],      // 天地人 (降順)
+      kan: []       // 甲乙丙丁 (昇順)
+    };
+
+    function getMarkValue(node, type) {
+      for (const mark of node.marks) {
+        if (mark.type === type) return mark.value;
+        if (mark.type === 'compound') {
+          const inner = parseKaeriten(mark.main);
+          if (inner && inner.type === type) return inner.value;
+        }
+      }
+      return null;
+    }
+
+    // スタック解決
+    function resolveStack(type, targetVal, isAscending) {
+      const stack = stacks[type];
+      const index = stack.findIndex(node => getMarkValue(node, type) === targetVal);
+
+      if (index !== -1) {
+        const [node] = stack.splice(index, 1);
+        finalOrder.push(...node.indices);
+        addLog(`保留から「${node.text}」を取り出しました（次の処理へ）。`);
+
+        // 次の値を解決
+        const nextTarget = isAscending ? targetVal + 1 : targetVal - 1;
+        if (isAscending || nextTarget >= 1) {
+          resolveStack(type, nextTarget, isAscending);
+        }
+      } else {
+        // 見つからない場合、降順（上中下など）なら飛ばされている可能性を考慮して
+        // 次の値を探索する（例: 「上」の次に「中」がなく「下」がある場合）
+        if (!isAscending && targetVal > 1) {
+          resolveStack(type, targetVal - 1, isAscending);
+        }
+      }
+    }
+
+    nodes.forEach(node => {
+      let structureParams = null;
+
+      if (getMarkValue(node, 'number') !== null) structureParams = { type: 'number', value: getMarkValue(node, 'number'), isAscending: true, max: 99, label: '一二点' };
+      else if (getMarkValue(node, 'position') !== null) structureParams = { type: 'position', value: getMarkValue(node, 'position'), isAscending: false, max: 3, label: '上下点' };
+      else if (getMarkValue(node, 'sky') !== null) structureParams = { type: 'sky', value: getMarkValue(node, 'sky'), isAscending: false, max: 3, label: '天地人点' };
+      else if (getMarkValue(node, 'kan') !== null) structureParams = { type: 'kan', value: getMarkValue(node, 'kan'), isAscending: true, max: 4, label: '甲乙点' };
+
+      if (structureParams) {
+        const { type, value, isAscending, max, label } = structureParams;
+
+        if (isAscending) {
+          // 昇順 (一二三)
+          if (value > 1) {
+            stacks[type].push(node);
+            addLog(`「${node.text}」を保留しました（${label}のため）。`);
+          } else {
+            // value === 1
+            finalOrder.push(...node.indices);
+            addLog(`「${node.text}」を読み上げました（${label}開始）。`);
+            resolveStack(type, 2, true);
+          }
+        } else {
+          // 降順 (上中下)
+          if (value < max) {
+            stacks[type].push(node);
+            addLog(`「${node.text}」を保留しました（${label}のため）。`);
+          } else {
+            // value === max (3)
+            finalOrder.push(...node.indices);
+            addLog(`「${node.text}」を読み上げました（${label}開始）。`);
+            resolveStack(type, max - 1, false);
+          }
+        }
+      } else {
+        // 構造マークなし
+        finalOrder.push(...node.indices);
+        addLog(`「${node.text}」を読み上げました。`);
+      }
+    });
+
+    Object.values(stacks).forEach(stack => {
+      stack.forEach(node => {
+        finalOrder.push(...node.indices);
+        addLog(`「${node.text}」が最後まで残ったため読み上げました。`);
+      });
+    });
+
+    return { order: finalOrder, logs: logs };
   }
 </script>
