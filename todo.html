@@ -100,6 +100,85 @@ old_base_css: true
           <input type="text" id="task-tags" placeholder="仕事, プライベート...">
         </div>
 
+        <div class="recurrence-section">
+          <div class="form-group">
+            <label><i class="fa-solid fa-repeat"></i> 繰り返し</label>
+            <select id="task-recurrence-type">
+              <option value="none">繰り返しなし</option>
+              <option value="daily">毎日</option>
+              <option value="weekly">毎週</option>
+              <option value="nweekly">何週かおき</option>
+              <option value="monthly-date">毎月（日付指定）</option>
+              <option value="monthly-weekday">毎月（曜日指定）</option>
+            </select>
+          </div>
+
+          <div id="recurrence-days-row" class="form-group hidden">
+            <label>繰り返す曜日</label>
+            <div class="day-picker">
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="0"><span>日</span></label>
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="1"><span>月</span></label>
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="2"><span>火</span></label>
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="3"><span>水</span></label>
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="4"><span>木</span></label>
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="5"><span>金</span></label>
+              <label class="day-check"><input type="checkbox" name="recurrence-dow" value="6"><span>土</span></label>
+            </div>
+          </div>
+
+          <div id="recurrence-interval-row" class="form-group hidden">
+            <label>間隔（週）</label>
+            <input type="number" id="task-recurrence-interval" min="2" max="52" value="2">
+          </div>
+
+          <div id="recurrence-month-date-row" class="form-group hidden">
+            <label>毎月何日</label>
+            <input type="number" id="task-recurrence-month-date" min="1" max="31" value="1">
+          </div>
+
+          <div id="recurrence-month-weekday-row" class="form-group hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label>順番</label>
+                <select id="task-recurrence-month-ord">
+                  <option value="1">第1</option>
+                  <option value="2">第2</option>
+                  <option value="3">第3</option>
+                  <option value="4">第4</option>
+                  <option value="-1">最終</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>曜日</label>
+                <select id="task-recurrence-month-weekday">
+                  <option value="0">日曜日</option>
+                  <option value="1">月曜日</option>
+                  <option value="2">火曜日</option>
+                  <option value="3">水曜日</option>
+                  <option value="4">木曜日</option>
+                  <option value="5">金曜日</option>
+                  <option value="6">土曜日</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="recurrence-end-row" class="form-group hidden">
+            <label>終了条件</label>
+            <select id="task-recurrence-end-type">
+              <option value="never">なし（無期限）</option>
+              <option value="date">終了日を指定</option>
+              <option value="count">回数を指定</option>
+            </select>
+            <div id="recurrence-end-date-row" class="hidden" style="margin-top:0.5rem">
+              <input type="date" id="task-recurrence-end-date">
+            </div>
+            <div id="recurrence-end-count-row" class="hidden" style="margin-top:0.5rem">
+              <input type="number" id="task-recurrence-end-count" min="1" value="10" placeholder="回数">
+            </div>
+          </div>
+        </div>
+
         <div class="subtasks-section">
           <label>サブタスク</label>
           <div id="subtask-list"></div>
