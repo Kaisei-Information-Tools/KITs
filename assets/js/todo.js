@@ -349,11 +349,14 @@ class TodoApp {
             // Preserve completedCount if recurrence type unchanged
             if (recurrence && existing.recurrence && recurrence.type === existing.recurrence.type) {
               recurrence.completedCount = existing.recurrence.completedCount || 0;
+            } else if (recurrence) {
+              recurrence.completedCount = 0;
             }
             this.tasks[index] = { ...existing, title, description: desc, dueDate: due, priority, tags, subtasks, recurrence };
           }
         } else {
           const newTask = new Task(title, desc, due, priority, tags, subtasks);
+          if (recurrence) recurrence.completedCount = 0;
           newTask.recurrence = recurrence;
           this.tasks.push(newTask);
         }
@@ -628,7 +631,6 @@ class TodoApp {
 
     const endType = document.getElementById('task-recurrence-end-type').value;
     r.endType = endType;
-    r.completedCount = 0;
 
     if (endType === 'date') {
       r.endDate = document.getElementById('task-recurrence-end-date').value;
