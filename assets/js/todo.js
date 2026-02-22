@@ -70,13 +70,21 @@ function getNextDueDate(task) {
         next.setDate(next.getDate() + interval * 7);
         return formatDate(next);
       }
-      // Start of the week that is `interval` weeks after the current week
+      // First check if there is another matching day later in the same week
+      for (const day of days) {
+        if (day > current.getDay()) {
+          const candidate = new Date(current);
+          candidate.setDate(current.getDate() + (day - current.getDay()));
+          return formatDate(candidate);
+        }
+      }
+      // No more days in this week — jump to the next interval-th week
       const weekSun = new Date(current);
       weekSun.setDate(current.getDate() - current.getDay() + interval * 7);
       for (let i = 0; i < 7; i++) {
         const candidate = new Date(weekSun);
         candidate.setDate(weekSun.getDate() + i);
-        if (days.includes(candidate.getDay()) && candidate > current) return formatDate(candidate);
+        if (days.includes(candidate.getDay())) return formatDate(candidate);
       }
       const fallback = new Date(current);
       fallback.setDate(fallback.getDate() + interval * 7);
