@@ -677,6 +677,79 @@ footer {
   /* Sync with title row height */
 }
 
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Recurrence */
+.recurrence-section {
+  border-top: 1px solid var(--pk-glass-border);
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.day-picker {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.day-check {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.day-check input[type="checkbox"] {
+  appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--input-border);
+  background: var(--glass-bg-input);
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.day-check input[type="checkbox"]:checked {
+  background: var(--pk-purple);
+  border-color: var(--pk-purple);
+}
+
+.day-check input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.day-check span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.recurrence-badge {
+  color: var(--pk-purple);
+  font-weight: 600;
+}
+
 @media (max-width: 600px) {
   .form-row {
     flex-direction: column;
