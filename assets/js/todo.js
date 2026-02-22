@@ -720,6 +720,42 @@ class TodoApp {
     }
   }
 
+  getRecurringOccurrencesInMonth(task, year, month) {
+    const r = task.recurrence;
+    if (!r || r.type === 'none' || !task.dueDate) return [];
+
+    const firstDayStr = `${year}-${String(month + 1).padStart(2, '0')}-01`;
+    const lastDayStr = formatDate(new Date(year, month + 1, 0));
+    const countEnded = r.endType === 'count' && (r.completedCount || 0) >= (r.endCount || 1);
+
+    const occurrences = [];
+    let currentDue = task.dueDate;
+    let iterations = 0;
+
+    // Advance past dates before the start of the month
+    while (currentDue < firstDayStr && iterations < 500) {
+      iterations++;
+      if (countEnded) return occurrences;
+      if (r.endType === 'date' && r.endDate && currentDue > r.endDate) return occurrences;
+      const next = getNextDueDate({ ...task, dueDate: currentDue });
+      if (!next || next <= currentDue) return occurrences;
+      currentDue = next;
+    }
+
+    // Collect occurrences within the month
+    while (currentDue <= lastDayStr && iterations < 1000) {
+      iterations++;
+      if (r.endType === 'date' && r.endDate && currentDue > r.endDate) break;
+      occurrences.push(currentDue);
+      if (countEnded) break;
+      const next = getNextDueDate({ ...task, dueDate: currentDue });
+      if (!next || next <= currentDue) break;
+      currentDue = next;
+    }
+
+    return occurrences;
+  }
+
   renderCalendar() {
     if (this.listView) this.listView.classList.add('hidden');
     if (this.calendarView) this.calendarView.classList.remove('hidden');
@@ -732,6 +768,18 @@ class TodoApp {
     
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Pre-compute recurring task occurrences for this month
+    const recurringByDate = {};
+    this.tasks.forEach(task => {
+      if (task.recurrence && task.recurrence.type !== 'none') {
+        const dates = this.getRecurringOccurrencesInMonth(task, year, month);
+        dates.forEach(dateStr => {
+          if (!recurringByDate[dateStr]) recurringByDate[dateStr] = [];
+          recurringByDate[dateStr].push(task);
+        });
+      }
+    });
 
     for(let i=0; i<firstDay; i++) {
         const div = document.createElement('div');
@@ -751,12 +799,19 @@ class TodoApp {
 
         div.innerHTML = `<div class="day-number">${i}</div>`;
         
-        const dayTasks = this.tasks.filter(t => t.dueDate && t.dueDate.startsWith(dateStr));
+        // Non-recurring tasks matched by dueDate + recurring task occurrences for this day
+        const nonRecurring = this.tasks.filter(t =>
+          t.dueDate && t.dueDate.startsWith(dateStr) && (!t.recurrence || t.recurrence.type === 'none')
+        );
+        const dayTasks = [...nonRecurring, ...(recurringByDate[dateStr] || [])];
         dayTasks.forEach(t => {
             const taskDiv = document.createElement('div');
-            taskDiv.className = `day-task ${t.completed ? 'completed' : ''} priority-${t.priority}`;
+            // Future occurrences (not the current dueDate) are shown as uncompleted
+            const isCompleted = t.dueDate === dateStr ? t.completed : false;
+            taskDiv.className = `day-task ${isCompleted ? 'completed' : ''} priority-${t.priority}`;
             taskDiv.innerText = t.title;
-            taskDiv.title = t.title;
+            const recLabel = getRecurrenceLabel(t.recurrence);
+            taskDiv.title = recLabel ? `${t.title} (${recLabel})` : t.title;
             taskDiv.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.openModal(t.id);
