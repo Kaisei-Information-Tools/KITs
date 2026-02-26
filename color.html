@@ -1,0 +1,66 @@
+---
+layout: default_new
+title: 画像カラーピッカー
+css: color
+js: color
+old_base_css: true
+---
+
+<div class="container">
+  <div class="title">画像カラーピッカー</div>
+  
+  <div class="picker-box">
+    <div class="picker-layout">
+      
+      <!-- 画像エリア -->
+      <div class="image-area">
+        <label for="image-loader" class="file-upload-label submit sapphire">
+          <i class="fa-solid fa-image"></i> 画像を選択
+        </label>
+        <input type="file" id="image-loader" accept="image/*">
+        
+        <div id="preview-container">
+          <img id="preview" alt="Preview">
+          <span id="placeholder-text">
+            <i class="fa-regular fa-image fa-3x mb-3" style="opacity:0.5;"></i><br>
+            ここに画像が表示されます
+          </span>
+          <div id="focus-marker"></div>
+        </div>
+        <p class="usage-text">
+          <small><i class="fa-solid fa-circle-info"></i> 画像をクリックすると色を固定できます</small>
+        </p>
+      </div>
+
+      <!-- 情報エリア -->
+      <div class="info-area" id="info-area">
+        <h2 class="info-title"><i class="fa-solid fa-palette"></i> Color Info</h2>
+        
+        <div class="color-details-grid">
+          <!-- 色プレビュー -->
+          <div class="color-preview-wrapper">
+            <div id="color-preview"></div>
+          </div>
+          
+          <!-- コード表示 -->
+          <div class="color-codes">
+            <div class="code-group">
+              <label>HEX</label>
+              <div class="code-display" id="hex-code">-</div>
+            </div>
+            <div class="code-group">
+              <label>RGB</label>
+              <div class="code-display" id="rgb-code">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ルーペ表示用 -->
+<canvas id="loupe"></canvas>
+<!-- 画像データ保持用（非表示） -->
+<canvas id="source-canvas" style="display:none;"></canvas>
