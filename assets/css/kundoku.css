@@ -68,7 +68,7 @@ button {
   border-radius: 10px;
   color: var(--text-primary);
   cursor: pointer;
-  box-shadow: 
+  box-shadow:
     0 8px 32px var(--glass-shadow, rgba(0, 0, 0, 0.1)),
     inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.6));
   transition: all 0.3s ease;
@@ -78,7 +78,7 @@ button {
 
 button:hover {
   background: var(--glass-bg-hover, rgba(255, 255, 255, 0.6));
-  box-shadow: 
+  box-shadow:
     0 12px 40px var(--glass-shadow, rgba(0, 0, 0, 0.15)),
     inset 0 1px 1px var(--glass-inset, rgba(255, 255, 255, 0.8));
   transform: translateY(-2px);
@@ -147,4 +147,172 @@ p {
   writing-mode: vertical-rl;
   height: max-content;
   letter-spacing: -3px;
+}
+
+/* ==========================
+   並べ替え後のスタイル
+   ========================== */
+.rearranged-char {
+  font-size: 1.5em;
+  display: inline-block;
+  margin: 5px 2px;
+}
+
+.rearranged-okurigana {
+  font-size: 1em;
+  display: inline-block;
+  margin: 5px 2px;
+  letter-spacing: -3px;
+}
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 500px) {
+
+  /* --- メインコンテナ --- */
+  main {
+    width: 94% !important;
+    padding: 15px 10px !important;
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  /* --- エディタ配置（縦積みに変更） --- */
+  .editor {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* --- 入力エリア --- */
+  .input-area {
+    width: 100%;
+  }
+
+  textarea {
+    font-size: 16px;
+    /* iOSでのズーム防止 */
+    height: 150px;
+    /* 画面を占領しすぎない高さに */
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  /* --- プレビューエリア --- */
+  .preview-area {
+    width: 100%;
+    /* 縦書きの文章が見えるよう高さを確保 */
+    min-height: 50vh;
+    max-height: 70vh;
+    padding: 15px 10px;
+
+    /* 縦書きなので右から左への横スクロールを許可 */
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    border: 2px solid var(--glass-border);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+
+  /* --- 文字・注釈コンテナ --- */
+  /* 指でタップしやすいようにマージンを広げる */
+  .char-container {
+    margin: 15px 8px;
+  }
+
+  /* 漢字本体を大きく */
+  .char-container .char {
+    font-size: 2rem;
+  }
+
+  /* 返り点・送り仮名の位置とサイズ微調整 */
+  .char-container .kaeriten {
+    font-size: 1rem;
+    /* 位置合わせの微調整 */
+    transform: translate(-50%, 60%);
+  }
+
+  .char-container .okurigana {
+    font-size: 1rem;
+    transform: translate(50%, 60%);
+  }
+
+  /* --- 並べ替え後のスタイル --- */
+  .rearranged-char {
+    font-size: 2rem;
+    margin: 10px 5px;
+  }
+
+  .rearranged-okurigana {
+    font-size: 1.2rem;
+    margin: 10px 5px;
+  }
+}
+
+/* ログ表示エリアのスタイル（折りたたみ） */
+details#log-details {
+  margin-top: 20px;
+  border: 1px solid var(--glass-border, rgba(204, 204, 204, 0.5));
+  border-radius: 8px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.6));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+details#log-details summary {
+  padding: 12px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background: var(--glass-bg-alt, rgba(255, 255, 255, 0.4));
+  list-style: none;
+  /* デフォルトの三角を消す */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* カスタム矢印 */
+details#log-details summary::after {
+  content: "▼";
+  font-size: 0.8em;
+  transition: transform 0.3s;
+}
+
+details#log-details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+details#log-details[open] {
+  box-shadow: 0 4px 12px var(--glass-shadow, rgba(0, 0, 0, 0.1));
+}
+
+#log-content {
+  padding: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+  border-top: 1px solid var(--glass-border, rgba(204, 204, 204, 0.5));
+}
+
+#log-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+#log-content li {
+  margin-bottom: 5px;
+  line-height: 1.5;
 }

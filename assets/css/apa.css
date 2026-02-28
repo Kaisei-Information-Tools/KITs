@@ -172,3 +172,127 @@
 main {
   max-width: 1000px !important;
 }
+
+
+
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- 共通レイアウト --- */
+  main {
+    padding: 15px 10px !important;
+    width: 94% !important;
+  }
+
+  .column {
+    margin-bottom: 1rem;
+  }
+
+  /* --- ソース選択ボタン (グリッドレイアウト) --- */
+  .source-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 左右均等の2列 */
+    gap: 8px;                       /* ボタン間の隙間 */
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* 1つ目の要素（Webサイト）を横幅一杯（2列分）に広げる */
+  .source-selection li:first-child {
+    grid-column: 1 / span 2;
+  }
+
+  .source-selection li {
+    margin: 0;
+    width: auto;
+  }
+
+  .source-selection button {
+    width: 100%;
+    margin: 0;
+    padding: 8px 2px;    /* 高さを抑える */
+    font-size: 0.9rem;
+    min-height: 40px;    /* 押しやすい最低限の高さ */
+    border-radius: 8px;
+  }
+
+  /* --- 詳細情報エリア --- */
+  .detail {
+    flex-direction: column; /* 入力欄は縦積み */
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .detail li {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .detail-input {
+    width: 100% !important;
+    margin: 5px 0 0 0;
+    font-size: 16px; /* ズーム防止 */
+  }
+
+  /* --- 日付エリア --- */
+  .date {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .date input,
+  .date select {
+    width: 100% !important;
+    margin: 0;
+    font-size: 16px; /* ズーム防止 */
+  }
+
+  .date-label {
+    display: none; /* ラベル省略 */
+  }
+
+  /* --- URL自動取得ボタン --- */
+  #auto-get-data {
+    margin-top: 8px;
+    padding: 8px;
+    height: auto;
+    font-size: 0.9rem;
+  }
+
+  /* --- 作成ボタン --- */
+  #create-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 15px;
+  }
+
+  .reset-button-box {
+    margin-bottom: 10px;
+  }
+  
+  .reset-button-box .reset {
+    width: auto;
+    padding: 5px 15px;
+    font-size: 0.85rem;
+  }
+
+  /* --- 下部ボタン --- */
+  .bottom-buttons {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .bottom-buttons button {
+    flex: 1;
+    padding: 8px;
+    width: auto;
+  }
+}

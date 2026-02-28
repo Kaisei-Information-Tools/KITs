@@ -14,6 +14,7 @@ main {
   align-items: flex-start;
 }
 
+/* --- 左側（入力エリア・結果） --- */
 .left {
   flex: 1 1 65%;
   min-width: 0;
@@ -29,8 +30,9 @@ main {
   box-shadow: 0 12px 32px var(--glass-shadow);
 }
 
+/* --- 右側（単語リスト） --- */
 .right {
-  flex: 0 1 35%;
+  flex: 0 1 35%; /* 幅の比率 */
   min-width: 0;
   background: var(--glass-bg-alt);
   backdrop-filter: blur(10px);

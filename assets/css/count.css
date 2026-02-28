@@ -104,3 +104,119 @@ main {
 footer {
   width: 100%;
 }
+
+
+/* =========================================
+   450px以下 スマホ向けレスポンシブ対応（修正版）
+   ========================================= */
+@media (max-width: 450px) {
+  /* --- メインコンテナ --- */
+  main {
+    max-width: 94% !important;
+    width: 94% !important;
+    height: auto !important;
+    display: block !important;
+    padding: 10px 10px 80px 10px !important;
+  }
+
+  /* --- カウンター表示 --- */
+  .counter {
+    font-size: 4rem;
+    padding: 20px;
+    margin: 10px 0 25px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* --- 定型ボタンエリア (Gridレイアウト) --- */
+  .templates {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 左右2列 */
+    gap: 8px; /* 隙間を少し狭く */
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  /* ボタン共通スタイル */
+  .templates .button {
+    width: 100%;
+    margin: 0;
+    height: 50px;
+    
+    /* ▼文字サイズとレイアウト調整 */
+    font-size: 0.8rem; /* 文字を小さく */
+    padding: 0 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1; /* 行間を詰める */
+    word-break: keep-all; /* 単語の途中での改行を防ぐ */
+  }
+
+  /* グリッド配置指定 */
+  .templates button:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .templates button:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .templates button:nth-child(3) { grid-column: 1; grid-row: 3; }
+  .templates button:nth-child(4) { grid-column: 2; grid-row: 1; }
+  .templates button:nth-child(5) { grid-column: 2; grid-row: 2; }
+  .templates button:nth-child(6) { grid-column: 2; grid-row: 3; }
+
+  /* リセットボタン */
+  #reset {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+    margin-top: 10px;
+    background-color: rgba(255, 100, 100, 0.2);
+  }
+
+  /* --- カスタム入力エリア (崩れ防止) --- */
+  .customs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* 両端揃え */
+    gap: 10px 0; /* 上下のみ隙間を空ける（左右は0） */
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--glass-bg-alt);
+    border-radius: 12px;
+  }
+
+  /* 入力欄 (60%) */
+  .customs input[type="number"] {
+    width: 60% !important; 
+    height: 40px;
+    margin: 0;
+    font-size: 16px !important;
+    box-sizing: border-box;
+  }
+
+  /* 実行ボタン (38%) -> 合計98%で1行に収める */
+  .customs button {
+    width: 38% !important;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* --- アラートボックス --- */
+  .counter-alert {
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+  }
+  .counter-alert input {
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  .counter-alert .button {
+    width: 45%;
+    margin: 0 2%;
+    height: 40px;
+  }
+}
