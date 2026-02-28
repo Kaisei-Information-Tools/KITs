@@ -1,26 +1,87 @@
 function analyzeText() {
   let text = document.getElementById("textInput").value;
+  let isCaseInsensitive = document.getElementById("caseInsensitive").checked;
+  let includeSymbolsInPercent = document.getElementById("includeSymbolsInPercent").checked;
   let segmenter = new TinySegmenter();
 
-  let words = text.split(/\r?\n/).flatMap((line) => segmenter.segment(line));
-  words = words.filter((word) => word.trim() !== "");
+  // Process line by line to prevent merging across newlines
+  let words = text.split(/\r?\n/).flatMap((line) => {
+    let rawWords = segmenter.segment(line);
+    let mergedWords = [];
+    
+    for (let i = 0; i < rawWords.length; i++) {
+      let token = rawWords[i];
+      let offset = 1;
+      
+      // Greedy merge loop
+      while (i + offset < rawWords.length) {
+        let next = rawWords[i + offset];
+        
+        // Rule 1: Adjacent Alphanumeric (e.g., "1", "9" -> "19")
+        // TinySegmenter might split numbers or alphanumerics unnecessarily
+        if (/[a-zA-Z0-9]/.test(next)) {
+          token += next;
+          offset++;
+          continue;
+        }
+
+        // Rule 2: Connector + Alphanumeric (e.g., "U", ".", "S" or "24", "/", "7" or "don", "'", "t")
+        if (i + offset + 1 < rawWords.length) {
+          let afterNext = rawWords[i + offset + 1];
+          if (/^[-\.\/'’]$/.test(next) && /[a-zA-Z0-9]/.test(afterNext)) {
+             token += next + afterNext;
+             offset += 2;
+             continue;
+          }
+        }
+        
+        // Rule 3: Trailing Dot for Abbreviation (e.g., "U.S", "." -> "U.S.")
+        // Only merge if the current token already looks like an abbreviation (contains a dot)
+        if (next === "." && /[a-zA-Z0-9]\.[a-zA-Z0-9]/.test(token)) {
+          token += ".";
+          offset++;
+          continue;
+        }
+        
+        break; // No merge rule matched
+      }
+      
+      mergedWords.push(token);
+      i += offset - 1; // Advance main loop
+    }
+    return mergedWords;
+  });
+  
+  // Filter out empty strings and strings that don't contain at least one alphanumeric or East Asian letter character.
+  words = words.filter((word) => 
+    /[a-zA-Z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A]/.test(word)
+  );
 
   let charCount = text.length;
   let charCountNoSpace = text.replace(/\s/g, "").length;
   let wordCount = words.length;
   let lineCount = text.split(/\r?\n/).length;
-  let symbolCount = (text.match(/[、。！？…]/g) || []).length;
+  // Improved symbol count regex covering common Japanese and English punctuation/symbols
+  let symbolCount = (text.match(/[、。！？…・「」『』（）［］【】.,!?:;()\[\]{}/\\|+=\-_*&^%$#@~"']/g) || []).length;
 
   let hiragana = (text.match(/[ぁ-ん]/g) || []).length;
   let katakana = (text.match(/[ァ-ン]/g) || []).length;
   let kanji = (text.match(/[一-龥]/g) || []).length;
   let alphabet = (text.match(/[a-zA-Z]/g) || []).length;
-  let total = charCount || 1;
-  let other = total - (hiragana + katakana + kanji + alphabet);
+  
+  let totalForPercent;
+  if (includeSymbolsInPercent) {
+    totalForPercent = charCount || 1;
+  } else {
+    totalForPercent = (hiragana + katakana + kanji + alphabet) || 1;
+  }
+  
+  let other = (charCount || 0) - (hiragana + katakana + kanji + alphabet);
 
   let wordFreq = {};
   words.forEach((word) => {
-    wordFreq[word] = (wordFreq[word] || 0) + 1;
+    let key = isCaseInsensitive ? word.toLowerCase() : word;
+    wordFreq[key] = (wordFreq[key] || 0) + 1;
   });
 
   document.getElementById("charCount").innerText = charCount;
@@ -28,26 +89,32 @@ function analyzeText() {
   document.getElementById("wordCount").innerText = wordCount;
   document.getElementById("lineCount").innerText = lineCount;
   document.getElementById("symbolCount").innerText = symbolCount;
+  
   document.getElementById("hiraganaPercent").innerText = (
-    (hiragana / total) *
-    100
+    (hiragana / totalForPercent) * 100
   ).toFixed(1);
   document.getElementById("katakanaPercent").innerText = (
-    (katakana / total) *
-    100
+    (katakana / totalForPercent) * 100
   ).toFixed(1);
   document.getElementById("kanjiPercent").innerText = (
-    (kanji / total) *
-    100
+    (kanji / totalForPercent) * 100
   ).toFixed(1);
   document.getElementById("alphabetPercent").innerText = (
-    (alphabet / total) *
-    100
+    (alphabet / totalForPercent) * 100
   ).toFixed(1);
-  document.getElementById("otherPercent").innerText = (
-    (other / total) *
-    100
-  ).toFixed(1);
+  let otherPercentVal = includeSymbolsInPercent ? (
+    (other / totalForPercent) * 100
+  ).toFixed(1) : "0.0";
+  
+  document.getElementById("otherPercent").innerText = otherPercentVal;
+  
+  // Hide the pill if it's 0.0% (especially when symbols are excluded or none are present)
+  let otherPill = document.getElementById("otherPill");
+  if (otherPercentVal === "0.0") {
+    otherPill.style.display = "none";
+  } else {
+    otherPill.style.display = "flex";
+  }
 
   let wordList = document.getElementById("wordFrequency");
   wordList.innerHTML = "";
@@ -61,3 +128,5 @@ function analyzeText() {
 }
 
 document.getElementById("textInput").addEventListener("input", analyzeText);
+document.getElementById("caseInsensitive").addEventListener("change", analyzeText);
+document.getElementById("includeSymbolsInPercent").addEventListener("change", analyzeText);
