@@ -26,6 +26,7 @@ exjs: https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js
                 <h2>問題リスト (<span id="question-count">0</span>問)</h2>
                 <div class="no-print">
                     <button id="shuffle-button" class="button-secondary" disabled>シャッフル</button>
+                    <button id="restore-order-button" class="button-secondary" disabled>順番を戻す</button>
                     <button id="toggle-all-button" class="button-secondary" disabled>答えを全て隠す/表示</button>
                 </div>
             </div>
@@ -66,6 +67,7 @@ exjs: https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js
                 <button id="export-json-button" disabled>エクスポート</button>
                 <label for="import-json-input" class="file-label">インポート</label>
                 <input type="file" id="import-json-input" class="file-input" accept=".json">
+                <button id="clear-all-button" disabled>全て削除</button>
             </div>
             <div class="section-box">
                 <h3>印刷 / PDF保存</h3>
@@ -87,12 +89,12 @@ exjs: https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js
             </div>
         </div>
         <div class="modal-footer">
-            <button id="focus-toggle-answer-button" style="margin-top: 10px;">答えを見る (Space)</button>
-            <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <button id="focus-toggle-answer-button">答えを見る (Space)</button>
+            <div style="display: flex; justify-content: space-between;">
                 <button id="focus-prev-button">(←) 前の問題へ</button>
                 <button id="focus-next-button">次の問題へ (→)</button>
             </div>
-             <button id="focus-close-button" class="button-secondary" style="margin-top: 10px;">モードを終了 (Esc)</button>
+             <button id="focus-close-button" class="button-secondary" >モードを終了 (Esc)</button>
         </div>
     </div>
 </div>
@@ -102,10 +104,11 @@ exjs: https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js
         <div class="modal-body quiz-body">
             <div id="quiz-question" class="question-text"></div>
             <div id="quiz-options" class="quiz-options"></div>
+            <div id="quiz-result" class="quiz-result hidden"></div>
         </div>
         <div class="modal-footer">
             <button id="quiz-next-button">次の問題へ (Enter)</button>
-            <button id="quiz-close-button" class="button-secondary" style="margin-top: 10px;">モードを終了 (Esc)</button>
+            <button id="quiz-close-button" class="button-secondary">モードを終了 (Esc)</button>
         </div>
     </div>
 </div>
@@ -119,7 +122,7 @@ exjs: https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js
             </div>
         </div>
         <div class="modal-footer" style="gap: 5px;">
-            <button id="matching-reset-button" class="button-secondary">リセット</button>
+            <button id="matching-reset-button" class="button-secondary">やり直す</button>
             <button id="matching-close-button" class="button-secondary">モードを終了 (Esc)</button>
         </div>
     </div>
