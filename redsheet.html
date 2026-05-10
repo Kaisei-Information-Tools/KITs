@@ -1,0 +1,129 @@
+---
+layout: default_new
+title: Web赤シートメーカー
+css: redsheet
+js: redsheet
+old_base_css: true
+exjs: https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js
+---
+
+<div class="redsheet-container">
+    <div class="redsheet-card" style="background-color: #fff;">
+        <nav class="tab-nav no-print">
+            <button class="tab-button active" data-tab="edit">編集</button>
+            <button class="tab-button" data-tab="learn">学習</button>
+            <button class="tab-button" data-tab="manage">共有・管理</button>
+        </nav>
+        <div id="edit-tab" class="tab-content active">
+            <div class="section-box">
+                <h2>問題を作成</h2>
+                <p>問題と答えを入力し、<code>Ctrl + Enter</code>でも追加できます。</p>
+                <textarea id="question-input" rows="3" placeholder="問題文を入力..."></textarea>
+                <textarea id="answer-input" rows="3" placeholder="答えを入力..."></textarea>
+                <button id="add-button">問題を追加</button>
+            </div>
+            <div class="controls">
+                <h2>問題リスト (<span id="question-count">0</span>問)</h2>
+                <div class="no-print">
+                    <button id="shuffle-button" class="button-secondary" disabled>シャッフル</button>
+                    <button id="restore-order-button" class="button-secondary" disabled>順番を戻す</button>
+                    <button id="toggle-all-button" class="button-secondary" disabled>答えを全て隠す/表示</button>
+                </div>
+            </div>
+            <ul id="question-list"></ul>
+        </div>
+        <div id="learn-tab" class="tab-content">
+            <h2>学習モードを選択</h2>
+            <div class="section-box">
+                <h3>集中学習モード</h3>
+                <p>問題を1問ずつカード形式で表示し、集中して学習するモードです。</p>
+                <button id="start-focus-mode-button" disabled>開始する</button>
+            </div>
+            <div class="section-box">
+                <h3>4択クイズモード</h3>
+                <p>正解に似た単語で賢い選択肢を自動生成します。間違えた問題は最後にまとめて復習できます。</p>
+                <button id="start-quiz-mode-button" disabled>開始する</button>
+                <small id="quiz-mode-notice" style="color: #666; margin-top: 5px; display: block;">（4問以上で利用可）</small>
+            </div>
+            <div class="section-box">
+                <h3>マッチング問題</h3>
+                <p>問題と答えをペアにするゲーム形式で、記憶の定着度をテストします。</p>
+                <label for="matching-count-input">挑戦する問題数</label>
+                <input type="number" id="matching-count-input" value="5" min="5" style="width: 100px; display: inline-block; margin-bottom:0;">
+                <button id="start-matching-mode-button" disabled>開始する</button>
+                <small id="matching-mode-notice" style="color: #666; margin-top: 5px; display: block;">（5問以上で利用可）</small>
+            </div>
+        </div>
+        <div id="manage-tab" class="tab-content">
+            <h2>共有・データ管理</h2>
+            <div class="section-box">
+                <h3>URLで共有</h3>
+                <p>現在の問題リストを圧縮したURLとして生成し、他者と共有できます。</p>
+                <button id="generate-url-button" disabled>共有URLをコピー</button>
+            </div>
+            <div class="section-box">
+                <h3>ファイルで管理 (JSON)</h3>
+                <p>問題リストをファイルとしてPCに保存したり、読み込んだりできます。</p>
+                <button id="export-json-button" disabled>エクスポート</button>
+                <label for="import-json-input" class="file-label">インポート</label>
+                <input type="file" id="import-json-input" class="file-input" accept=".json">
+                <button id="clear-all-button" disabled>全て削除</button>
+            </div>
+            <div class="section-box">
+                <h3>印刷 / PDF保存</h3>
+                <p>物理的な赤シート学習用に、問題リストを印刷またはPDFとして保存します。</p>
+                <button id="print-button" disabled>印刷プレビュー</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="toast-notification" class="toast-notification"></div>
+<div id="focus-mode-modal" class="modal-overlay no-print">
+    <div class="modal-card">
+        <div class="modal-header"><h3>集中学習モード</h3><span id="focus-counter"></span></div>
+        <div class="modal-body focus-body">
+            <div id="focus-question" class="question-text"></div>
+            <div id="focus-answer-area" class="answer-area">
+                <strong style="color: var(--answer-color);">A:</strong>
+                <div id="focus-answer"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="focus-toggle-answer-button">答えを見る (Space)</button>
+            <div style="display: flex; justify-content: space-between;">
+                <button id="focus-prev-button">(←) 前の問題へ</button>
+                <button id="focus-next-button">次の問題へ (→)</button>
+            </div>
+             <button id="focus-close-button" class="button-secondary" >モードを終了 (Esc)</button>
+        </div>
+    </div>
+</div>
+<div id="quiz-mode-modal" class="modal-overlay no-print">
+    <div class="modal-card">
+        <div class="modal-header"><h3>4択クイズモード</h3><span id="quiz-counter"></span></div>
+        <div class="modal-body quiz-body">
+            <div id="quiz-question" class="question-text"></div>
+            <div id="quiz-options" class="quiz-options"></div>
+            <div id="quiz-result" class="quiz-result hidden"></div>
+        </div>
+        <div class="modal-footer">
+            <button id="quiz-next-button">次の問題へ (Enter)</button>
+            <button id="quiz-close-button" class="button-secondary">モードを終了 (Esc)</button>
+        </div>
+    </div>
+</div>
+<div id="matching-mode-modal" class="modal-overlay no-print">
+    <div class="modal-card">
+        <div class="modal-header"><h3>マッチング問題</h3><span id="matching-progress"></span></div>
+        <div class="modal-body">
+            <div id="matching-container" class="matching-container">
+                <ul id="matching-questions" class="matching-list"></ul>
+                <ul id="matching-answers" class="matching-list"></ul>
+            </div>
+        </div>
+        <div class="modal-footer" style="gap: 5px;">
+            <button id="matching-reset-button" class="button-secondary">やり直す</button>
+            <button id="matching-close-button" class="button-secondary">モードを終了 (Esc)</button>
+        </div>
+    </div>
+</div>
