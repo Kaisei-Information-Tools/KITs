@@ -36,6 +36,15 @@ old_base_css: true
         <option value="priority">優先度順</option>
       </select>
     </div>
+    <div class="import-export-group">
+      <button id="export-btn" class="btn-icon" title="エクスポート" aria-label="エクスポート">
+        <i class="fa-solid fa-download"></i>
+      </button>
+      <button id="import-btn" class="btn-icon" title="インポート" aria-label="インポート">
+        <i class="fa-solid fa-upload"></i>
+      </button>
+      <input type="file" id="import-file-input" accept=".json" style="display: none;">
+    </div>
   </div>
 
   <div id="list-view" class="view-container active">
