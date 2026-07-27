@@ -1,0 +1,54 @@
+---
+layout: default_new
+title: 画像フォーマットコンバーター
+css: converter
+js: converter
+old_base_css: true
+---
+
+<h1>画像フォーマットコンバーター</h1>
+<p>
+  PNG, JPEG, GIF,
+  SVGなど、様々な形式の画像をブラウザだけで安全に相互変換します。
+</p>
+
+<div class="converter-box">
+  <!-- ステップ1: ファイル選択 -->
+  <div class="step">
+    <h2>Step 1: 画像を選択</h2>
+    <label for="image-input">画像ファイルを選択:</label>
+    <input type="file" id="image-input" accept="image/*,image/svg+xml" />
+  </div>
+
+  <!-- 画像プレビュー -->
+  <div id="preview-container" class="hidden">
+    <img id="image-preview" src="#" alt="Image preview" />
+  </div>
+
+  <!-- ステップ2: 変換オプション -->
+  <div id="options-container" class="step hidden">
+    <h2>Step 2: 変換オプションを選択</h2>
+    <div class="option-group">
+      <label for="format-select">変換後のフォーマット:</label>
+      <select id="format-select">
+        <option value="png">PNG</option>
+        <option value="jpeg">JPEG</option>
+        <option value="webp">WebP</option>
+        <option value="gif">GIF (静止画)</option>
+        <option value="bmp">BMP (一部ブラウザ対応)</option>
+        <option value="svg">SVG (簡易変換)</option>
+      </select>
+    </div>
+    <div id="quality-control" class="option-group hidden">
+      <label for="quality-slider">画質: <span id="quality-value">0.92</span></label>
+      <input type="range" id="quality-slider" min="0.1" max="1.0" step="0.01" value="0.92" />
+    </div>
+  </div>
+
+  <!-- ステップ3: 変換実行 -->
+  <div id="convert-container" class="step hidden">
+    <h2>Step 3: 変換してダウンロード</h2>
+    <button id="convert-btn" type="button" aria-label="変換してダウンロード">変換してダウンロード</button>
+  </div>
+</div>
+
